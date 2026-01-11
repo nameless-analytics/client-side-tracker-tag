@@ -94,7 +94,7 @@ const default_ua_parser_url = 'https://cdn.jsdelivr.net/npm/ua-parser-js/src/ua-
 // Custom script paths
 const custom_libraries_path = 'https://' + config.custom_libraries_domain + config.custom_libraries_path;
 
-// Script pathss
+// Script paths
 const na_url = (config.load_libraries_from_custom_location) ? custom_libraries_path + '/nameless-analytics.js' : default_na_url_min;
 const ua_parser_url = (config.load_libraries_from_custom_location) ? custom_libraries_path + '/ua-parser.min.js' : default_ua_parser_url;
 
