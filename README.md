@@ -6,7 +6,7 @@ For an overview of how Nameless Analytics works [start from here](https://github
 
 
 
-## TOC
+## Table of Contents
 * [Nameless Analytics Client-side Tracker Tag UI](#nameless-analytics-client-side-tracker-tag-ui)
 * [Event data](#event-data)
   * [Event name](#event-name)
