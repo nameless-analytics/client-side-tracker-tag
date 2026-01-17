@@ -42,9 +42,6 @@ if (config != undefined && config.enable_logs) {
 
 
 // Event data
-const pv_event_name = (config.change_default_page_view_event_name) ? config.page_view_event_name : 'gtm.js';
-const vpv_event_name = (config.change_default_virtual_page_view_event_name) ? config.virtual_page_view_event_name : 'gtm.historyChange';
-
 const timestamp = getTimestampMillis();
 const hostname = getUrl('host');
 const referrer_hostname = getReferrerUrl('host');
@@ -120,34 +117,34 @@ if (config == undefined || config.is_na_config_variable != true) {
   if (enable_logs) { log(event_name, '>', '  🟢 Valid Nameless Analytics Client-Side tracker configuration variable'); }
 }
 
+if (enable_logs && event_name == 'page_view') { log(event_name, '>', 'TRACKER TAG CONFIGURATION'); }
+if (enable_logs && event_name == 'page_view') { log(event_name, '>', '  👉 Server-side requests endpoint path:', full_endpoint); }
+if (enable_logs && event_name == 'page_view') { log(event_name, '>', '  👉 Load libraries in first-party mode:', (config.load_libraries_from_custom_location) ? 'Yes' : 'No'); }
+if (enable_logs && event_name == 'page_view') { log(event_name, '>', '  👉 Enable cross-domain tracking?', (config.enable_cross_domain_tracking) ? 'Yes' : 'No'); }
+if (enable_logs && event_name == 'page_view') { log(event_name, '>', '  👉 Respect Google Consent Mode?', (respect_consent_mode) ? 'Yes' : 'No'); }
 
-if (enable_logs && event_name == 'page_view' && datalayer_event_name == pv_event_name) { log(event_name, '>', 'TRACKER TAG CONFIGURATION'); }
-if (enable_logs && event_name == 'page_view' && datalayer_event_name == pv_event_name) { log(event_name, '>', '  👉 Server-side requests endpoint path:', full_endpoint); }
-if (enable_logs && event_name == 'page_view' && datalayer_event_name == pv_event_name) { log(event_name, '>', '  👉 Load libraries in first-party mode:', (config.load_libraries_from_custom_location) ? 'Yes' : 'No'); }
-if (enable_logs && event_name == 'page_view' && datalayer_event_name == pv_event_name) { log(event_name, '>', '  👉 Enable cross-domain tracking?', (config.enable_cross_domain_tracking) ? 'Yes' : 'No'); }
-if (enable_logs && event_name == 'page_view' && datalayer_event_name == pv_event_name) { log(event_name, '>', '  👉 Respect Google Consent Mode?', (respect_consent_mode) ? 'Yes' : 'No'); }
 
-
-if (enable_logs && event_name == 'page_view' && datalayer_event_name == pv_event_name) { log(event_name, '>', 'LOADING LIBRARIES'); }
+// Load libraries
+if (enable_logs && event_name == 'page_view') { log(event_name, '>', 'LOADING LIBRARIES'); }
 
 // Load UA parser library
 if (queryPermission('inject_script', ua_parser_url)) {
   injectScript(
     ua_parser_url,
     () => { // UA parser library loaded
-      if (enable_logs && event_name == 'page_view' && datalayer_event_name == pv_event_name) { log(event_name, '>', '  🟢 UA parser library loaded from:', ua_parser_url); }
+      if (enable_logs && event_name == 'page_view') { log(event_name, '>', '  🟢 UA parser library loaded from:', ua_parser_url); }
 
       // Load Main library
       if (queryPermission('inject_script', na_url)) {
         injectScript(
           na_url,
           () => { // Main library loaded  
-            if (enable_logs && event_name == 'page_view' && datalayer_event_name == pv_event_name) { log(event_name, '>', '  🟢 Main library loaded from:', na_url); }
+            if (enable_logs && event_name == 'page_view') { log(event_name, '>', '  🟢 Main library loaded from:', na_url); }
 
             send_request(full_endpoint);
           },
           () => { // Main library not loaded
-            if (enable_logs && event_name == 'page_view' && datalayer_event_name == pv_event_name) { log(event_name, '>', '  🔴 Main library not loaded from:', na_url); }
+            if (enable_logs && event_name == 'page_view') { log(event_name, '>', '  🔴 Main library not loaded from:', na_url); }
 
             if (enable_logs) { log(event_name, '>', 'REQUEST STATUS'); }
             if (enable_logs) { log(event_name, '>', '  🔴 Request aborted'); }
@@ -155,7 +152,7 @@ if (queryPermission('inject_script', ua_parser_url)) {
           }, na_url // cached Main library
         );
       } else {
-        if (enable_logs && datalayer_event_name != pv_event_name) { log(event_name, '>', '  🔴 Permission denied: unable to load Main library from', na_url); }
+        if (enable_logs && event_name == 'page_view') { log(event_name, '>', '  🔴 Permission denied: unable to load Main library from', na_url); }
 
         if (enable_logs) { log(event_name, '>', 'REQUEST STATUS'); }
         if (enable_logs) { log(event_name, '>', '  🔴 Request aborted'); }
@@ -164,7 +161,7 @@ if (queryPermission('inject_script', ua_parser_url)) {
 
     },
     () => { // UA parser library not loaded
-      if (enable_logs && event_name == 'page_view' && datalayer_event_name == pv_event_name) { log(event_name, '>', '  🔴 UA parser library not loaded from:', ua_parser_url); }
+      if (enable_logs && event_name == 'page_view') { log(event_name, '>', '  🔴 UA parser library not loaded from:', ua_parser_url); }
 
       if (enable_logs) { log(event_name, '>', 'REQUEST STATUS'); }
       if (enable_logs) { log(event_name, '>', '  🔴 Request aborted'); }
@@ -172,7 +169,7 @@ if (queryPermission('inject_script', ua_parser_url)) {
     }, ua_parser_url // cached UA parser library
   );
 } else {
-  if (enable_logs && datalayer_event_name != pv_event_name) { log(event_name, '>', '  🔴 Permission denied: unable to load UA parser library from', ua_parser_url); }
+  if (enable_logs && event_name == 'page_view') { log(event_name, '>', '  🔴 Permission denied: unable to load UA parser library from', ua_parser_url); }
 
   if (enable_logs) { log(event_name, '>', 'REQUEST STATUS'); }
   if (enable_logs) { log(event_name, '>', '  🔴 Request aborted'); }
@@ -270,17 +267,18 @@ function send_request(full_endpoint) {
 
 // Set cross-domain listener
 function set_cross_domain_listener(full_endpoint) {
-  if (enable_logs && event_name == 'page_view' && datalayer_event_name == pv_event_name) { log(event_name, '>', 'ENABLING CROSS-DOMAIN TRACKING'); }
 
   var cross_domain_listener_status = templateStorage.getItem('cross_domain_listener') || false;
   const domains = config.cross_domain_domains.map(obj => obj.domain);
 
   if (!cross_domain_listener_status) {
+    if (enable_logs && event_name == 'page_view') { log(event_name, '>', 'ENABLING CROSS-DOMAIN TRACKING'); }
+
     if (queryPermission('access_globals', 'execute', 'set_cross_domain_listener')) {
       callInWindow('set_cross_domain_listener', full_endpoint, domains, respect_consent_mode, enable_logs);
       templateStorage.setItem('cross_domain_listener', true);
 
-      if (enable_logs && event_name == 'page_view' && datalayer_event_name == pv_event_name) { log(event_name, '>', '  👉 Cross-domain enabled for:', domains.join(', ')); }
+      if (enable_logs && event_name == 'page_view') { log(event_name, '>', '  👉 Cross-domain enabled for:', domains.join(', ')); }
     }
   }
 }
@@ -342,7 +340,7 @@ function build_payload() {
   // ECOMMERCE DATA
   // Add ecommerce data from dataLayer
   if (data.add_ecommerce) {
-    payload.ecommerce = copyFromDataLayer('ecommerce', 2);
+    payload.ecommerce = copyFromDataLayer('ecommerce', 2) || {};
   }
 
 
@@ -495,13 +493,13 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
   const channel_grouping = (queryPermission('access_globals', 'execute', 'get_channel_grouping')) ? callInWindow('get_channel_grouping', source, campaign) : null;
 
   // Standard and Virtual Page View
-  if (event_name == 'page_view' && (datalayer_event_name == pv_event_name || datalayer_event_name == vpv_event_name)) {
+  if (event_name == 'page_view') {
     const page_id = alphanumeric_page_id;
     const event_id = page_id + "_" + alphanumeric_event_id;
 
     const event_info = [{
       event_id: event_id,
-      event_type: (datalayer_event_name == pv_event_name) ? 'page_view' : 'virtual_page_view',
+      event_type: 'page_view',
       channel_grouping: channel_grouping,
       source: source,
       campaign: campaign,
@@ -509,7 +507,7 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
       campaign_click_id: campaign_click_id,
       campaign_term: campaign_term,
       campaign_content: campaign_content,
-      cross_domain_id: (datalayer_event_name == pv_event_name) ? cross_domain_id : null
+      cross_domain_id: cross_domain_id
     }, {
       page_id: page_id,
       page_timestamp: timestamp,
@@ -524,8 +522,8 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
       page_referrer: (storage_value == null) ? ((getReferrerUrl() == '') ? null : getReferrerUrl()) : storage_value[1].page_location,
     }];
 
-    // Override page data if virtual_page_view event name != gtm.historyChange
-    if (datalayer_event_name == vpv_event_name && config.page_title != undefined && config.page_location != undefined) {
+    // Override page data for virtual page view
+    if (config.page_title != undefined && config.page_location != undefined) {
       event_info[1].page_title = config.page_title;
       event_info[1].page_location = config.page_location;
       event_info[1].page_fragment = config.page_fragment || null;
@@ -535,21 +533,12 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
 
     templateStorage.setItem(storage_name, JSON.stringify(event_info));
 
-    if (enable_logs) { log(event_name, '>', '  🟢 Valid', event_name); }
+    if (enable_logs) { log(event_name, '>', '  🟢 Valid', event_name, 'event'); }
 
     return true;
 
-  } else if (event_name == 'page_view' && (datalayer_event_name != pv_event_name || datalayer_event_name != vpv_event_name)) {
-    if (enable_logs && datalayer_event_name != pv_event_name) { log(event_name, '>', '  🔴', (datalayer_event_name == pv_event_name) ? 'Page view' : 'Virtual page view', 'fired on wrong event:', datalayer_event_name + '. Change default JavaScript page view event name in Nameless Analytics Client-Side tracker configuration variable. Actual:', (datalayer_event_name == pv_event_name) ? pv_event_name : vpv_event_name); }
-
-    if (enable_logs) { log(event_name, '>', 'REQUEST STATUS'); }
-    if (enable_logs) { log(event_name, '>', '  🔴 Request aborted'); }
-
-    data.gtmOnSuccess();
-    return false;
-
   } else if (event_name != 'page_view' && !storage_value) {
-    if (enable_logs) { log(event_name, '>', '  🔴 Event fired before a page view event. The first event on a page view ever must be page_view. Request aborted'); }
+    if (enable_logs) { log(event_name, '>', '  🔴 Event fired before a page view event. The first event on a page view ever must be page_view.'); }
 
     if (enable_logs) { log(event_name, '>', 'REQUEST STATUS'); }
     if (enable_logs) { log(event_name, '>', '  🔴 Request aborted'); }
@@ -580,7 +569,7 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
 
     templateStorage.setItem(storage_name, JSON.stringify(event_info));
 
-    if (enable_logs) { log(event_name, '>', '  🟢 Valid', event_name); }
+    if (enable_logs) { log(event_name, '>', '  🟢 Valid', event_name, 'event'); }
 
     return true;
   }
