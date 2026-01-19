@@ -165,7 +165,7 @@ function get_channel_grouping(source, campaign) {
   if (patterns.shopping.test(source)) return campaign ? 'paid_shopping' : 'organic_shopping';
   if (patterns.video.test(source)) return campaign ? 'paid_video' : 'organic_video';
   if (patterns.ai.test(source)) return 'ai';
-  if (patterns.email.test(source)) return campaign ? 'email' : 'undefined';
+  if (patterns.email.test(source)) return 'email';
   if (!campaign) return 'referral';
   if (campaign) return 'affiliate';
 
