@@ -29,7 +29,6 @@ For an overview of how Nameless Analytics works [start from here](https://github
 
 
 
-
 ## Nameless Analytics Client-side Tracker Tag UI
 This is the UI of the Nameless Analytics Client-side Tracker Tag.
 
