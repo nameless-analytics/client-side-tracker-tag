@@ -146,12 +146,12 @@ When logs are enabled, the following success and status messages may appear in t
 
 | **Scope** | **Message** | **Description** |
 |:---|:---|:---|
-| Config | `[event_name] > 🟢 Valid Nameless Analytics Client-Side tracker configuration variable` | Tag configuration variable is correctly set and verified |
-| | `[event_name] > 🟢 UA parser library loaded from: [URL]` | The User-Agent parser library was successfully injected and loaded |
-| | `[event_name] > 🟢 Main library loaded from: [URL]` | The Nameless Analytics core library was successfully injected and loaded |
-| Consent | `[event_name] > 🟢 analytics_storage granted` | Tracking is allowed by Google Consent Mode |
-| Events | `[event_name] > 🟢 Valid [event_name]` | The event was successfully built and validated |
-| Cross-domain | `cross-domain > 🟢 Valid user data. Cross-domain URL link decoration will be applied` | Success log for `na_id` link decoration |
+| Config | [event_name] > 🟢 Valid Nameless Analytics Client-Side tracker configuration variable | Tag configuration variable is correctly set and verified |
+| | [event_name] > 🟢 UA parser library loaded from: [URL] | The User-Agent parser library was successfully injected and loaded |
+| | [event_name] > 🟢 Main library loaded from: [URL] | The Nameless Analytics core library was successfully injected and loaded |
+| Consent | [event_name] > 🟢 analytics_storage granted | Tracking is allowed by Google Consent Mode |
+| Events | [event_name] > 🟢 Valid [event_name] | The event was successfully built and validated |
+| Cross-domain | cross-domain > 🟢 Valid user data. Cross-domain URL link decoration will be applied | Success log for `na_id` link decoration |
 
 
 ### Error messages
@@ -159,20 +159,19 @@ These messages appear in the browser console when an issue prevents the correct 
 
 | **Scope** | **Message** | **What it means** | **How to fix it** |
 |:---|:---|:---|:---|
-| Config | `[event_name] > 🔴 Tracker configuration error: event has invalid Nameless Analytics Client-Side tracker configuration variable` | The tag is missing the required config variable or it's incorrectly set | Check the "Configuration Variable" field in the tag and ensure it points to a valid NA Config Variable |
-| | `[event_name] > 🔴 Main library not loaded from: [URL]` | The browser couldn't fetch the core tracker script | Verify the URL in the Config Variable or check your network/CORS settings |
-| | `[event_name] > 🔴 UA parser library not loaded from: [URL]` | The browser couldn't fetch the User-Agent parser script | Verify the library URL or check for ad-blockers/firewalls |
-| | `[event_name] > 🔴 Permission denied: unable to load Main library from [URL]` | The GTM Sandbox is blocking the external script loading | Ensure the library URL is added to the "Inject Scripts" permission in the template |
-| | `[event_name] > 🔴 Permission denied: unable to load UA parser library from [URL]` | The GTM Sandbox is blocking the external script loading | Ensure the library URL is added to the "Inject Scripts" permission in the template |
-| Consent | `[event_name] > 🔴 Google Consent Mode not found` | The tag expects GCM to be active, but it's not initialized on the page | Ensure GCM is correctly implemented on the site before GTM loads |
-| | `[event_name] > 🔴 analytics_storage denied` | Tracking is blocked by Google Consent Mode | This is expected behavior for users who opt-out |
-| Events | `[event_name] > 🔴 Request aborted` | A generic issue stopped the tag execution | Check the previous logs in the console to find the specific cause |
-| | `Page view / Virtual page view > 🔴 Page view / Virtual page view fired on wrong event: [name]` | The trigger is firing the Page view / Virtual page view tag on wrong dataLayer event name | Adjust the tag trigger to match the intended event (e.g., use `gtm.js` for page_view) |
-| | `[event_name] > 🔴 Event fired before a page view event. The first event on a page view ever must be page_view. Request aborted` | Sequence error: an event was triggered before a `page_view` initialized the session | Reorder your triggers to ensure `page_view` always fires first |
-| | `[event_name] > 🔴 Request refused` | The server rejected the request | Check the server-side tag logs for more details |
-| | `[event_name] > 🔴 [error]` | A generic JavaScript error occurred during the fetch request | Check the browser console for details |
-| | `[event_name] > 🔴 Request not sent successfully` | The network request failed | Check your internet connection and the server-side endpoint status |
-| Cross-domain | `cross-domain > 🔴 Error while fetch user data: [error]` | The cross-domain listener failed to retrieve IDs from the server | Verify the server-side client is reachable |
+| Config | [event_name] > 🔴 Tracker configuration error: event has invalid Nameless Analytics Client-Side tracker configuration variable | The tag is missing the required config variable or it's incorrectly set | Check the "Configuration Variable" field in the tag and ensure it points to a valid NA Config Variable |
+| | [event_name] > 🔴 Main library not loaded from: [URL] | The browser couldn't fetch the core tracker script | Verify the URL in the Config Variable or check your network/CORS settings |
+| | [event_name] > 🔴 UA parser library not loaded from: [URL] | The browser couldn't fetch the User-Agent parser script | Verify the library URL or check for ad-blockers/firewalls |
+| | [event_name] > 🔴 Permission denied: unable to load Main library from [URL] | The GTM Sandbox is blocking the external script loading | Ensure the library URL is added to the "Inject Scripts" permission in the template |
+| | [event_name] > 🔴 Permission denied: unable to load UA parser library from [URL] | The GTM Sandbox is blocking the external script loading | Ensure the library URL is added to the "Inject Scripts" permission in the template |
+| Consent | [event_name] > 🔴 Google Consent Mode not found | The tag expects GCM to be active, but it's not initialized on the page | Ensure GCM is correctly implemented on the site before GTM loads |
+| | [event_name] > 🔴 analytics_storage denied | Tracking is blocked by Google Consent Mode | This is expected behavior for users who opt-out |
+| Events | [event_name] > 🔴 Request aborted | A generic issue stopped the tag execution | Check the previous logs in the console to find the specific cause |
+| | [event_name] > 🔴 Event fired before a page view event. The first event on a page view ever must be page_view. Request aborted | Sequence error: an event was triggered before a `page_view` initialized the session | Reorder your triggers to ensure `page_view` always fires first |
+| | [event_name] > 🔴 Request refused | The server rejected the request | Check the server-side tag logs for more details |
+| | [event_name] > 🔴 [error] | A generic JavaScript error occurred during the fetch request | Check the browser console for details |
+| | [event_name] > 🔴 Request not sent successfully | The network request failed | Check your internet connection and the server-side endpoint status |
+| Cross-domain | cross-domain > 🔴 Error while fetch user data: [error] | The cross-domain listener failed to retrieve IDs from the server | Verify the server-side client is reachable |
 
 </br>
 
