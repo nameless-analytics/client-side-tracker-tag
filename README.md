@@ -8,7 +8,6 @@ For an overview of how Nameless Analytics works [start from here](https://github
 
 
 
-</br>
 
 ## Table of Contents
 - [Nameless Analytics Client-side Tracker Tag UI](#nameless-analytics-client-side-tracker-tag-ui)
@@ -31,7 +30,6 @@ For an overview of how Nameless Analytics works [start from here](https://github
 
 
 
-</br>
 
 ## Nameless Analytics Client-side Tracker Tag UI
 This is the UI of the Nameless Analytics Client-side Tracker Tag.
@@ -40,7 +38,6 @@ This is the UI of the Nameless Analytics Client-side Tracker Tag.
 
 
 
-</br>
 
 ## Event data
 ### Event name
@@ -132,7 +129,6 @@ These parameters can be overridden by:
 
 
 
-</br>
 
 ## Configuration variable settings
 ### Configuration variable
@@ -153,7 +149,6 @@ This variable will handle settings like:
 
 
 
-</br>
 
 ## Advanced settings
 ### Add ecommerce data from dataLayer
@@ -171,7 +166,6 @@ Disable console log for this specific event when [Enable logs in JavaScript cons
 
 
 
-</br>
 
 ## Execution messages
 ### Success messages
