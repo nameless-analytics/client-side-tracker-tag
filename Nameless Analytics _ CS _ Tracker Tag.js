@@ -81,7 +81,7 @@ const scclid = getQueryParameters('scclid'); // SnapChat
 const source = (referrer_hostname == hostname) ? null : ((utm_source) ? utm_source : ((referrer_hostname == '') ? 'direct' : referrer_hostname));
 const campaign = utm_campaign || null;
 const campaign_id = utm_id || null;
-const campaign_click_id = gclid || dclid || gclsrc || wbraid || gbraid || msclkid || fbclid || ttclid || twclid || epik || li_fat_id || sccid || null;
+const campaign_click_id = gclid || dclid || gclsrc || wbraid || gbraid || msclkid || fbclid || ttclid || twclid || epik || li_fat_id || scclid || null;
 const campaign_term = utm_term || null;
 const campaign_content = utm_content || null;
 
