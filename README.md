@@ -29,6 +29,10 @@ For an overview of how Nameless Analytics works [start from here](https://github
 
 
 ## Nameless Analytics Client-side Tracker Tag UI
+The Nameless Analytics Client-side Tracker Tag is designed to simplify complex tracking implementations with a seamless GTM integration. 
+
+It provides a structured interface to configure event names, manage deep parameter hierarchies, and handle advanced tracking settings without writing custom code.
+
 This is the UI of the Nameless Analytics Client-side Tracker Tag.
 
 ![Nameless Analytics Client-side Tracker Tag UI](https://github.com/user-attachments/assets/30449ace-ae5d-4b1d-9b82-4af0a535ac18)
@@ -47,14 +51,15 @@ Please note:
 #### Standard event name
 Choose a standard event name for the event:
 
-* page_view: Send this event when a page is viewed. Use this event for both standard and virtual page views. This is the only mandatory event.
+* page_view: Send this event when a page is viewed. Use this event for both standard and virtual page views. This is the only mandatory event
 * consent_update: Send this event when the user gives or withdraws consent to improve the accuracy of consent metrics.
-* page_load_time: Send this event when a page is loaded (on the `gtm.load` JavaScript event) with these parameters:
-  * time_to_dom_interactive: `performance.timing.domInteractive - performance.timing.responseStart`
-  * page_render_time: `performance.timing.domComplete - performance.timing.domLoading`
-  * time_to_dom_complete: `performance.timing.domComplete - performance.timing.responseStart`
-  * total_page_load_time: `performance.timing.loadEventEnd - performance.timing.navigationStart` 
-* page_closed: Send this event when a page is closed to improve the accuracy of `time_on_page`, `session_duration`, and other metrics.
+* page_load_time: Send this event when a page is loaded (on the `gtm.load` JavaScript event)
+* page_closed: Send this event when a page is closed to improve the accuracy of `time_on_page`, `session_duration`, and other metrics
+* view_search_results: Send this event when a search results page is viewed
+* click_search_result: Send this event when a search result is clicked
+* login: Send this event when a user logs in
+* logout: Send this event when a user logs out
+* register: Send this event when a user creates an account
 
 #### Custom event name
 Choose a custom event name for the event.
@@ -66,7 +71,7 @@ Examples:
 * form_submitted
 * video_played
 
-Avoid
+Avoid:
 * Spaces: button clicked
 * Hyphens: button-clicked
 * CamelCase: ButtonClicked
@@ -111,17 +116,17 @@ These parameters can be overridden by:
 The Nameless Analytics Client-side Tracker Tag inherits configuration settings from [Nameless Analytics Client-side Tracker Configuration Variable](https://github.com/nameless-analytics/nameless-analytics-client-side-tracker-configuration-variable/). 
 
 This variable will handle settings like:
-- [set requests endpoint domain name and path](https://github.com/nameless-analytics/nameless-analytics-client-side-tracker-configuration-variable/#server-side-endpoint-settings)
 - [set user level parameters](https://github.com/nameless-analytics/nameless-analytics-client-side-tracker-configuration-variable/#user-parameters)
 - [set session level parameters](https://github.com/nameless-analytics/nameless-analytics-client-side-tracker-configuration-variable/#session-parameters)
+- [set page level parameters](https://github.com/nameless-analytics/nameless-analytics-client-side-tracker-configuration-variable/#page-parameters)
 - [set common event parameters](https://github.com/nameless-analytics/nameless-analytics-client-side-tracker-configuration-variable/#event-parameters)
-- [respect Google Consent Mode](https://github.com/nameless-analytics/nameless-analytics-client-side-tracker-configuration-variable/#respect-google-consent-mode)
+- [set server-side endpoint settings](https://github.com/nameless-analytics/nameless-analytics-client-side-tracker-configuration-variable/#server-side-endpoint-settings)
+- [set page view settings](https://github.com/nameless-analytics/nameless-analytics-client-side-tracker-configuration-variable/#page-view-settings)
+- [respect google consent mode](https://github.com/nameless-analytics/nameless-analytics-client-side-tracker-configuration-variable/#respect-google-consent-mode)
 - [enable cross-domain tracking](https://github.com/nameless-analytics/nameless-analytics-client-side-tracker-configuration-variable/#enable-cross-domain-tracking)
-- [customize source and campaigns URL parameters](https://github.com/nameless-analytics/nameless-analytics-client-side-tracker-configuration-variable/#override-default-source-and-campaigns-url-query-parameters)
-- [change default JavaScript page view event names](https://github.com/nameless-analytics/nameless-analytics-client-side-tracker-configuration-variable/#override-default-javascript-page-view-event-names)
-- [load main library from custom location](https://github.com/nameless-analytics/nameless-analytics-client-side-tracker-configuration-variable/#load-javascript-libraries-in-first-party-mode)
+- [load javascript libraries in first-party mode](https://github.com/nameless-analytics/nameless-analytics-client-side-tracker-configuration-variable/#load-javascript-libraries-in-first-party-mode)
 - [add current dataLayer state](https://github.com/nameless-analytics/nameless-analytics-client-side-tracker-configuration-variable/#add-current-datalayer-state)
-- [show logs in JavaScript console](https://github.com/nameless-analytics/nameless-analytics-client-side-tracker-configuration-variable/#enable-logs-in-javascript-console)
+- [enable logs in javascript console](https://github.com/nameless-analytics/nameless-analytics-client-side-tracker-configuration-variable/#enable-logs-in-javascript-console)
 
 
 
