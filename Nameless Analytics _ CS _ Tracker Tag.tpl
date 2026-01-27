@@ -914,6 +914,9 @@ const cross_domain_id = getQueryParameters('na_id');
 
 const respect_consent_mode = config.respect_consent_mode;
 
+const retreive_page_status_code = templateStorage.getItem('page_status_code') || false;
+if(config.add_page_status_code && !retreive_page_status_code && event_name == 'page_view') {templateStorage.setItem('page_status_code', true);}
+
 // Acquisition
 const utm_source = (config.set_custom_utm_parameters_names) ? getQueryParameters(config.custom_source_name) : getQueryParameters('utm_source');
 const utm_campaign = (config.set_custom_utm_parameters_names) ? getQueryParameters(config.custom_campaign_name) : getQueryParameters('utm_campaign');
@@ -930,19 +933,19 @@ const msclkid = getQueryParameters('msclkid'); // Bing
 const fbclid = getQueryParameters('fbclid'); // Facebook 
 const ttclid = getQueryParameters('ttclid'); // TikTok 
 const twclid = getQueryParameters('twclid'); // X
-const epik = getQueryParameters('epik'); // Pinterest
 const li_fat_id = getQueryParameters('li_fat_id'); // Linkedin
-const sccid = getQueryParameters('sccid'); // SnapChat
+const epik = getQueryParameters('epik'); // Pinterest
+const scclid = getQueryParameters('scclid'); // SnapChat
 
 const source = (referrer_hostname == hostname) ? null : ((utm_source) ? utm_source : ((referrer_hostname == '') ? 'direct' : referrer_hostname));
 const campaign = utm_campaign || null;
 const campaign_id = utm_id || null;
-const campaign_click_id = gclid || dclid || gclsrc || wbraid || gbraid || msclkid || fbclid || ttclid || twclid || epik || li_fat_id || sccid || null;
+const campaign_click_id = gclid || dclid || gclsrc || wbraid || gbraid || msclkid || fbclid || ttclid || twclid || epik || li_fat_id || scclid || null;
 const campaign_term = utm_term || null;
 const campaign_content = utm_content || null;
 
 // Default script paths
-const default_na_url_min = 'https://cdn.jsdelivr.net/gh/nameless-analytics/nameless-analytics-client-side-tracker-tag@main/nameless-analytics.min.js';
+const default_na_url_min = 'https://cdn.jsdelivr.net/gh/nameless-analytics/nameless-analytics-client-side-tracker-tag@main/lib/nameless-analytics.min.js';
 const default_ua_parser_url = 'https://cdn.jsdelivr.net/npm/ua-parser-js/src/ua-parser.min.js';
 
 // Custom script paths
@@ -1085,7 +1088,7 @@ function send_request(full_endpoint) {
 
           // Send pending requests when consent is granted          
           if (queryPermission('access_globals', 'execute', 'send_queued_requests')) {
-            callInWindow('send_queued_requests', full_endpoint, payload, data, enable_logs, config.add_page_status_code);
+            callInWindow('send_queued_requests', full_endpoint, payload, data, enable_logs, retreive_page_status_code);
           }
         });
 
@@ -1100,7 +1103,7 @@ function send_request(full_endpoint) {
 
         // Send requests
         if (queryPermission('access_globals', 'execute', 'send_queued_requests')) {
-          callInWindow('send_queued_requests', full_endpoint, payload, data, enable_logs, config.add_page_status_code);
+          callInWindow('send_queued_requests', full_endpoint, payload, data, enable_logs, retreive_page_status_code);
         }
       }
     }
@@ -1115,7 +1118,7 @@ function send_request(full_endpoint) {
 
     // Send requests
     if (queryPermission('access_globals', 'execute', 'send_queued_requests')) {
-      callInWindow('send_queued_requests', full_endpoint, payload, data, enable_logs, config.add_page_status_code);
+      callInWindow('send_queued_requests', full_endpoint, payload, data, enable_logs, retreive_page_status_code);
     }
   }
 }
@@ -1127,15 +1130,15 @@ function send_request(full_endpoint) {
 // Set cross-domain listener
 function set_cross_domain_listener(full_endpoint) {
 
-  var cross_domain_listener_status = templateStorage.getItem('cross_domain_listener') || false;
+  var set_cross_domain_listener = templateStorage.getItem('set_cross_domain_listener') || false;
   const domains = config.cross_domain_domains.map(obj => obj.domain);
 
-  if (!cross_domain_listener_status) {
+  if (!set_cross_domain_listener) {
     if (enable_logs && event_name == 'page_view') { log(event_name, '>', 'ENABLING CROSS-DOMAIN TRACKING'); }
 
     if (queryPermission('access_globals', 'execute', 'set_cross_domain_listener')) {
       callInWindow('set_cross_domain_listener', full_endpoint, domains, respect_consent_mode, enable_logs);
-      templateStorage.setItem('cross_domain_listener', true);
+      templateStorage.setItem('set_cross_domain_listener', true);
 
       if (enable_logs && event_name == 'page_view') { log(event_name, '>', '  👉 Cross-domain enabled for:', domains.join(', ')); }
     }
