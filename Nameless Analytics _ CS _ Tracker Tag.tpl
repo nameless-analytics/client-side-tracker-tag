@@ -945,7 +945,7 @@ const campaign_term = utm_term || null;
 const campaign_content = utm_content || null;
 
 // Default script paths
-const default_na_url_min = 'https://cdn.jsdelivr.net/gh/nameless-analytics/nameless-analytics-client-side-tracker-tag@main/lib/nameless-analytics.min.js';
+const default_na_url_min = 'https://cdn.jsdelivr.net/gh/nameless-analytics/client-side-tracker-tag@main/lib/nameless-analytics.js';
 const default_ua_parser_url = 'https://cdn.jsdelivr.net/npm/ua-parser-js/src/ua-parser.min.js';
 
 // Custom script paths
