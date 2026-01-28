@@ -78,9 +78,28 @@ Avoid:
 
 
 ### Event parameters
-Add event parameters for a specific event. The parameters will be added in the event_data object in the payload. 
+The parameters will be added in the event_data object in the payload. 
 
-Please note: if a parameter has the same name as another, it can override or be overridden depending on where it was set.
+These event parameters can't be added, overridden or removed:
+- event_type 
+- channel_grouping 
+- source 
+- campaign 
+- campaign_id
+- campaign_click_id
+- campaign_term 
+- campaign_content 
+- user_agent 
+- browser_name 
+- browser_language 
+- browser_version 
+- device_type 
+- device_vendor 
+- device_model 
+- os_name 
+- os_version 
+- screen_size 
+- viewport_size
 
 This is the hierarchy of event parameter importance: 
 
@@ -97,53 +116,11 @@ These parameters can override:
 These parameters can be overridden by:
 - Event parameter added in Nameless Analytics Server-side Client Tag
 
-These parameters can't be added or overridden:
-- event_type 
-- channel_grouping 
-- source 
-- campaign 
-- campaign_id
-- campaign_click_id
-- campaign_term 
-- campaign_content 
-- user_agent 
-- browser_name 
-- browser_language 
-- browser_version 
-- device_type 
-- device_vendor 
-- device_model 
-- os_name 
-- os_version 
-- screen_size 
-- viewport_size
-
 #### Remove event level parameters
 Remove event level parameters in event_data object in the payload.
 
-These parameters can't be removed:
-- event_type 
-- channel_grouping 
-- source 
-- campaign 
-- campaign_id
-- campaign_click_id
-- campaign_term 
-- campaign_content 
-- user_agent 
-- browser_name 
-- browser_language 
-- browser_version 
-- device_type 
-- device_vendor 
-- device_model 
-- os_name 
-- os_version 
-- screen_size 
-- viewport_size
-
 #### Add event parameters from dataLayer
-Retrieve current dataLayer values from the dataLayer.push() event that triggered the tag.
+Add event parameters from the dataLayer.push() event that triggered the tag. Accepted values: strings, integers, floats, and JSON.
 
 These parameters can override:
 - Default event parameters
@@ -153,26 +130,7 @@ These parameters can be overridden by:
 - Event parameters added in Nameless Analytics Client-side Tracker Tag
 - Shared event parameters added in Nameless Analytics Client-side Tracker Configuration Variable
 
-These parameters can't be added via datalayer:
-- event_type 
-- channel_grouping 
-- source 
-- campaign 
-- campaign_id
-- campaign_click_id
-- campaign_term 
-- campaign_content 
-- user_agent 
-- browser_name 
-- browser_language 
-- browser_version 
-- device_type 
-- device_vendor 
-- device_model 
-- os_name 
-- os_version 
-- screen_size 
-- viewport_size
+
 
 ## Configuration variable settings
 ### Configuration variable
