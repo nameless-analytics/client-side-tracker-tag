@@ -78,9 +78,18 @@ Avoid:
 
 
 ### Event parameters
-The parameters will be added in the event_data object in the payload. 
+Add, override or remove event parameters in the event_data object. 
 
-These event parameters can't be added, overridden or removed:
+This settings can override:
+- Shared event parameters added in Nameless Analytics Client-side Tracker Configuration Variable
+- dataLayer event parameters added in Nameless Analytics Client-side Tracker Tag
+
+This settings can be overridden by:
+- Event parameter added in Nameless Analytics Server-side Client Tag
+
+See [Parameter Hierarchy & Overriding](https://github.com/nameless-analytics/nameless-analytics/#parameter-hierarchy--overriding) in the main project documentation.
+
+These event parameters are reserved and can't be modified:
 - event_type 
 - channel_grouping 
 - source 
@@ -101,29 +110,14 @@ These event parameters can't be added, overridden or removed:
 - screen_size 
 - viewport_size
 
-This is the hierarchy of event parameter importance: 
-
-See [Parameter Hierarchy & Overriding](https://github.com/nameless-analytics/nameless-analytics/#parameter-hierarchy--overriding) in the main project documentation.
-
 #### Add/override event level parameters
 Add or overwrite parameters for a specific event. Accepted values: strings, integers, floats, and JSON.
-
-These parameters can override:
-- Shared event parameters added in Nameless Analytics Client-side Tracker Configuration Variable
-- dataLayer event parameters added in Nameless Analytics Client-side Tracker Tag
-- Default event parameters
-
-These parameters can be overridden by:
-- Event parameter added in Nameless Analytics Server-side Client Tag
 
 #### Remove event level parameters
 Remove event level parameters in event_data object in the payload.
 
 #### Add event parameters from dataLayer
 Add event parameters from the dataLayer.push() event that triggered the tag. Accepted values: strings, integers, floats, and JSON.
-
-These parameters can override:
-- Default event parameters
 
 These parameters can be overridden by:
 - Event parameters added in Nameless Analytics Server-side Client Tag
