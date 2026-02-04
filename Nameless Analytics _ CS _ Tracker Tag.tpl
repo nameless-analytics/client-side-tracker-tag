@@ -766,6 +766,7 @@ if(config.add_page_status_code && !retreive_page_status_code && event_name == 'p
 const utm_source = (config.set_custom_utm_parameters_names) ? getQueryParameters(config.custom_source_name) : getQueryParameters('utm_source');
 const utm_campaign = (config.set_custom_utm_parameters_names) ? getQueryParameters(config.custom_campaign_name) : getQueryParameters('utm_campaign');
 const utm_id = (config.set_custom_utm_parameters_names) ? getQueryParameters(config.custom_id_name) : getQueryParameters('utm_id');
+const utm_click_id = (config.set_custom_utm_parameters_names) ? getQueryParameters(config.custom_click_id_name) : getQueryParameters('utm_click_id');
 const utm_term = (config.set_custom_utm_parameters_names) ? getQueryParameters(config.custom_term_name) : getQueryParameters('utm_term');
 const utm_content = (config.set_custom_utm_parameters_names) ? getQueryParameters(config.custom_content_name) : getQueryParameters('utm_content');
 
@@ -785,7 +786,7 @@ const scclid = getQueryParameters('scclid'); // SnapChat
 const source = (referrer_hostname == hostname) ? null : ((utm_source) ? utm_source : ((referrer_hostname == '') ? 'direct' : referrer_hostname));
 const campaign = utm_campaign || null;
 const campaign_id = utm_id || null;
-const campaign_click_id = gclid || dclid || gclsrc || wbraid || gbraid || msclkid || fbclid || ttclid || twclid || epik || li_fat_id || scclid || null;
+const campaign_click_id = utm_click_id || gclid || dclid || gclsrc || wbraid || gbraid || msclkid || fbclid || ttclid || twclid || epik || li_fat_id || scclid || null;
 const campaign_term = utm_term || null;
 const campaign_content = utm_content || null;
 
