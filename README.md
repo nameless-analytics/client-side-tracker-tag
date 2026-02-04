@@ -135,10 +135,10 @@ This variable will handle settings like:
 - [set page level parameters](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/#page-parameters)
 - [set common event parameters](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/#event-parameters)
 - [set server-side endpoint settings](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/#server-side-endpoint-settings)
-- [set page view settings](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/#page-view-settings)
 - [respect google consent mode](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/#respect-google-consent-mode)
+- [override default acquisition parameters]
 - [enable cross-domain tracking](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/#enable-cross-domain-tracking)
-- [load javascript libraries in first-party mode](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/#load-javascript-libraries-in-first-party-mode)
+- [load JavaScript libraries in first-party mode](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/#load-javascript-libraries-in-first-party-mode)
 - [add current dataLayer state](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/#add-current-datalayer-state)
 - [enable logs in javascript console](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/#enable-logs-in-javascript-console)
 
