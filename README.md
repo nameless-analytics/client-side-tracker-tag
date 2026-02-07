@@ -48,8 +48,6 @@ Please note:
 - Follow naming conventions for event names and event parameters.
 
 #### Standard event name
-Choose a standard event name for the event:
-
 * page_view: Send this event when a page is viewed. Use this event for both standard and virtual page views. This is the only mandatory event
 * consent_update: Send this event when the user gives or withdraws consent to improve the accuracy of consent metrics.
 * page_load_time: Send this event when a page is loaded (on the `gtm.load` JavaScript event)
@@ -79,7 +77,7 @@ Avoid:
 ### Event parameters
 Add, override or remove event parameters in the event_data object. See [Parameter Hierarchy & Overriding](https://github.com/nameless-analytics/nameless-analytics/#parameter-hierarchy--overriding) in the main project documentation.
 
-This is the hierarchy of event parameter importance:
+They will be sent to BigQuery with every event.
 
 These event parameters are reserved and can't be modified:
 - event_type 
@@ -101,9 +99,12 @@ These event parameters are reserved and can't be modified:
 - os_version 
 - screen_size 
 - viewport_size
+- tld_source
+- city
+- country
 
 #### Add/override event level parameters
-Add or overwrite parameters for a specific event. Accepted values: strings, integers, floats, and JSON.
+Add or overwrite parameters for a specific event. Accepted values: strings, integers, floats, JSON and booleans.
 
 This settings can override:
 - Shared event parameters added in Nameless Analytics Client-side Tracker Configuration Variable
@@ -116,7 +117,7 @@ This settings can be overridden by:
 Remove event level parameters in event_data object in the payload.
 
 #### Add event parameters from dataLayer
-Add event parameters from the dataLayer.push() event that triggered the tag. Accepted values: strings, integers, floats, and JSON.
+Add event parameters from the dataLayer.push() event that triggered the tag. Accepted values: strings, integers, floats, JSON and booleans.
 
 These parameters can be overridden by:
 - Event parameters added in Nameless Analytics Server-side Client Tag
