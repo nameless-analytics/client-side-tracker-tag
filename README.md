@@ -155,7 +155,7 @@ Add ecommerce data as a JSON object inside the ecommerce field.
 
 Please note: 
 - By default, the table function queries extract data from standard GA4 ecommerce data structure
-- The data model can be customized to support any ecommerce data structure by modifying the relative JSON paths in the user, session, ecommerce, product and funnels [table function queries](https://github.com/nameless-analytics/tables/blob/main/table-functions/)
+- The data model can be customized to support any ecommerce data structure by modifying the relative JSON paths in the user, session, ecommerce, product and funnels [table function queries](https://github.com/nameless-analytics/nameless-analytics/tree/main/tables)
 
 
 ### Disable logs in JavaScript console for this event
