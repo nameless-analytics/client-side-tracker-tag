@@ -106,15 +106,19 @@ These event parameters are reserved and can't be modified:
 #### Add/override event level parameters
 Add or overwrite parameters for a specific event. Accepted values: strings, integers, floats, JSON and booleans.
 
-This settings can override:
+These settings can override:
 - Shared event parameters added in Nameless Analytics Client-side Tracker Configuration Variable
-- dataLayer event parameters added in Nameless Analytics Client-side Tracker Tag
+- event parameters from dataLayer added in Nameless Analytics Client-side Tracker Tag
 
-This settings can be overridden by:
+These settings can be overridden by:
 - Event parameter added in Nameless Analytics Server-side Client Tag
 
 #### Remove event level parameters
-Remove event level parameters in event_data object in the payload.
+Remove event level parameters by name in event_data object in the payload.
+
+These settings can remove:
+- Shared event parameters added in Nameless Analytics Client-side Tracker Configuration Variable
+- Event parameters from dataLayer added in Nameless Analytics Client-side Tracker Tag
 
 #### Add event parameters from dataLayer
 Add event parameters from the dataLayer.push() event that triggered the tag. Accepted values: strings, integers, floats, JSON and booleans.
