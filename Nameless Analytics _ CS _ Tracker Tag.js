@@ -425,7 +425,8 @@ function build_payload() {
       && key != 'os_version' 
       && key != 'screen_size' 
       && key != 'viewport_size' 
-      && key != 'city' 
+      && key != 'hostname'
+      && key != 'city'
       && key != 'country') {
         event_info[key] = last_current_event_push[key];
       }
@@ -536,7 +537,8 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
       campaign_click_id: campaign_click_id,
       campaign_term: campaign_term,
       campaign_content: campaign_content,
-      cross_domain_id: cross_domain_id
+      cross_domain_id: cross_domain_id,
+      hostname: hostname
     }, {
       page_id: page_id,
       page_timestamp: timestamp,
@@ -591,7 +593,8 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
       campaign_click_id: campaign_click_id,
       campaign_term: campaign_term,
       campaign_content: campaign_content,
-      cross_domain_id: null
+      cross_domain_id: null,
+      hostname: hostname
     },
       current_page_info
     ];

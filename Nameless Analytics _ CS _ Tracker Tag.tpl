@@ -223,7 +223,7 @@ ___TEMPLATE_PARAMETERS___
         "displayName": "Event parameters",
         "alwaysInSummary": true,
         "defaultValue": false,
-        "help": "Add or override event parameters to the request in event_data. If a parameter has the same name, it will be overridden.\n\u003c/br\u003e\u003c/br\u003e\nReserved event parameters: \u003c/br\u003e \n• event_type \u003c/br\u003e \n• channel_grouping \u003c/br\u003e \n• source \u003c/br\u003e \n• tld_source \u003c/br\u003e\n• campaign \u003c/br\u003e \n• campaign_id \u003c/br\u003e\n• campaign_click_id \u003c/br\u003e\n• campaign_term \u003c/br\u003e \n• campaign_content \u003c/br\u003e \n• user_agent \u003c/br\u003e \n• browser_name \u003c/br\u003e \n• browser_language \u003c/br\u003e \n• browser_version \u003c/br\u003e \n• device_type \u003c/br\u003e \n• device_vendor \u003c/br\u003e \n• device_model \u003c/br\u003e \n• os_name \u003c/br\u003e \n• os_version \u003c/br\u003e \n• screen_size \u003c/br\u003e \n• viewport_size \u003c/br\u003e\n• city \u003c/br\u003e\n• country",
+        "help": "Add or override event parameters to the request in event_data. If a parameter has the same name, it will be overridden.\n\u003c/br\u003e\u003c/br\u003e\nReserved event parameters: \u003c/br\u003e \n• event_type \u003c/br\u003e \n• channel_grouping \u003c/br\u003e \n• source \u003c/br\u003e \n• tld_source \u003c/br\u003e\n• campaign \u003c/br\u003e \n• campaign_id \u003c/br\u003e\n• campaign_click_id \u003c/br\u003e\n• campaign_term \u003c/br\u003e \n• campaign_content \u003c/br\u003e \n• user_agent \u003c/br\u003e \n• browser_name \u003c/br\u003e \n• browser_language \u003c/br\u003e \n• browser_version \u003c/br\u003e \n• device_type \u003c/br\u003e \n• device_vendor \u003c/br\u003e \n• device_model \u003c/br\u003e \n• os_name \u003c/br\u003e \n• os_version \u003c/br\u003e \n• screen_size \u003c/br\u003e \n• viewport_size \u003c/br\u003e\n• hostname \u003c/br\u003e\n• city \u003c/br\u003e\n• country",
         "subParams": [
           {
             "type": "SIMPLE_TABLE",
@@ -384,6 +384,13 @@ ___TEMPLATE_PARAMETERS___
                   {
                     "type": "REGEX",
                     "args": [
+                      "^(?!hostname$).*"
+                    ],
+                    "errorMessage": "Can\u0027t add/override hostname parameter."
+                  },
+                  {
+                    "type": "REGEX",
+                    "args": [
                       "^(?!city$).*"
                     ],
                     "errorMessage": "Can\u0027t add/override city parameter."
@@ -430,7 +437,7 @@ ___TEMPLATE_PARAMETERS___
         "displayName": "",
         "alwaysInSummary": true,
         "defaultValue": false,
-        "help": "Remove event parameters from the request in event_data. If a parameter has the same name, it will be overridden.\n\u003c/br\u003e\u003c/br\u003e\nReserved event parameters: \u003c/br\u003e \n• event_type \u003c/br\u003e \n• channel_grouping \u003c/br\u003e \n• source \u003c/br\u003e \n• tld_source \u003c/br\u003e\n• campaign \u003c/br\u003e \n• campaign_id \u003c/br\u003e\n• campaign_click_id \u003c/br\u003e\n• campaign_term \u003c/br\u003e \n• campaign_content \u003c/br\u003e \n• user_agent \u003c/br\u003e \n• browser_name \u003c/br\u003e \n• browser_language \u003c/br\u003e \n• browser_version \u003c/br\u003e \n• device_type \u003c/br\u003e \n• device_vendor \u003c/br\u003e \n• device_model \u003c/br\u003e \n• os_name \u003c/br\u003e \n• os_version \u003c/br\u003e \n• screen_size \u003c/br\u003e \n• viewport_size \u003c/br\u003e\n• city \u003c/br\u003e\n• country",
+        "help": "Remove event parameters from the request in event_data. If a parameter has the same name, it will be overridden.\n\u003c/br\u003e\u003c/br\u003e\nReserved event parameters: \u003c/br\u003e \n• event_type \u003c/br\u003e \n• channel_grouping \u003c/br\u003e \n• source \u003c/br\u003e \n• tld_source \u003c/br\u003e\n• campaign \u003c/br\u003e \n• campaign_id \u003c/br\u003e\n• campaign_click_id \u003c/br\u003e\n• campaign_term \u003c/br\u003e \n• campaign_content \u003c/br\u003e \n• user_agent \u003c/br\u003e \n• browser_name \u003c/br\u003e \n• browser_language \u003c/br\u003e \n• browser_version \u003c/br\u003e \n• device_type \u003c/br\u003e \n• device_vendor \u003c/br\u003e \n• device_model \u003c/br\u003e \n• os_name \u003c/br\u003e \n• os_version \u003c/br\u003e \n• screen_size \u003c/br\u003e \n• viewport_size \u003c/br\u003e\n• hostname \u003c/br\u003e\n• city \u003c/br\u003e\n• country",
         "subParams": [
           {
             "type": "SIMPLE_TABLE",
@@ -584,6 +591,13 @@ ___TEMPLATE_PARAMETERS___
                   {
                     "type": "REGEX",
                     "args": [
+                      "^(?!hostname$).*"
+                    ],
+                    "errorMessage": "Can\u0027t remove hostname parameter."
+                  },
+                  {
+                    "type": "REGEX",
+                    "args": [
                       "^(?!city$).*"
                     ],
                     "errorMessage": "Can\u0027t remove city parameter."
@@ -622,7 +636,7 @@ ___TEMPLATE_PARAMETERS___
         "displayName": "",
         "alwaysInSummary": true,
         "defaultValue": false,
-        "help": "Add event parameters from the dataLayer.push() event that has triggered the tag.\u003cbr\u003e\u003c/br\u003e\n\nReserved dataLayer event parameters: \u003c/br\u003e \nReserved event parameters: \u003c/br\u003e \n• event_type \u003c/br\u003e \n• channel_grouping \u003c/br\u003e \n• source \u003c/br\u003e \n• tld_source \u003c/br\u003e\n• campaign \u003c/br\u003e \n• campaign_id \u003c/br\u003e\n• campaign_click_id \u003c/br\u003e\n• campaign_term \u003c/br\u003e \n• campaign_content \u003c/br\u003e \n• user_agent \u003c/br\u003e \n• browser_name \u003c/br\u003e \n• browser_language \u003c/br\u003e \n• browser_version \u003c/br\u003e \n• device_type \u003c/br\u003e \n• device_vendor \u003c/br\u003e \n• device_model \u003c/br\u003e \n• os_name \u003c/br\u003e \n• os_version \u003c/br\u003e \n• screen_size \u003c/br\u003e \n• viewport_size\n• city\n• country\n\nIf present the ecommerce object in the dataLayer will not be added in event data but it will be added in the ecommerce field."
+        "help": "Add event parameters from the dataLayer.push() event that has triggered the tag.\u003cbr\u003e\u003c/br\u003e\n\nReserved dataLayer event parameters: \u003c/br\u003e \nReserved event parameters: \u003c/br\u003e \n• event_type \u003c/br\u003e \n• channel_grouping \u003c/br\u003e \n• source \u003c/br\u003e \n• tld_source \u003c/br\u003e\n• campaign \u003c/br\u003e \n• campaign_id \u003c/br\u003e\n• campaign_click_id \u003c/br\u003e\n• campaign_term \u003c/br\u003e \n• campaign_content \u003c/br\u003e \n• user_agent \u003c/br\u003e \n• browser_name \u003c/br\u003e \n• browser_language \u003c/br\u003e \n• browser_version \u003c/br\u003e \n• device_type \u003c/br\u003e \n• device_vendor \u003c/br\u003e \n• device_model \u003c/br\u003e \n• os_name \u003c/br\u003e \n• os_version \u003c/br\u003e \n• screen_size \u003c/br\u003e \n• viewport_size \u003c/br\u003e\n• hostname \u003c/br\u003e\n• city \u003c/br\u003e\n• country \u003c/br\u003e\u003c/br\u003e\n\nIf present the ecommerce object in the dataLayer will not be added in event data but it will be added in the ecommerce field."
       }
     ]
   },
@@ -1129,8 +1143,10 @@ function build_payload() {
       && key != 'os_version' 
       && key != 'screen_size' 
       && key != 'viewport_size' 
-      && key != 'city' 
-      && key != 'country') {
+      && key != 'hostname'
+      && key != 'city'
+      && key != 'country'
+      && key != 'scclid') {
         event_info[key] = last_current_event_push[key];
       }
     }
@@ -1240,7 +1256,8 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
       campaign_click_id: campaign_click_id,
       campaign_term: campaign_term,
       campaign_content: campaign_content,
-      cross_domain_id: cross_domain_id
+      cross_domain_id: cross_domain_id,
+      hostname: hostname
     }, {
       page_id: page_id,
       page_timestamp: timestamp,
@@ -1295,7 +1312,8 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
       campaign_click_id: campaign_click_id,
       campaign_term: campaign_term,
       campaign_content: campaign_content,
-      cross_domain_id: null
+      cross_domain_id: null,
+      hostname: hostname
     },
       current_page_info
     ];
