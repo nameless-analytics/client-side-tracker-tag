@@ -55,8 +55,15 @@ const cross_domain_id = getQueryParameters('na_id');
 
 const respect_consent_mode = config.respect_consent_mode;
 
-const retrieve_page_status_code = templateStorage.getItem('page_status_code') || false;
-if(config.add_page_status_code && !retrieve_page_status_code && event_name == 'page_view') {templateStorage.setItem('page_status_code', true);}
+const retrieve_page_status_code_storage_value = templateStorage.getItem('page_status_code') || false;
+let retrieve_page_status_code = retrieve_page_status_code_storage_value;
+
+if(config.add_page_status_code && event_name == 'page_view') {
+  retrieve_page_status_code = true;
+  if (!retrieve_page_status_code_storage_value) {
+    templateStorage.setItem('page_status_code', true);
+  }
+}
 
 // Acquisition
 const utm_source = (config.set_custom_utm_parameters_names) ? getQueryParameters(config.custom_source_name) : getQueryParameters('utm_source');
@@ -272,10 +279,10 @@ function send_request(full_endpoint) {
 // Set cross-domain listener
 function set_cross_domain_listener(full_endpoint) {
 
-  var set_cross_domain_listener = templateStorage.getItem('set_cross_domain_listener') || false;
+  var set_cross_domain_listener_storage_value = templateStorage.getItem('set_cross_domain_listener') || false;
   const domains = config.cross_domain_domains.map(obj => obj.domain);
 
-  if (!set_cross_domain_listener) {
+  if (!set_cross_domain_listener_storage_value) {
     if (enable_logs && event_name == 'page_view') { log(event_name, '>', 'ENABLING CROSS-DOMAIN TRACKING'); }
 
     if (queryPermission('access_globals', 'execute', 'set_cross_domain_listener')) {
