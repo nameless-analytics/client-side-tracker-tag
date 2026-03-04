@@ -1,14 +1,13 @@
 # Nameless Analytics | Contributing
-
-Thank you for your interest in contributing to Nameless Analytics! 
+Nameless Analytics contributing guidelines.
 
 ### 🚧 Nameless Analytics and the documentation are currently in beta and subject to change 🚧
 
 
 ## How to Contribute
-Currently, I am not accepting external contributions. 
+Appreciation for the interest in contributing to Nameless Analytics! Currently, external contributions are not being accepted. 
 
-If you would like to discuss the project or potential future collaborations, please feel free to reach out via [email](mailto:hello@namelessanalytics.com).
+To discuss the project or potential future collaborations, reach out via [email](mailto:hello@namelessanalytics.com).
 
 ---
 
