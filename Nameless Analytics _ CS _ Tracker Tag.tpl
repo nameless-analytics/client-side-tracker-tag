@@ -1237,7 +1237,6 @@ function build_payload() {
 function set_event_data_in_template_storage(storage_name, storage_value) {
   if (enable_logs) { log(event_name, '>', 'CHECKING EVENT'); }
 
-  const channel_grouping = (queryPermission('access_globals', 'execute', 'get_channel_grouping')) ? callInWindow('get_channel_grouping', source, campaign) : null;
 
   // Standard and Virtual Page View
   if (event_name == 'page_view') {
@@ -1247,7 +1246,6 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
     const event_info = [{
       event_id: event_id,
       event_type: 'page_view',
-      channel_grouping: channel_grouping,
       source: source,
       campaign: campaign,
       campaign_id: campaign_id,
@@ -1303,7 +1301,6 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
     const event_info = [{
       event_id: event_id,
       event_type: 'event',
-      channel_grouping: channel_grouping,
       source: source,
       campaign: campaign,
       campaign_id: campaign_id,
