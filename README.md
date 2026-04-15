@@ -136,19 +136,20 @@ These parameters can be overridden by:
 The Nameless Analytics Client-side Tracker Tag inherits configuration settings from [Nameless Analytics Client-side Tracker Configuration Variable](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/). 
 
 This variable will handle settings like:
-- [set user level parameters](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/#user-parameters)
-- [set session level parameters](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/#session-parameters)
-- [set page level parameters](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/#page-parameters)
-- [set common event parameters](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/#event-parameters)
-- [set server-side endpoint settings](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/#server-side-endpoint-settings)
-- [respect google consent mode](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/#respect-google-consent-mode)
-- [override default acquisition parameters](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/#override-default-acquisition-parameters)
-- [enable cross-domain tracking](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/#enable-cross-domain-tracking)
-- [load JavaScript libraries in first-party mode](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/#load-javascript-libraries-in-first-party-mode)
-- [add current dataLayer state](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/#add-current-datalayer-state)
-- [enable logs in javascript console](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/#enable-logs-in-javascript-console)
-
-
+- add user level parameters
+- add user id
+- set session level parameters
+- add page status code
+- override default page parameters
+- add shared event level parameters
+- add server-side endpoint domain name and path
+- set if Google Consent Mode is respected
+- override default acquisition parameters
+- enable cross-domain tracking
+- load JavaScript libraries in first-party mode
+- custom library domain name and path
+- add current dataLayer state
+- enable logs in JavaScript console
 
 ## Advanced settings
 ### Add ecommerce data from dataLayer
