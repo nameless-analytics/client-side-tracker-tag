@@ -68,8 +68,6 @@ if(config.add_page_status_code && event_name == 'page_view') {
 }
 
 // Acquisition
-var page_referrer = (getReferrerUrl() == '') ? null : getReferrerUrl();
-
 const utm_source = (config.set_custom_utm_parameters_names) ? getQueryParameters(config.custom_source_name) : getQueryParameters('utm_source');
 const utm_campaign = (config.set_custom_utm_parameters_names) ? getQueryParameters(config.custom_campaign_name) : getQueryParameters('utm_campaign');
 const utm_id = (config.set_custom_utm_parameters_names) ? getQueryParameters(config.custom_id_name) : getQueryParameters('utm_id');
@@ -103,6 +101,11 @@ var campaign_id = (temp_campaign_id) ? temp_campaign_id : (utm_id || null);
 var campaign_click_id = (temp_campaign_click_id) ? temp_campaign_click_id : (utm_click_id || gclid || dclid || gclsrc || wbraid || gbraid || msclkid || fbclid || ttclid || twclid || epik || li_fat_id || scclid || null);
 var campaign_term = (temp_campaign_term) ? temp_campaign_term : (utm_term || null);
 var campaign_content = (temp_campaign_content) ? temp_campaign_content : (utm_content || null);
+
+const temp_page_referrer = getQueryParameters('na_page_referrer');
+
+var page_referrer = (temp_page_referrer) ? temp_page_referrer : getReferrerUrl();
+page_referrer = (page_referrer == '') ? null : page_referrer;
 
 // Default script paths
 const default_na_url_min = 'https://cdn.jsdelivr.net/gh/nameless-analytics/client-side-tracker-tag@main/lib/nameless-analytics.js';
@@ -273,13 +276,13 @@ function send_request(full_endpoint) {
           log(event_name, '>', 'Temp cookie value', temp_cookie_value);
           
           if (temp_cookie_value != null) {
-            source = temp_cookie_value.na_source;
-            campaign = temp_cookie_value.na_campaign;
-            campaign_id = temp_cookie_value.na_campaign_id;
-            campaign_click_id = temp_cookie_value.na_campaign_click_id;
-            campaign_term = temp_cookie_value.na_campaign_term;
-            campaign_content = temp_cookie_value.na_campaign_content;
-            page_referrer = temp_cookie_value.na_page_referrer; 
+            source = temp_cookie_value.source;
+            campaign = temp_cookie_value.campaign;
+            campaign_id = temp_cookie_value.campaign_id;
+            campaign_click_id = temp_cookie_value.campaign_click_id;
+            campaign_term = temp_cookie_value.campaign_term;
+            campaign_content = temp_cookie_value.campaign_content;
+            page_referrer = temp_cookie_value.page_referrer; 
           }
 
           // Build payload
@@ -318,13 +321,13 @@ function send_request(full_endpoint) {
         temp_cookie_value = get_cookie('na_temp');
         
         if (temp_cookie_value != null) {
-          source = temp_cookie_value.na_source;
-          campaign = temp_cookie_value.na_campaign;
-          campaign_id = temp_cookie_value.na_campaign_id;
-          campaign_click_id = temp_cookie_value.na_campaign_click_id;
-          campaign_term = temp_cookie_value.na_campaign_term;
-          campaign_content = temp_cookie_value.na_campaign_content;
-          page_referrer = temp_cookie_value.na_page_referrer; 
+          source = temp_cookie_value.source;
+          campaign = temp_cookie_value.campaign;
+          campaign_id = temp_cookie_value.campaign_id;
+          campaign_click_id = temp_cookie_value.campaign_click_id;
+          campaign_term = temp_cookie_value.campaign_term;
+          campaign_content = temp_cookie_value.campaign_content;
+          page_referrer = temp_cookie_value.page_referrer; 
         }
         // }
 
