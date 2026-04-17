@@ -69,6 +69,7 @@ if(config.add_page_status_code && event_name == 'page_view') {
 
 // Acquisition
 var page_referrer = (getReferrerUrl() == '') ? null : getReferrerUrl();
+log(page_referrer);
 
 const utm_source = (config.set_custom_utm_parameters_names) ? getQueryParameters(config.custom_source_name) : getQueryParameters('utm_source');
 const utm_campaign = (config.set_custom_utm_parameters_names) ? getQueryParameters(config.custom_campaign_name) : getQueryParameters('utm_campaign');
@@ -241,7 +242,7 @@ function send_request(full_endpoint) {
             };
             
             set_cookie('na_temp', JSON.stringify(temp_cookie_value));
-            log(event_name, '>', 'Temp cookie saved');
+            log(event_name, '>', 'Temp cookie saved:', temp_cookie_value);
           } else {
             log(event_name, '>', 'Temp cookie found:', temp_cookie_value);
           }
