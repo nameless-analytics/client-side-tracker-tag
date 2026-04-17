@@ -69,7 +69,6 @@ if(config.add_page_status_code && event_name == 'page_view') {
 
 // Acquisition
 var page_referrer = (getReferrerUrl() == '') ? null : getReferrerUrl();
-log(page_referrer);
 
 const utm_source = (config.set_custom_utm_parameters_names) ? getQueryParameters(config.custom_source_name) : getQueryParameters('utm_source');
 const utm_campaign = (config.set_custom_utm_parameters_names) ? getQueryParameters(config.custom_campaign_name) : getQueryParameters('utm_campaign');
@@ -91,12 +90,19 @@ const li_fat_id = getQueryParameters('li_fat_id'); // Linkedin
 const epik = getQueryParameters('epik'); // Pinterest
 const scclid = getQueryParameters('scclid'); // SnapChat
 
-var source = (referrer_hostname == hostname) ? null : ((utm_source) ? utm_source : ((referrer_hostname == '') ? 'direct' : referrer_hostname));
-var campaign = utm_campaign || null;
-var campaign_id = utm_id || null;
-var campaign_click_id = utm_click_id || gclid || dclid || gclsrc || wbraid || gbraid || msclkid || fbclid || ttclid || twclid || epik || li_fat_id || scclid || null;
-var campaign_term = utm_term || null;
-var campaign_content = utm_content || null;
+const temp_source = getQueryParameters('na_source'); // Cross-domain source parameter when respect consent mode is enabled and consent is denied
+const temp_campaign = getQueryParameters('na_campaign'); // Cross-domain campaign parameter when respect consent mode is enabled and consent is denied
+const temp_campaign_id = getQueryParameters('na_campaign_id'); // Cross-domain campaign ID parameter when respect consent mode is enabled and consent is denied
+const temp_campaign_click_id = getQueryParameters('na_campaign_click_id'); // Cross-domain campaign click ID parameter when respect consent mode is enabled and consent is denied
+const temp_campaign_term = getQueryParameters('na_campaign_term'); // Cross-domain campaign term parameter when respect consent mode is enabled and consent is denied
+const temp_campaign_content = getQueryParameters('na_campaign_content'); // Cross-domain campaign content parameter when respect consent mode is enabled and consent is denied
+
+var source = (temp_source) ? temp_source : ((referrer_hostname == hostname) ? null : ((utm_source) ? utm_source : ((referrer_hostname == '') ? 'direct' : referrer_hostname)));
+var campaign = (temp_campaign) ? temp_campaign : (utm_campaign || null);
+var campaign_id = (temp_campaign_id) ? temp_campaign_id : (utm_id || null);
+var campaign_click_id = (temp_campaign_click_id) ? temp_campaign_click_id : (utm_click_id || gclid || dclid || gclsrc || wbraid || gbraid || msclkid || fbclid || ttclid || twclid || epik || li_fat_id || scclid || null);
+var campaign_term = (temp_campaign_term) ? temp_campaign_term : (utm_term || null);
+var campaign_content = (temp_campaign_content) ? temp_campaign_content : (utm_content || null);
 
 // Default script paths
 const default_na_url_min = 'https://cdn.jsdelivr.net/gh/nameless-analytics/client-side-tracker-tag@main/lib/nameless-analytics.js';
@@ -267,13 +273,13 @@ function send_request(full_endpoint) {
           log(event_name, '>', 'Temp cookie value', temp_cookie_value);
           
           if (temp_cookie_value != null) {
-            source = temp_cookie_value.source;
-            campaign = temp_cookie_value.campaign;
-            campaign_id = temp_cookie_value.campaign_id;
-            campaign_click_id = temp_cookie_value.campaign_click_id;
-            campaign_term = temp_cookie_value.campaign_term;
-            campaign_content = temp_cookie_value.campaign_content;
-            page_referrer = temp_cookie_value.page_referrer; 
+            source = temp_cookie_value.na_source;
+            campaign = temp_cookie_value.na_campaign;
+            campaign_id = temp_cookie_value.na_campaign_id;
+            campaign_click_id = temp_cookie_value.na_campaign_click_id;
+            campaign_term = temp_cookie_value.na_campaign_term;
+            campaign_content = temp_cookie_value.na_campaign_content;
+            page_referrer = temp_cookie_value.na_page_referrer; 
           }
 
           // Build payload
@@ -312,13 +318,13 @@ function send_request(full_endpoint) {
         temp_cookie_value = get_cookie('na_temp');
         
         if (temp_cookie_value != null) {
-          source = temp_cookie_value.source;
-          campaign = temp_cookie_value.campaign;
-          campaign_id = temp_cookie_value.campaign_id;
-          campaign_click_id = temp_cookie_value.campaign_click_id;
-          campaign_term = temp_cookie_value.campaign_term;
-          campaign_content = temp_cookie_value.campaign_content;
-          page_referrer = temp_cookie_value.page_referrer; 
+          source = temp_cookie_value.na_source;
+          campaign = temp_cookie_value.na_campaign;
+          campaign_id = temp_cookie_value.na_campaign_id;
+          campaign_click_id = temp_cookie_value.na_campaign_click_id;
+          campaign_term = temp_cookie_value.na_campaign_term;
+          campaign_content = temp_cookie_value.na_campaign_content;
+          page_referrer = temp_cookie_value.na_page_referrer; 
         }
         // }
 
