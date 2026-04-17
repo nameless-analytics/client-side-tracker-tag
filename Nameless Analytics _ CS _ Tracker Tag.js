@@ -68,7 +68,7 @@ if(config.add_page_status_code && event_name == 'page_view') {
 }
 
 // Acquisition
-var page_referrer = getReferrerUrl();
+var page_referrer = (getReferrerUrl() == '') ? null : getReferrerUrl();
 
 const utm_source = (config.set_custom_utm_parameters_names) ? getQueryParameters(config.custom_source_name) : getQueryParameters('utm_source');
 const utm_campaign = (config.set_custom_utm_parameters_names) ? getQueryParameters(config.custom_campaign_name) : getQueryParameters('utm_campaign');
@@ -682,7 +682,7 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
       page_fragment: getUrl('fragment') || null,
       page_query: getUrl('query') || null,
       page_extension: getUrl('extension') || null,
-      page_referrer: (storage_value == null) ? ((page_referrer == '') ? null : page_referrer) : storage_value[1].page_location,
+      page_referrer: (storage_value == null) ? page_referrer : storage_value[1].page_location,
     }];
 
     // Override page data for virtual page view
