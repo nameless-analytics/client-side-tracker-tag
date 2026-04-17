@@ -16,7 +16,6 @@ const copyFromDataLayer = require('copyFromDataLayer');
 const copyFromWindow = require('copyFromWindow');
 const Object = require('Object');
 const generateRandom = require('generateRandom');
-const parseUrl = require('parseUrl');
 const setCookie = require('setCookie');
 const getCookieValues = require('getCookieValues');
 
@@ -197,56 +196,6 @@ if (queryPermission('inject_script', ua_parser_url)) {
 // ------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-// Set temporary source/medium cookie when respect_consent_mode is enabled and consent is denied.
-function set_cookie(cookie_name, cookie_value) {
-  const cookie_domain = 'auto';
-  const cookie_path = '/';
-  const cookie_secure = true;
-  const sameSite = "Strict";
-  // const max_age = 30 * 60; // Change the first value (30) to match the session timeout in Nameless Analytics Server-Side Client tag
-
-  const cookie_options = {
-    domain: cookie_domain,
-    path: cookie_path,
-    secure: cookie_secure,
-    sameSite: sameSite
-    // 'max-age': max_age,
-  };
-
-  setCookie(cookie_name, cookie_value, cookie_options);
-}
-
-// Read temporary source/medium cookie when respect_consent_mode is enabled and consent is denied.
-function get_cookie(cookie_name) {
-  const cookie_value = getCookieValues(cookie_name)[0];
-  if (!cookie_value) return null;
-  return JSON.parse(cookie_value);
-}
-
-
-// Delete temporary source/medium cookie when respect_consent_mode is enabled and consent is denied.
-function delete_cookie(cookie_name, cookie_value) {
-  const cookie_domain = 'auto';
-  const cookie_path = '/';
-  const cookie_secure = true;
-  const sameSite = "Strict";
-  const max_age = 0; // Change the first value (30) to match the session timeout in Nameless Analytics Server-Side Client tag
-
-  const cookie_options = {
-    domain: cookie_domain,
-    path: cookie_path,
-    secure: cookie_secure,
-    sameSite: sameSite,
-    'max-age': max_age,
-  };
-
-  setCookie(cookie_name, cookie_value, cookie_options);
-}
-
-
-// ------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
 // Send request
 function send_request(full_endpoint) {
   // Enable cross-domain
@@ -398,6 +347,56 @@ function send_request(full_endpoint) {
       callInWindow('send_queued_requests', full_endpoint, payload, data, enable_logs, retrieve_page_status_code);
     }
   }
+}
+
+
+// ------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+// Set temporary source/medium cookie when respect_consent_mode is enabled and consent is denied
+function set_cookie(cookie_name, cookie_value) {
+  const cookie_domain = 'auto';
+  const cookie_path = '/';
+  const cookie_secure = true;
+  const sameSite = "Strict";
+  // const max_age = 30 * 60; // Change the first value (30) to match the session timeout in Nameless Analytics Server-Side Client tag
+
+  const cookie_options = {
+    domain: cookie_domain,
+    path: cookie_path,
+    secure: cookie_secure,
+    sameSite: sameSite
+    // 'max-age': max_age,
+  };
+
+  setCookie(cookie_name, cookie_value, cookie_options);
+}
+
+// Read temporary source/medium cookie when respect_consent_mode is enabled and consent is denied
+function get_cookie(cookie_name) {
+  const cookie_value = getCookieValues(cookie_name)[0];
+  if (!cookie_value) return null;
+  return JSON.parse(cookie_value);
+}
+
+
+// Delete temporary source/medium cookie when respect_consent_mode is enabled and consent is denied
+function delete_cookie(cookie_name, cookie_value) {
+  const cookie_domain = 'auto';
+  const cookie_path = '/';
+  const cookie_secure = true;
+  const sameSite = "Strict";
+  const max_age = 0;
+
+  const cookie_options = {
+    domain: cookie_domain,
+    path: cookie_path,
+    secure: cookie_secure,
+    sameSite: sameSite,
+    'max-age': max_age,
+  };
+
+  setCookie(cookie_name, cookie_value, cookie_options);
 }
 
 
