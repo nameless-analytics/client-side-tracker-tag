@@ -233,12 +233,11 @@ function send_request(full_endpoint) {
         
         // Save temp cookie
         if(event_name == 'page_view') {
-          log(event_name, '>', 'Check temp cookie...');
+          log(event_name, '>', 'CHECKING TEMP COOKIE');
           const temp_cookie_value = get_cookie('na_temp');
           
           if (get_cookie('na_temp') == null){
-            log(event_name, '>', 'Temp cookie not found');
-            log(event_name, '>', 'Save temp cookie...');
+            log(event_name, '>', 'Temp cookie not found, saving temp cookie...');
             
             const temp_cookie_value = {
               source: source,
@@ -271,9 +270,9 @@ function send_request(full_endpoint) {
 
           if (enable_logs) { log(event_name, '>', '  🟢 analytics_storage granted'); }
                   
-          log(event_name, '>', 'Check temp cookie...');
+          log(event_name, '>', 'CHECKING TEMP COOKIE');
           const temp_cookie_value = get_cookie('na_temp');
-          log(event_name, '>', 'Temp cookie value', temp_cookie_value);
+          log(event_name, '>', 'Temp cookie found:', temp_cookie_value);
           
           if (temp_cookie_value != null) {
             source = temp_cookie_value.source;
@@ -301,20 +300,16 @@ function send_request(full_endpoint) {
       } else if (isConsentGranted("analytics_storage")) {
         if (enable_logs) { log(event_name, '>', '  🟢 analytics_storage granted'); }
         
-        log(event_name, '>', 'Check temp cookie...');
+        log(event_name, '>', 'CHECKING TEMP COOKIE');
         var temp_cookie_value = get_cookie('na_temp');
-        log(event_name, '>', 'Temp cookie value', temp_cookie_value);  
+        log(event_name, '>', 'Temp cookie found:', temp_cookie_value);  
         
         // Delete temp cookie          
         if(event_name == 'page_view') {          
-          if(temp_cookie_value != null) {
-            log(event_name, '>', 'Temp cookie found:', temp_cookie_value);
-        
+          if(temp_cookie_value != null) {        
             log(event_name, '>', 'Delete temp cookie...');
             delete_cookie('na_temp', JSON.stringify({}));
             log(event_name, '>', 'Temp cookie deleted');
-          } else {
-            log(event_name, '>', 'Temp cookie not found');
           }
         }
         
