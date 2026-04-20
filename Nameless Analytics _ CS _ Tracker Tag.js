@@ -775,7 +775,7 @@ function generate_alphanumeric() {
   var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   var alphanumeric_id = '';
   for (var i = 0; i < max_length; i++) {
-    alphanumeric_id += chars.charAt(generateRandom(0, chars.length));
+    alphanumeric_id += chars.charAt(generateRandom(0, chars.length - 1));
   }
   return alphanumeric_id;
 }
