@@ -110,9 +110,9 @@ var page_referrer = (temp_page_referrer) ? temp_page_referrer : getReferrerUrl()
 page_referrer = (page_referrer === '') ? null : page_referrer;
 
 
-// Calculate PV Count synchronously to bypass consent delays
+// Count page_view events occurred in the same real page
 var pv_count = templateStorage.getItem('pv_count_tracker');
-if (!pv_count) {
+if (!pv_count && event_name === 'page_view') {
   pv_count = 1;
 } else if (event_name === 'page_view') {
   pv_count = pv_count + 1;
