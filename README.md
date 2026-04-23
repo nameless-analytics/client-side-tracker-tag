@@ -176,8 +176,8 @@ The following success and status messages indicate a correct implementation:
 | | [event_name] > 🟢 UA parser library loaded from: [URL] | The User-Agent parser library was successfully injected and loaded |
 | | [event_name] > 🟢 Main library loaded from: [URL] | The Nameless Analytics core library was successfully injected and loaded |
 | Consent | [event_name] > 🟢 analytics_storage granted | Tracking is allowed by Google Consent Mode |
+| | [event_name] > Temp cookie saved: [JSON] | Confirms that acquisition data is being persisted while consent is denied |
 | Events | [event_name] > 🟢 Valid [event_name] event | The event was successfully built and validated |
-| Consent | [event_name] > Temp cookie saved: [JSON] | Confirms that acquisition data is being persisted while consent is denied |
 | Cross-domain | cross-domain > 🟢 Valid user data. Cross-domain URL link decoration will be applied | Success log for `na_id` link decoration when consent is granted |
 | | cross-domain > Decorating URL with na_temp params: [JSON] | Confirms that anonymous acquisition data is being transferred across domains while consent is denied |
 
