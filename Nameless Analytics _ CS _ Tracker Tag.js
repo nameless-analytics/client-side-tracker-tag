@@ -315,7 +315,6 @@ function send_request(full_endpoint) {
         
         // Delete temp cookie          
         if(event_name === 'page_view') {
-          
           if(temp_cookie_value !== null && temp_cookie_value !== undefined) {        
             if (enable_logs) { log(event_name, '>', '    Temp cookie found:', temp_cookie_value); }
             delete_cookie('na_temp', JSON.stringify({}));
