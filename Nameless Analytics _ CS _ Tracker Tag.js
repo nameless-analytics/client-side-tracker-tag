@@ -698,7 +698,7 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
       cross_domain_id: cross_domain_id,
     }, {
       page_id: page_id,
-      page_timestamp: timestamp,
+      page_load_timestamp: timestamp,
       page_hostname_protocol: getUrl('protocol'),
       page_hostname: hostname,
       page_category: config.page_category || null,
