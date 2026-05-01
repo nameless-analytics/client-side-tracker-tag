@@ -729,7 +729,7 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
 
   // Orphan events
   } else if (event_name !== 'page_view' && !storage_value) {
-    if (enable_logs) { log(event_name, '>', '  🔴 Event fired before a page view event. The first event on a page view ever must be page_view.'); }
+    if (enable_logs) { log(event_name, '>', '  🔴 Event fired before a page view event. The first event on any page must be page_view.'); }
 
     if (enable_logs) { log(event_name, '>', 'REQUEST STATUS'); }
     if (enable_logs) { log(event_name, '>', '  🔴 Request aborted'); }
