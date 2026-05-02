@@ -1,4 +1,4 @@
-___INFO___
+﻿___INFO___
 
 {
   "type": "TAG",
@@ -820,9 +820,9 @@ var page_referrer = (temp_page_referrer) ? temp_page_referrer : getReferrerUrl()
 page_referrer = (page_referrer === '') ? null : page_referrer;
 
 
-// Calculate PV Count synchronously to bypass consent delays
+// Count page_view events occurred in the same real page
 var pv_count = templateStorage.getItem('pv_count_tracker');
-if (!pv_count) {
+if (!pv_count && event_name === 'page_view') {
   pv_count = 1;
 } else if (event_name === 'page_view') {
   pv_count = pv_count + 1;
@@ -831,8 +831,9 @@ templateStorage.setItem('pv_count_tracker', pv_count);
 
 
 // Default script paths
-const default_na_url_min = 'https://cdn.jsdelivr.net/gh/nameless-analytics/client-side-tracker-tag@main/lib/nameless-analytics.js';
-const default_ua_parser_url = 'https://cdn.jsdelivr.net/npm/ua-parser-js/src/ua-parser.min.js';
+const default_na_url_min = 'https://cdn.jsdelivr.net/gh/nameless-analytics/client-side-tracker-tag@main/lib/nameless-analytics.min.js';
+// const default_na_url_min = 'https://cdn.jsdelivr.net/gh/nameless-analytics/client-side-tracker-tag@main/lib/nameless-analytics.js';
+const default_ua_parser_url = 'https://cdn.jsdelivr.net/npm/ua-parser-js/dist/ua-parser.pack.min.js';
 
 
 // Custom script paths
@@ -869,34 +870,34 @@ if (config === undefined || config.is_na_config_variable !== true) {
 }
 
 
-if (enable_logs && event_name === 'page_view') { log(event_name, '>', 'TRACKER TAG CONFIGURATION'); }
-if (enable_logs && event_name === 'page_view') { log(event_name, '>', '  👉 Server-side requests endpoint path:', full_endpoint); }
-if (enable_logs && event_name === 'page_view') { log(event_name, '>', '  👉 Load libraries in first-party mode:', (config.load_libraries_from_custom_location) ? 'Yes' : 'No'); }
-if (enable_logs && event_name === 'page_view') { log(event_name, '>', '  👉 Enable cross-domain tracking?', (config.enable_cross_domain_tracking) ? 'Yes' : 'No'); }
-if (enable_logs && event_name === 'page_view') { log(event_name, '>', '  👉 Respect Google Consent Mode?', (respect_consent_mode) ? 'Yes' : 'No'); }
+if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', 'TRACKER TAG CONFIGURATION'); }
+if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  👉 Server-side requests endpoint path:', full_endpoint); }
+if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  👉 Load libraries in first-party mode:', (config.load_libraries_from_custom_location) ? 'Yes' : 'No'); }
+if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  👉 Enable cross-domain tracking?', (config.enable_cross_domain_tracking) ? 'Yes' : 'No'); }
+if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  👉 Respect Google Consent Mode?', (respect_consent_mode) ? 'Yes' : 'No'); }
 
 
 // Load libraries
-if (enable_logs && event_name === 'page_view') { log(event_name, '>', 'LOADING LIBRARIES'); }
+if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', 'LOADING LIBRARIES'); }
 
 // Load UA parser library
 if (queryPermission('inject_script', ua_parser_url)) {
   injectScript(
     ua_parser_url,
     () => { // UA parser library loaded
-      if (enable_logs && event_name === 'page_view') { log(event_name, '>', '  🟢 UA parser library loaded from:', ua_parser_url); }
+      if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  🟢 UA parser library loaded from:', ua_parser_url); }
 
       // Load Main library
       if (queryPermission('inject_script', na_url)) {
         injectScript(
           na_url,
           () => { // Main library loaded  
-            if (enable_logs && event_name === 'page_view') { log(event_name, '>', '  🟢 Main library loaded from:', na_url); }
+            if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  🟢 Main library loaded from:', na_url); }
 
             send_request(full_endpoint);
           },
           () => { // Main library not loaded
-            if (enable_logs && event_name === 'page_view') { log(event_name, '>', '  🔴 Main library not loaded from:', na_url); }
+            if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  🔴 Main library not loaded from:', na_url); }
 
             if (enable_logs) { log(event_name, '>', 'REQUEST STATUS'); }
             if (enable_logs) { log(event_name, '>', '  🔴 Request aborted'); }
@@ -904,7 +905,7 @@ if (queryPermission('inject_script', ua_parser_url)) {
           }, na_url // cached Main library
         );
       } else {
-        if (enable_logs && event_name === 'page_view') { log(event_name, '>', '  🔴 Permission denied: unable to load Main library from', na_url); }
+        if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  🔴 Permission denied: unable to load Main library from', na_url); }
 
         if (enable_logs) { log(event_name, '>', 'REQUEST STATUS'); }
         if (enable_logs) { log(event_name, '>', '  🔴 Request aborted'); }
@@ -913,7 +914,7 @@ if (queryPermission('inject_script', ua_parser_url)) {
 
     },
     () => { // UA parser library not loaded
-      if (enable_logs && event_name === 'page_view') { log(event_name, '>', '  🔴 UA parser library not loaded from:', ua_parser_url); }
+      if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  🔴 UA parser library not loaded from:', ua_parser_url); }
 
       if (enable_logs) { log(event_name, '>', 'REQUEST STATUS'); }
       if (enable_logs) { log(event_name, '>', '  🔴 Request aborted'); }
@@ -921,7 +922,7 @@ if (queryPermission('inject_script', ua_parser_url)) {
     }, ua_parser_url // cached UA parser library
   );
 } else {
-  if (enable_logs && event_name === 'page_view') { log(event_name, '>', '  🔴 Permission denied: unable to load UA parser library from', ua_parser_url); }
+  if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  🔴 Permission denied: unable to load UA parser library from', ua_parser_url); }
 
   if (enable_logs) { log(event_name, '>', 'REQUEST STATUS'); }
   if (enable_logs) { log(event_name, '>', '  🔴 Request aborted'); }
@@ -1020,11 +1021,11 @@ function send_request(full_endpoint) {
       // Consent granted  
       } else if (isConsentGranted("analytics_storage")) {
         if (enable_logs) { log(event_name, '>', '  🟢 analytics_storage granted'); }
-                
+        
+        var temp_cookie_value = get_cookie('na_temp');
+        
         // Delete temp cookie          
         if(event_name === 'page_view') {
-          var temp_cookie_value = get_cookie('na_temp');
-          
           if(temp_cookie_value !== null && temp_cookie_value !== undefined) {        
             if (enable_logs) { log(event_name, '>', '    Temp cookie found:', temp_cookie_value); }
             delete_cookie('na_temp', JSON.stringify({}));
@@ -1408,7 +1409,7 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
       cross_domain_id: cross_domain_id,
     }, {
       page_id: page_id,
-      page_timestamp: timestamp,
+      page_load_timestamp: timestamp,
       page_hostname_protocol: getUrl('protocol'),
       page_hostname: hostname,
       page_category: config.page_category || null,
@@ -1439,7 +1440,7 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
 
   // Orphan events
   } else if (event_name !== 'page_view' && !storage_value) {
-    if (enable_logs) { log(event_name, '>', '  🔴 Event fired before a page view event. The first event on a page view ever must be page_view.'); }
+    if (enable_logs) { log(event_name, '>', '  🔴 Event fired before a page view event. The first event on any page must be page_view.'); }
 
     if (enable_logs) { log(event_name, '>', 'REQUEST STATUS'); }
     if (enable_logs) { log(event_name, '>', '  🔴 Request aborted'); }
@@ -1483,7 +1484,7 @@ function generate_alphanumeric() {
   var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   var alphanumeric_id = '';
   for (var i = 0; i < max_length; i++) {
-    alphanumeric_id += chars.charAt(generateRandom(0, chars.length));
+    alphanumeric_id += chars.charAt(generateRandom(0, chars.length - 1));
   }
   return alphanumeric_id;
 }
