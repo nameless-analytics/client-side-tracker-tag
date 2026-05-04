@@ -49,14 +49,16 @@ Please note:
 
 #### Standard event name
 * page_view: Send this event when a page is viewed. Use this event for both standard and virtual page views. This is the only mandatory event
-* consent_update: Send this event when the user gives or withdraws consent to improve the accuracy of consent metrics.
-* page_load_time: Send this event when a page is loaded (on the `gtm.load` JavaScript event)
+* consent_update: Send this event when the user gives or withdraws consent to improve the accuracy of consent metrics
+* page_load_time: Send this event when a page is loaded
 * page_closed: Send this event when a page is closed to improve the accuracy of `time_on_page`, `session_duration`, and other metrics
 * view_search_results: Send this event when a search results page is viewed
 * select_search_result: Send this event when a search result is clicked
 * login: Send this event when a user logs in
 * logout: Send this event when a user logs out
 * sign_up: Send this event when a user creates an account
+
+For more information see [Setup Guides](../setup-guides/SETUP-GUIDES.md#how-to-track-standard-events).
 
 #### Custom event name
 Choose a custom event name for the event.
