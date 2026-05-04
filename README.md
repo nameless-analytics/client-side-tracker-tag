@@ -58,7 +58,7 @@ Please note:
 * logout: Send this event when a user logs out
 * sign_up: Send this event when a user creates an account
 
-For more information see [Setup Guides](../setup-guides/SETUP-GUIDES.md#how-to-track-standard-events).
+For more information see [Setup Guides](https://github.com/nameless-analytics/nameless-analytics/blob/main/setup-guides/SETUP-GUIDES.md#how-to-track-standard-events).
 
 #### Custom event name
 Choose a custom event name for the event.
