@@ -4,7 +4,7 @@ The Nameless Analytics Client-side Tracker Tag is a highly customizable GTM cust
 
 For an overview of how Nameless Analytics works [start from here](https://github.com/nameless-analytics/nameless-analytics/#high-level-data-flow).
 
-### 🚧 Nameless Analytics and the documentation are currently in beta and subject to change 🚧
+### 🚧 Nameless Analytics and the documentation are currently in beta and subject to change
 
 
 ## Table of Contents
