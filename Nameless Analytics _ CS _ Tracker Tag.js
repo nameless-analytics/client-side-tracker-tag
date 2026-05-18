@@ -702,7 +702,6 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
       page_load_timestamp: timestamp,
       page_hostname_protocol: getUrl('protocol'),
       page_hostname: hostname,
-      page_category: config.page_category || null,
       page_title: readTitle(),
       page_location: getUrl('path'),
       page_fragment: getUrl('fragment') || null,
@@ -712,6 +711,20 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
     }, {
       pv_count: pv_count
     }];
+
+    // Add page parameters (configuration variable)
+    if (config.add_page_params) {
+      const config_page_params = config.page_params;
+
+      if (config_page_params !== undefined) {
+        for (let i = 0; i < config_page_params.length; i++) {
+          const param_name = config_page_params[i].param_name;
+          const param_value = config_page_params[i].param_value;
+
+          event_info[1][param_name] = param_value;
+        }
+      }
+    }
 
     // Override page data for virtual page view
     if (config.override_page_data_params && config.page_title !== undefined && config.page_location !== undefined) {
