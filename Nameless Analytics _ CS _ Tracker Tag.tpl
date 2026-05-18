@@ -1251,33 +1251,33 @@ function build_payload() {
     const last_current_event_push = current_event_pushes.length > 0 ? current_event_pushes[current_event_pushes.length - 1] : null;
 
     for (var key of Object.keys(last_current_event_push)) {if (
-      key !== 'event'
-      && key !== 'gtm.start' 
-      && key !== 'gtm.uniqueEventId' 
-      && key !== 'ecommerce' 
-      && key !== 'event_type' 
-      && key !== 'channel_grouping' 
-      && key !== 'source' 
-      && key !== 'tld_source' 
-      && key !== 'campaign' 
-      && key !== 'campaign_id' 
-      && key !== 'campaign_click_id' 
-      && key !== 'campaign_term' 
-      && key !== 'campaign_content' 
-      && key !== 'user_agent' 
-      && key !== 'browser_name' 
-      && key !== 'browser_language' 
-      && key !== 'browser_version' 
-      && key !== 'device_type' 
-      && key !== 'device_vendor' 
-      && key !== 'device_model' 
-      && key !== 'os_name' 
-      && key !== 'os_version' 
-      && key !== 'screen_size' 
-      && key !== 'viewport_size' 
-      && key !== 'hostname'
-      && key !== 'city'
-      && key !== 'country') {
+      key !== 'event' && 
+      key !== 'gtm.start' && 
+      key !== 'gtm.uniqueEventId' && 
+      key !== 'ecommerce' &&  
+      key !== 'event_type' &&  
+      key !== 'channel_grouping' &&  
+      key !== 'source' &&  
+      key !== 'tld_source' &&  
+      key !== 'campaign' &&  
+      key !== 'campaign_id' &&  
+      key !== 'campaign_click_id' &&  
+      key !== 'campaign_term' &&  
+      key !== 'campaign_content' &&  
+      key !== 'user_agent' &&  
+      key !== 'browser_name' &&  
+      key !== 'browser_language' &&  
+      key !== 'browser_version' &&  
+      key !== 'device_type' &&  
+      key !== 'device_vendor' &&  
+      key !== 'device_model' &&  
+      key !== 'os_name' &&  
+      key !== 'os_version' &&  
+      key !== 'screen_size' &&  
+      key !== 'viewport_size' &&  
+      key !== 'hostname' && 
+      key !== 'city' && 
+      key !== 'country') {
         event_info[key] = last_current_event_push[key];
       }
     }
@@ -1412,7 +1412,6 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
       page_load_timestamp: timestamp,
       page_hostname_protocol: getUrl('protocol'),
       page_hostname: hostname,
-      page_category: config.page_category || null,
       page_title: readTitle(),
       page_location: getUrl('path'),
       page_fragment: getUrl('fragment') || null,
@@ -1422,6 +1421,33 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
     }, {
       pv_count: pv_count
     }];
+
+    // Add page parameters (configuration variable)
+    if (config.add_page_params) {
+      const config_page_params = config.page_params;
+
+      if (config_page_params !== undefined) {
+        for (let i = 0; i < config_page_params.length; i++) {
+          const param_name = config_page_params[i].param_name;
+          const param_value = config_page_params[i].param_value;
+
+          if (
+            param_name !== 'page_id' &&
+            param_name !== 'page_load_timestamp' &&
+            param_name !== 'page_hostname_protocol' &&
+            param_name !== 'page_hostname' &&
+            param_name !== 'page_title' &&
+            param_name !== 'page_location' &&
+            param_name !== 'page_fragment' &&
+            param_name !== 'page_query' &&
+            param_name !== 'page_extension' &&
+            param_name !== 'page_referrer'
+          ) {
+            event_info[1][param_name] = param_value;
+          }
+        }
+      }
+    }
 
     // Override page data for virtual page view
     if (config.override_page_data_params && config.page_title !== undefined && config.page_location !== undefined) {
