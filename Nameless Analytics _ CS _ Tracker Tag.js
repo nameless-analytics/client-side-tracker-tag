@@ -721,20 +721,7 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
           const param_name = config_page_params[i].param_name;
           const param_value = config_page_params[i].param_value;
 
-          if (
-            param_name !== 'page_id' &&
-            param_name !== 'page_load_timestamp' &&
-            param_name !== 'page_hostname_protocol' &&
-            param_name !== 'page_hostname' &&
-            param_name !== 'page_title' &&
-            param_name !== 'page_location' &&
-            param_name !== 'page_fragment' &&
-            param_name !== 'page_query' &&
-            param_name !== 'page_extension' &&
-            param_name !== 'page_referrer'
-          ) {
-            event_info[1][param_name] = param_value;
-          }
+          event_info[1][param_name] = param_value;
         }
       }
     }
