@@ -52,8 +52,8 @@ Please note:
 * consent_update: Send this event when the user gives or withdraws consent to improve the accuracy of consent metrics
 * page_load_time: Send this event when a page is loaded
 * page_closed: Send this event when a page is closed to improve the accuracy of `time_on_page`, `session_duration`, and other metrics
-* view_search_results: Send this event when a search results page is viewed
-* select_search_result: Send this event when a search result is clicked
+* search_result_view: Send this event when a search results page is viewed
+* search_result_click: Send this event when a search result is clicked
 * login: Send this event when a user logs in
 * logout: Send this event when a user logs out
 * sign_up: Send this event when a user creates an account
