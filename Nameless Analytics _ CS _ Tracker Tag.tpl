@@ -1,4 +1,4 @@
-___INFO___
+﻿___INFO___
 
 {
   "type": "TAG",
@@ -149,14 +149,14 @@ ___TEMPLATE_PARAMETERS___
                   {
                     "type": "REGEX",
                     "args": [
-                      "^(?!view_search_result$).*"
+                      "^(?!search_result_view$).*"
                     ],
                     "errorMessage": "Please use standard event name for search_result_view."
                   },
                   {
                     "type": "REGEX",
                     "args": [
-                      "^(?!select_search_result$).*"
+                      "^(?!search_result_click$).*"
                     ],
                     "errorMessage": "Please use standard event name for search_result_click."
                   },
@@ -771,7 +771,7 @@ const respect_consent_mode = config.respect_consent_mode;
 const retrieve_page_status_code_storage_value = templateStorage.getItem('page_status_code') || false;
 let retrieve_page_status_code = retrieve_page_status_code_storage_value;
 
-if(config.add_page_status_code && event_name === 'page_view') {
+if (config.add_page_status_code && event_name === 'page_view') {
   retrieve_page_status_code = true;
   if (!retrieve_page_status_code_storage_value) {
     templateStorage.setItem('page_status_code', true);
@@ -782,8 +782,8 @@ if(config.add_page_status_code && event_name === 'page_view') {
 // Acquisition
 const utm_source = (config.set_custom_utm_parameters_names) ? getQueryParameters(config.custom_source_name) : getQueryParameters('utm_source');
 const utm_campaign = (config.set_custom_utm_parameters_names) ? getQueryParameters(config.custom_campaign_name) : getQueryParameters('utm_campaign');
-const utm_id = (config.set_custom_utm_parameters_names) ? getQueryParameters(config.custom_id_name) : getQueryParameters('utm_id');
-const utm_click_id = (config.set_custom_utm_parameters_names) ? getQueryParameters(config.custom_click_id_name) : getQueryParameters('utm_click_id');
+const utm_id = (config.set_custom_utm_parameters_names) ? getQueryParameters(config.custom_campaign_id) : getQueryParameters('utm_id');
+const utm_click_id = (config.set_custom_utm_parameters_names) ? getQueryParameters(config.custom_campaign_click_id) : getQueryParameters('utm_click_id');
 const utm_term = (config.set_custom_utm_parameters_names) ? getQueryParameters(config.custom_term_name) : getQueryParameters('utm_term');
 const utm_content = (config.set_custom_utm_parameters_names) ? getQueryParameters(config.custom_content_name) : getQueryParameters('utm_content');
 
@@ -957,13 +957,13 @@ function send_request(full_endpoint) {
       // Consent denied
       if (!isConsentGranted("analytics_storage")) {
         if (enable_logs) { log(event_name, '>', '  🔴 analytics_storage denied'); }
-        
+
         // Save temp cookie
-        if(event_name === 'page_view' && pv_count === 1) {
+        if (event_name === 'page_view' && pv_count === 1) {
           // if (enable_logs) { log(event_name, '>', 'CHECKING TEMP COOKIE'); }
           const temp_cookie_value = get_cookie('na_temp');
-          
-          if (get_cookie('na_temp') === null || get_cookie('na_temp') === undefined){            
+
+          if (get_cookie('na_temp') === null || get_cookie('na_temp') === undefined) {
             const temp_cookie_value = {
               source: source,
               campaign: campaign,
@@ -973,14 +973,14 @@ function send_request(full_endpoint) {
               campaign_content: campaign_content,
               page_referrer: page_referrer
             };
-            
+
             set_cookie('na_temp', JSON.stringify(temp_cookie_value));
-            if (enable_logs){log(event_name, '>', '    Temp cookie saved:', temp_cookie_value);}
+            if (enable_logs) { log(event_name, '>', '    Temp cookie saved:', temp_cookie_value); }
           } else {
-            if (enable_logs){log(event_name, '>', '    Temp cookie found:', temp_cookie_value);}
+            if (enable_logs) { log(event_name, '>', '    Temp cookie found:', temp_cookie_value); }
           }
         }
-        
+
         var consent_listener_called = false;
 
         // Add consent listener
@@ -993,7 +993,7 @@ function send_request(full_endpoint) {
           // When consent is granted
           consent_listener_called = true;
           if (enable_logs) { log(event_name, '>', '  🟢 analytics_storage granted'); }
-                  
+
           // if (enable_logs && event_name === 'page_view') {log(event_name, '>', 'CHECKING TEMP COOKIE');}
           const temp_cookie_value = get_cookie('na_temp');
           if (temp_cookie_value !== null && temp_cookie_value !== undefined && pv_count === 1) {
@@ -1003,7 +1003,7 @@ function send_request(full_endpoint) {
             campaign_click_id = temp_cookie_value.campaign_click_id;
             campaign_term = temp_cookie_value.campaign_term;
             campaign_content = temp_cookie_value.campaign_content;
-            page_referrer = temp_cookie_value.page_referrer; 
+            page_referrer = temp_cookie_value.page_referrer;
           }
 
           // Build payload
@@ -1018,23 +1018,23 @@ function send_request(full_endpoint) {
           }
         });
 
-      // Consent granted  
+        // Consent granted  
       } else if (isConsentGranted("analytics_storage")) {
         if (enable_logs) { log(event_name, '>', '  🟢 analytics_storage granted'); }
-        
+
         var temp_cookie_value = get_cookie('na_temp');
-        
+
         // Delete temp cookie          
-        if(event_name === 'page_view') {
-          if(temp_cookie_value !== null && temp_cookie_value !== undefined) {        
+        if (event_name === 'page_view') {
+          if (temp_cookie_value !== null && temp_cookie_value !== undefined) {
             if (enable_logs) { log(event_name, '>', '    Temp cookie found:', temp_cookie_value); }
             delete_cookie('na_temp', JSON.stringify({}));
             if (enable_logs) { log(event_name, '>', '    Temp cookie deleted'); }
           }
         }
-        
+
         temp_cookie_value = get_cookie('na_temp');
-        
+
         if (temp_cookie_value !== null && temp_cookie_value !== undefined && pv_count === 1) {
           source = temp_cookie_value.source;
           campaign = temp_cookie_value.campaign;
@@ -1042,7 +1042,7 @@ function send_request(full_endpoint) {
           campaign_click_id = temp_cookie_value.campaign_click_id;
           campaign_term = temp_cookie_value.campaign_term;
           campaign_content = temp_cookie_value.campaign_content;
-          page_referrer = temp_cookie_value.page_referrer; 
+          page_referrer = temp_cookie_value.page_referrer;
         }
 
         // Build payload
@@ -1050,7 +1050,7 @@ function send_request(full_endpoint) {
         if (!payload) {
           return;
         }
-  
+
         // Send requests
         if (queryPermission('access_globals', 'execute', 'send_queued_requests')) {
           callInWindow('send_queued_requests', full_endpoint, payload, data, enable_logs, retrieve_page_status_code);
@@ -1250,34 +1250,35 @@ function build_payload() {
     const current_event_pushes = datalayer.filter(item => item.event === datalayer_event_name);
     const last_current_event_push = current_event_pushes.length > 0 ? current_event_pushes[current_event_pushes.length - 1] : null;
 
-    for (var key of Object.keys(last_current_event_push)) {if (
-      key !== 'event' && 
-      key !== 'gtm.start' && 
-      key !== 'gtm.uniqueEventId' && 
-      key !== 'ecommerce' &&  
-      key !== 'event_type' &&  
-      key !== 'channel_grouping' &&  
-      key !== 'source' &&  
-      key !== 'tld_source' &&  
-      key !== 'campaign' &&  
-      key !== 'campaign_id' &&  
-      key !== 'campaign_click_id' &&  
-      key !== 'campaign_term' &&  
-      key !== 'campaign_content' &&  
-      key !== 'user_agent' &&  
-      key !== 'browser_name' &&  
-      key !== 'browser_language' &&  
-      key !== 'browser_version' &&  
-      key !== 'device_type' &&  
-      key !== 'device_vendor' &&  
-      key !== 'device_model' &&  
-      key !== 'os_name' &&  
-      key !== 'os_version' &&  
-      key !== 'screen_size' &&  
-      key !== 'viewport_size' &&  
-      key !== 'hostname' && 
-      key !== 'city' && 
-      key !== 'country') {
+    for (var key of Object.keys(last_current_event_push)) {
+      if (
+        key !== 'event' &&
+        key !== 'gtm.start' &&
+        key !== 'gtm.uniqueEventId' &&
+        key !== 'ecommerce' &&
+        key !== 'event_type' &&
+        key !== 'channel_grouping' &&
+        key !== 'source' &&
+        key !== 'tld_source' &&
+        key !== 'campaign' &&
+        key !== 'campaign_id' &&
+        key !== 'campaign_click_id' &&
+        key !== 'campaign_term' &&
+        key !== 'campaign_content' &&
+        key !== 'user_agent' &&
+        key !== 'browser_name' &&
+        key !== 'browser_language' &&
+        key !== 'browser_version' &&
+        key !== 'device_type' &&
+        key !== 'device_vendor' &&
+        key !== 'device_model' &&
+        key !== 'os_name' &&
+        key !== 'os_version' &&
+        key !== 'screen_size' &&
+        key !== 'viewport_size' &&
+        key !== 'hostname' &&
+        key !== 'city' &&
+        key !== 'country') {
         event_info[key] = last_current_event_push[key];
       }
     }
@@ -1371,7 +1372,7 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
   if (enable_logs) { log(event_name, '>', 'CHECKING EVENT'); }
 
   if (pv_count > 1) {
-    
+
     // Simulate internal traffic for virtual page views
     if (storage_value !== null && storage_value !== undefined) {
       page_referrer = (event_name === 'page_view') ? storage_value[1].page_location : storage_value[1].page_referrer;
@@ -1451,7 +1452,7 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
 
     return true;
 
-  // Orphan events
+    // Orphan events
   } else if (event_name !== 'page_view' && !storage_value) {
     if (enable_logs) { log(event_name, '>', '  🔴 Event fired before a page view event. The first event on any page must be page_view.'); }
 
@@ -1461,7 +1462,7 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
     data.gtmOnSuccess();
     return false;
 
-  // Events
+    // Events
   } else {
     const current_page_info = storage_value[1];
 
@@ -1480,7 +1481,7 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
       cross_domain_id: null,
     },
       current_page_info,
-      { pv_count: pv_count }
+    { pv_count: pv_count }
     ];
 
     templateStorage.setItem(storage_name, JSON.stringify(event_info));
