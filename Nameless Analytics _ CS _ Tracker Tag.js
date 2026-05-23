@@ -538,7 +538,7 @@ function build_payload() {
   // Add event parameters from dataLayer (tag fields)
   if (data.add_parameters_from_dataLayer) {
     const current_event_pushes = datalayer.filter(item => item.event === datalayer_event_name);
-    const last_current_event_push = current_event_pushes.length > 0 ? current_event_pushes[current_event_pushes.length - 1] : null;
+    const last_current_event_push = current_event_pushes.length > 0 ? current_event_pushes[current_event_pushes.length - 1] : {};
 
     for (var key of Object.keys(last_current_event_push)) {
       if (
