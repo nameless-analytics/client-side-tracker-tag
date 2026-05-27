@@ -1426,7 +1426,7 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
       page_hostname: hostname || null,
       page_title: readTitle() || null,
       page_url: getUrl() || null,
-      page_location: getUrl('path') || null,
+      page_path: getUrl('path') || null,
       page_fragment: getUrl('fragment') || null,
       page_query: getUrl('query') || null,
       page_extension: getUrl('extension') || null,
@@ -1450,10 +1450,10 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
     }
 
     // Override page data for virtual page view
-    if (config.override_page_data_params && config.page_title !== undefined && config.page_location !== undefined) {
+    if (config.override_page_data_params && config.page_title !== undefined && config.page_path !== undefined) {
       event_info[1].page_title = config.page_title || null;
       event_info[1].page_url = config.page_url || null;
-      event_info[1].page_location = config.page_location || null;
+      event_info[1].page_path = config.page_path || null;
       event_info[1].page_fragment = config.page_fragment || null;
       event_info[1].page_query = config.page_query || null;
       event_info[1].page_extension = config.page_extension || null;
