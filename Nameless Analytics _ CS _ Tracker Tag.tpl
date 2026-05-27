@@ -708,6 +708,16 @@ ___TEMPLATE_PARAMETERS___
 
 ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 
+// --------------------------------------------------------------------------------------------------------------
+// NAMELESS ANALYTICS | CLIENT SIDE | TRACKER TAG
+// This tag template is used to send requests to the Nameless Analytics Server-Side Client Tag.
+// --------------------------------------------------------------------------------------------------------------
+
+
+// --------------------------------------------------------------------------------------------------------------
+// LIBRARIES
+// --------------------------------------------------------------------------------------------------------------
+
 const log = require('logToConsole');
 const getTimestampMillis = require('getTimestampMillis');
 const queryPermission = require('queryPermission');
@@ -730,12 +740,12 @@ const setCookie = require('setCookie');
 const getCookieValues = require('getCookieValues');
 
 
-// ------------------------------------------------------------------------------------------------------------------------------------------------------
-
+// --------------------------------------------------------------------------------------------------------------
+// CONSTANTS
+// --------------------------------------------------------------------------------------------------------------
 
 const config = data.config_variable;
 const event_name = (data.event_name === 'standard') ? data.standard_event_name : data.custom_event_name;
-
 
 // Logs
 let enable_logs = false;
@@ -745,14 +755,13 @@ if (config !== undefined && config.enable_logs) {
   } else {
     enable_logs = true;
   }
-
+  
   if (enable_logs && data.disable_this_log) {
     enable_logs = false;
   }
 } else {
   enable_logs = true;
 }
-
 
 // Event data
 const timestamp = getTimestampMillis();
@@ -819,7 +828,6 @@ const temp_page_referrer = getQueryParameters('na_page_referrer');
 var page_referrer = (temp_page_referrer) ? temp_page_referrer : getReferrerUrl();
 page_referrer = (page_referrer === '') ? null : page_referrer;
 
-
 // Count page_view events occurred in the same real page
 var pv_count = templateStorage.getItem('pv_count_tracker');
 if (!pv_count && event_name === 'page_view') {
@@ -851,10 +859,10 @@ const endpoint_path = config.endpoint_path;
 const full_endpoint = 'https://' + endpoint_domain_name + endpoint_path;
 
 
-// ------------------------------------------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------
+// CHECK CONFIGURATION VARIABLE
+// --------------------------------------------------------------------------------------------------------------
 
-
-// Check configuration variable
 if (enable_logs) { log(event_name, '>', 'NAMELESS ANALYTICS'); }
 if (enable_logs) { log(event_name, '>', 'CHECKING CONFIGURATION VARIABLE'); }
 
@@ -869,7 +877,6 @@ if (config === undefined || config.is_na_config_variable !== true) {
   if (enable_logs) { log(event_name, '>', '  🟢 Valid Nameless Analytics Client-Side tracker configuration variable'); }
 }
 
-
 if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', 'TRACKER TAG CONFIGURATION'); }
 if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  👉 Server-side requests endpoint path:', full_endpoint); }
 if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  👉 Load libraries in first-party mode:', (config.load_libraries_from_custom_location) ? 'Yes' : 'No'); }
@@ -877,7 +884,10 @@ if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_nam
 if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  👉 Respect Google Consent Mode?', (respect_consent_mode) ? 'Yes' : 'No'); }
 
 
-// Load libraries
+// --------------------------------------------------------------------------------------------------------------
+// LOADING LIBRARIES
+// --------------------------------------------------------------------------------------------------------------
+
 if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', 'LOADING LIBRARIES'); }
 
 // Load UA parser library
@@ -930,10 +940,10 @@ if (queryPermission('inject_script', ua_parser_url)) {
 }
 
 
-// ------------------------------------------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------
+// SEND REQUESTS
+// --------------------------------------------------------------------------------------------------------------
 
-
-// Send request
 function send_request(full_endpoint) {
   // Enable cross-domain
   if (config.enable_cross_domain_tracking) {
@@ -1091,10 +1101,11 @@ function set_cross_domain_listener(full_endpoint) {
 }
 
 
-// ------------------------------------------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------
+// HANDLE TEMPORARY ACQUISITION COOKIE (only if respect_consent_mode is enabled and analytics_storage is denied)
+// --------------------------------------------------------------------------------------------------------------
 
-
-// Set temporary source/medium cookie when respect_consent_mode is enabled and consent is denied
+// Set cookie
 function set_cookie(cookie_name, cookie_value) {
   const cookie_domain = 'auto';
   const cookie_path = '/';
@@ -1111,14 +1122,14 @@ function set_cookie(cookie_name, cookie_value) {
   setCookie(cookie_name, cookie_value, cookie_options);
 }
 
-// Read temporary source/medium cookie when respect_consent_mode is enabled and consent is denied
+// Get cookie
 function get_cookie(cookie_name) {
   const cookie_value = getCookieValues(cookie_name)[0];
   if (!cookie_value) return null;
   return JSON.parse(cookie_value);
 }
 
-// Delete temporary source/medium cookie when respect_consent_mode is enabled and consent is denied
+// Delete cookie
 function delete_cookie(cookie_name, cookie_value) {
   const cookie_domain = 'auto';
   const cookie_path = '/';
@@ -1138,10 +1149,10 @@ function delete_cookie(cookie_name, cookie_value) {
 }
 
 
-// ------------------------------------------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------
+// BUILD PAYLOAD
+// --------------------------------------------------------------------------------------------------------------
 
-
-// Build the payload
 function build_payload() {
   // Save event info in template storage
   const storage_name = 'data_storage';
@@ -1364,10 +1375,10 @@ function build_payload() {
 }
 
 
-// ------------------------------------------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------
+// HANDLE PAGE AND EVENTS INFO IN TEMPLATE STORAGE
+// --------------------------------------------------------------------------------------------------------------
 
-
-// Save event info in template storage
 function set_event_data_in_template_storage(storage_name, storage_value) {
   if (enable_logs) { log(event_name, '>', 'CHECKING EVENT'); }
 
@@ -1375,7 +1386,7 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
 
     // Simulate internal traffic for virtual page views
     if (storage_value !== null && storage_value !== undefined) {
-      page_referrer = (event_name === 'page_view') ? storage_value[1].page_location : storage_value[1].page_referrer;
+      page_referrer = (event_name === 'page_view') ? storage_value[1].page_url : storage_value[1].page_referrer;
     }
 
     // Delete temp cookie on the second page view after consent is granted
@@ -1411,10 +1422,11 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
     }, {
       page_id: page_id,
       page_load_timestamp: timestamp,
-      page_hostname_protocol: getUrl('protocol'),
-      page_hostname: hostname,
-      page_title: readTitle(),
-      page_location: getUrl('path'),
+      page_hostname_protocol: getUrl('protocol') || null,
+      page_hostname: hostname || null,
+      page_title: readTitle() || null,
+      page_url: getUrl() || null,
+      page_location: getUrl('path') || null,
       page_fragment: getUrl('fragment') || null,
       page_query: getUrl('query') || null,
       page_extension: getUrl('extension') || null,
@@ -1439,8 +1451,9 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
 
     // Override page data for virtual page view
     if (config.override_page_data_params && config.page_title !== undefined && config.page_location !== undefined) {
-      event_info[1].page_title = config.page_title;
-      event_info[1].page_location = config.page_location;
+      event_info[1].page_title = config.page_title || null;
+      event_info[1].page_url = config.page_url || null;
+      event_info[1].page_location = config.page_location || null;
       event_info[1].page_fragment = config.page_fragment || null;
       event_info[1].page_query = config.page_query || null;
       event_info[1].page_extension = config.page_extension || null;
