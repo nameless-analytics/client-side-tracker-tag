@@ -181,7 +181,7 @@ The following success and status messages indicate a correct implementation:
 | | [event_name] > Temp cookie saved: [JSON] | Confirms that acquisition data is being persisted while consent is denied |
 | Events | [event_name] > 🟢 Valid [event_name] event | The event was successfully built and validated |
 | Cross-domain | cross-domain > 🟢 Valid user data. Cross-domain URL link decoration will be applied | Success log for `na_id` link decoration when consent is granted |
-| | cross-domain > Decorating URL with na_temp params: [JSON] | Confirms that anonymous acquisition data is being transferred across domains while consent is denied |
+| | cross-domain > Decorating URL with na_temp params: [JSON] | Confirms that anonymous acquisition data is being transferred across-domains while consent is denied |
 
 
 ## Troubleshooting
