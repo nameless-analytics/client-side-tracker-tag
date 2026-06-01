@@ -1,4 +1,12 @@
-﻿___INFO___
+﻿___TERMS_OF_SERVICE___
+
+By creating or modifying this file you agree to Google Tag Manager's Community
+Template Gallery Developer Terms of Service available at
+https://developers.google.com/tag-manager/gallery-tos (or such other URL as
+Google may provide), as modified from time to time.
+
+
+___INFO___
 
 {
   "type": "TAG",
@@ -698,7 +706,7 @@ ___TEMPLATE_PARAMETERS___
       {
         "type": "LABEL",
         "name": "info",
-        "displayName": "\u003cb\u003eNameless Analytics Client-Side tracker tag\u003c/b\u003e\u003c/br\u003e\nBeta version: 1.0. \n\u003c/br\u003e\nRead more about the \u003ca href\u003d\"https://github.com/nameless-analytics/nameless-analytics\" target\u003d\u0027_blank\u0027 rel\u003d\"noopener\"\u003eNameless Analytics project\u003c/a\u003e or the \u003ca href\u003d\"https://github.com/nameless-analytics/nameless-analytics-client-tag\" target\u003d\u0027_blank\u0027 rel\u003d\"noopener\"\u003eClient-side Tracker Tag\u003c/a\u003e. \n\u003c/br\u003e\nCreated by \u003ca href\u003d\"https://tommasomoretti.com/?utm_source\u003dtagmanager.google.com\u0026utm_medium\u003dreferral\u0026utm_campaign\u003dcs_analytics_tag\" target\u003d\u0027_blank\u0027 rel\u003d\"noopener\"\u003eTommaso Moretti\u003c/a\u003e\n\u003c/br\u003e\u003c/br\u003e"
+        "displayName": "\u003cb\u003eNameless Analytics Client-Side tracker tag | Beta version 1.0\u003c/b\u003e\u003c/br\u003e\nBeta version: 1.0. \n\u003c/br\u003e\nRead more about the \u003ca href\u003d\"https://github.com/nameless-analytics/nameless-analytics\" target\u003d\u0027_blank\u0027 rel\u003d\"noopener\"\u003eNameless Analytics project\u003c/a\u003e or the \u003ca href\u003d\"https://github.com/nameless-analytics/nameless-analytics-client-tag\" target\u003d\u0027_blank\u0027 rel\u003d\"noopener\"\u003eClient-side Tracker Tag\u003c/a\u003e. \n\u003c/br\u003e\nOfficial website \u003ca href\u003d\"https://namelessanalytics.com/?utm_source\u003dtagmanager.google.com\u0026utm_medium\u003dreferral\u0026utm_campaign\u003dcs_analytics_tag\" target\u003d\u0027_blank\u0027 rel\u003d\"noopener\"\u003eNameless Analytics\u003c/a\u003e\n\u003c/br\u003e\nCreated by \u003ca href\u003d\"https://tommasomoretti.com/?utm_source\u003dtagmanager.google.com\u0026utm_medium\u003dreferral\u0026utm_campaign\u003dcs_analytics_tag\" target\u003d\u0027_blank\u0027 rel\u003d\"noopener\"\u003eTommaso Moretti\u003c/a\u003e\n\u003c/br\u003e\u003c/br\u003e"
       }
     ],
     "groupStyle": "ZIPPY_OPEN"
