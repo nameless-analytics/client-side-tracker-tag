@@ -91,8 +91,16 @@ ___TEMPLATE_PARAMETERS___
                     "displayValue": "logout"
                   },
                   {
-                    "value": "sign_up",
-                    "displayValue": "sign_up"
+                    "value": "newsletter_subscription",
+                    "displayValue": "newsletter_subscription"
+                  },
+                  {
+                    "value": "form_submission",
+                    "displayValue": "form_submission"
+                  },
+                  {
+                    "value": "account_creation",
+                    "displayValue": "account_creation"
                   }
                 ],
                 "simpleValueType": true,
@@ -188,9 +196,23 @@ ___TEMPLATE_PARAMETERS___
                   {
                     "type": "REGEX",
                     "args": [
-                      "^(?!sign_up$).*"
+                      "^(?!account_creation$).*"
                     ],
-                    "errorMessage": "Please use standard event name for sign_up."
+                    "errorMessage": "Please use standard event name for account_creation."
+                  },
+                  {
+                    "type": "REGEX",
+                    "args": [
+                      "^(?!newsletter_subscription$).*"
+                    ],
+                    "errorMessage": "Please use standard event name for newsletter_subscription."
+                  },
+                  {
+                    "type": "REGEX",
+                    "args": [
+                      "^(?!form_submission$).*"
+                    ],
+                    "errorMessage": "Please use standard event name for form_submission."
                   },
                   {
                     "type": "REGEX",
