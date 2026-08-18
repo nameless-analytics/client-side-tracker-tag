@@ -57,7 +57,9 @@ Please note:
 * search_result_click: Send this event when a search result is clicked
 * login: Send this event when a user logs in
 * logout: Send this event when a user logs out
-* sign_up: Send this event when a user creates an account
+* account_creation: Send this event when a user creates an account
+* form_submission: Send this event when a user submits a form
+* newsletter_subscription: Send this event when a user subscribes to a newsletter
 
 For more information see [Setup Guides](https://github.com/nameless-analytics/nameless-analytics/blob/main/setup-guides/SETUP-GUIDES.md#how-to-track-standard-events).
 
@@ -180,6 +182,11 @@ The following success and status messages indicate a correct implementation:
 | Consent | [event_name] > 🟢 analytics_storage granted | Tracking is allowed by Google Consent Mode |
 | | [event_name] > Temp cookie saved: [JSON] | Confirms that acquisition data is being persisted while consent is denied |
 | Events | [event_name] > 🟢 Valid [event_name] event | The event was successfully built and validated |
+| Processing | [event_name] > PROCESSING STATUS | Header indicating commencement of server response processing details |
+| | [event_name] > Claim request: [Status] | Claim request processing outcome |
+| | [event_name] > Firestore: [Status] | Firestore user and session persistence outcome |
+| | [event_name] > BigQuery: [Status] | BigQuery streaming insertion outcome |
+| | [event_name] > Custom Endpoint: [Status] | Forwarding outcome to custom endpoint |
 | Cross-domain | cross-domain > 🟢 Valid user data. Cross-domain URL link decoration will be applied | Success log for `na_id` link decoration when consent is granted |
 | | cross-domain > Decorating URL with na_temp params: [JSON] | Confirms that anonymous acquisition data is being transferred across-domains while consent is denied |
 
