@@ -176,7 +176,7 @@ The following success and status messages indicate a correct implementation:
 
 | **Scope** | **Message** | **Description** |
 |:---|:---|:---|
-| Config | [event_name] > 🟢 Valid Nameless Analytics Client-Side tracker configuration variable | Tag configuration variable is correctly set and verified |
+| Config | [event_name] > 🟢 Valid Nameless Analytics Client-side Tracker Configuration Variable | Tag configuration variable is correctly set and verified |
 | | [event_name] > 🟢 UA parser library loaded from: [URL] | The User-Agent parser library was successfully injected and loaded |
 | | [event_name] > 🟢 Main library loaded from: [URL] | The Nameless Analytics core library was successfully injected and loaded |
 | Consent | [event_name] > 🟢 analytics_storage granted | Tracking is allowed by Google Consent Mode |

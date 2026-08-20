@@ -129,19 +129,22 @@ templateStorage.setItem('pv_count_tracker', pv_count);
 
 
 // Default script paths
-const default_na_url = 'https://cdn.jsdelivr.net/gh/nameless-analytics/client-side-tracker-tag@main/lib/nameless-analytics.min.js'; // Minified
-// const default_na_url = 'https://cdn.jsdelivr.net/gh/nameless-analytics/client-side-tracker-tag@main/lib/nameless-analytics.js'; // Non-minified
+const default_na_url = 'https://cdn.jsdelivr.net/gh/nameless-analytics/client-side-tracker-tag@main/lib/nameless-analytics_v1.0.0.min.js'; // Minified
+// const default_na_url = 'https://cdn.jsdelivr.net/gh/nameless-analytics/client-side-tracker-tag@main/lib/nameless-analytics_v1.0.0.js'; // Non-minified
 
 const default_ua_parser_url = 'https://cdn.jsdelivr.net/npm/ua-parser-js/dist/ua-parser.pack.min.js';
 
 
 // Custom script paths
-const custom_libraries_path = 'https://' + config.custom_libraries_domain + config.custom_libraries_path;
+const custom_na_url = 'https://' + config.custom_libraries_domain + config.custom_libraries_path + '/nameless-analytics_v1.0.0.min.js'; // Minified
+// const custom_na_url = 'https://' + config.custom_libraries_domain + config.custom_libraries_path + '/nameless-analytics_v1.0.0.js'; // Non-minified
+
+const custom_ua_parser_url = 'https://' + config.custom_libraries_domain + config.custom_libraries_path + '/ua-parser.pack.min.js';
 
 
 // Script paths
-const na_url = (config.load_libraries_from_custom_location) ? custom_libraries_path + '/nameless-analytics.js' : default_na_url;
-const ua_parser_url = (config.load_libraries_from_custom_location) ? custom_libraries_path + '/ua-parser.min.js' : default_ua_parser_url;
+const na_url = (config.load_libraries_from_custom_location) ? custom_na_url : default_na_url;
+const ua_parser_url = (config.load_libraries_from_custom_location) ? custom_ua_parser_url : default_ua_parser_url;
 
 
 // Server side path
