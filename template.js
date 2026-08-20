@@ -55,7 +55,18 @@ if (config !== undefined && config.enable_logs) {
 
 // Event data
 const timestamp = getTimestampMillis();
-const hostname = getUrl('host');
+const page_snapshot = {
+  page_hostname_protocol: getUrl('protocol') || null,
+  page_hostname: getUrl('host') || null,
+  page_title: readTitle() || null,
+  page_url: getUrl() || null,
+  page_path: getUrl('path') || null,
+  page_fragment: getUrl('fragment') || null,
+  page_query: getUrl('query') || null,
+  page_extension: getUrl('extension') || null
+};
+
+const hostname = page_snapshot.page_hostname;
 const referrer_hostname = getReferrerUrl('host');
 const datalayer = copyFromWindow('dataLayer');
 const datalayer_event_name = copyFromDataLayer('event', 2);
@@ -161,21 +172,21 @@ if (enable_logs) { log(event_name, '>', 'NAMELESS ANALYTICS'); }
 if (enable_logs) { log(event_name, '>', 'CHECKING CONFIGURATION VARIABLE'); }
 
 if (config === undefined || config.is_na_config_variable !== true) {
-  if (enable_logs) { log(event_name, '>', '  🔴 Tracker configuration error: event has invalid Nameless Analytics Client-Side tracker configuration variable'); }
+  if (enable_logs) { log(event_name, '>', '  ðŸ”´ Tracker configuration error: event has invalid Nameless Analytics Client-Side tracker configuration variable'); }
 
   if (enable_logs) { log(event_name, '>', 'REQUEST STATUS'); }
-  if (enable_logs) { log(event_name, '>', '  🔴 Request aborted'); }
+  if (enable_logs) { log(event_name, '>', '  ðŸ”´ Request aborted'); }
   data.gtmOnSuccess();
   return;
 } else {
-  if (enable_logs) { log(event_name, '>', '  🟢 Valid Nameless Analytics Client-Side tracker configuration variable'); }
+  if (enable_logs) { log(event_name, '>', '  ðŸŸ¢ Valid Nameless Analytics Client-Side tracker configuration variable'); }
 }
 
 if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', 'TRACKER TAG CONFIGURATION'); }
-if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  👉 Server-side requests endpoint path:', full_endpoint); }
-if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  👉 Load libraries in first-party mode:', (config.load_libraries_from_custom_location) ? 'Yes' : 'No'); }
-if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  👉 Enable cross-domain tracking?', (config.enable_cross_domain_tracking) ? 'Yes' : 'No'); }
-if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  👉 Respect Google Consent Mode?', (respect_consent_mode) ? 'Yes' : 'No'); }
+if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  ðŸ‘‰ Server-side requests endpoint path:', full_endpoint); }
+if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  ðŸ‘‰ Load libraries in first-party mode:', (config.load_libraries_from_custom_location) ? 'Yes' : 'No'); }
+if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  ðŸ‘‰ Enable cross-domain tracking?', (config.enable_cross_domain_tracking) ? 'Yes' : 'No'); }
+if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  ðŸ‘‰ Respect Google Consent Mode?', (respect_consent_mode) ? 'Yes' : 'No'); }
 
 
 // --------------------------------------------------------------------------------------------------------------
@@ -189,47 +200,47 @@ if (queryPermission('inject_script', ua_parser_url)) {
   injectScript(
     ua_parser_url,
     () => { // UA parser library loaded
-      if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  🟢 UA parser library loaded from:', ua_parser_url); }
+      if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  ðŸŸ¢ UA parser library loaded from:', ua_parser_url); }
 
       // Load Main library
       if (queryPermission('inject_script', na_url)) {
         injectScript(
           na_url,
           () => { // Main library loaded  
-            if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  🟢 Main library loaded from:', na_url); }
+            if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  ðŸŸ¢ Main library loaded from:', na_url); }
 
             send_request(full_endpoint);
           },
           () => { // Main library not loaded
-            if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  🔴 Main library not loaded from:', na_url); }
+            if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  ðŸ”´ Main library not loaded from:', na_url); }
 
             if (enable_logs) { log(event_name, '>', 'REQUEST STATUS'); }
-            if (enable_logs) { log(event_name, '>', '  🔴 Request aborted'); }
+            if (enable_logs) { log(event_name, '>', '  ðŸ”´ Request aborted'); }
             data.gtmOnSuccess();
           }, na_url // cached Main library
         );
       } else {
-        if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  🔴 Permission denied: unable to load Main library from', na_url); }
+        if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  ðŸ”´ Permission denied: unable to load Main library from', na_url); }
 
         if (enable_logs) { log(event_name, '>', 'REQUEST STATUS'); }
-        if (enable_logs) { log(event_name, '>', '  🔴 Request aborted'); }
+        if (enable_logs) { log(event_name, '>', '  ðŸ”´ Request aborted'); }
         data.gtmOnSuccess();
       }
 
     },
     () => { // UA parser library not loaded
-      if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  🔴 UA parser library not loaded from:', ua_parser_url); }
+      if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  ðŸ”´ UA parser library not loaded from:', ua_parser_url); }
 
       if (enable_logs) { log(event_name, '>', 'REQUEST STATUS'); }
-      if (enable_logs) { log(event_name, '>', '  🔴 Request aborted'); }
+      if (enable_logs) { log(event_name, '>', '  ðŸ”´ Request aborted'); }
       data.gtmOnSuccess();
     }, ua_parser_url // cached UA parser library
   );
 } else {
-  if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  🔴 Permission denied: unable to load UA parser library from', ua_parser_url); }
+  if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  ðŸ”´ Permission denied: unable to load UA parser library from', ua_parser_url); }
 
   if (enable_logs) { log(event_name, '>', 'REQUEST STATUS'); }
-  if (enable_logs) { log(event_name, '>', '  🔴 Request aborted'); }
+  if (enable_logs) { log(event_name, '>', '  ðŸ”´ Request aborted'); }
   data.gtmOnSuccess();
 }
 
@@ -252,15 +263,15 @@ function send_request(full_endpoint) {
 
     // Check if consent mode is present
     if (consent_type === 'Consent mode not present') {
-      if (enable_logs) { log(event_name, '>', '  🔴 Google Consent Mode not found'); }
+      if (enable_logs) { log(event_name, '>', '  ðŸ”´ Google Consent Mode not found'); }
 
       if (enable_logs) { log(event_name, '>', 'REQUEST STATUS'); }
-      if (enable_logs) { log(event_name, '>', '  🔴 Request aborted'); }
+      if (enable_logs) { log(event_name, '>', '  ðŸ”´ Request aborted'); }
       data.gtmOnSuccess();
     } else if (consent_type === 'Default' || consent_type === 'Update') {
       // Consent denied
       if (!isConsentGranted("analytics_storage")) {
-        if (enable_logs) { log(event_name, '>', '  🔴 analytics_storage denied'); }
+        if (enable_logs) { log(event_name, '>', '  ðŸ”´ analytics_storage denied'); }
 
         // Save temp cookie
         if (event_name === 'page_view' && pv_count === 1) {
@@ -296,7 +307,7 @@ function send_request(full_endpoint) {
 
           // When consent is granted
           consent_listener_called = true;
-          if (enable_logs) { log(event_name, '>', '  🟢 analytics_storage granted'); }
+          if (enable_logs) { log(event_name, '>', '  ðŸŸ¢ analytics_storage granted'); }
 
           // if (enable_logs && event_name === 'page_view') {log(event_name, '>', 'CHECKING TEMP COOKIE');}
           const temp_cookie_value = get_cookie('na_temp');
@@ -324,7 +335,7 @@ function send_request(full_endpoint) {
 
         // Consent granted  
       } else if (isConsentGranted("analytics_storage")) {
-        if (enable_logs) { log(event_name, '>', '  🟢 analytics_storage granted'); }
+        if (enable_logs) { log(event_name, '>', '  ðŸŸ¢ analytics_storage granted'); }
 
         var temp_cookie_value = get_cookie('na_temp');
 
@@ -389,7 +400,7 @@ function set_cross_domain_listener(full_endpoint) {
       callInWindow('set_cross_domain_listener', full_endpoint, domains, respect_consent_mode, enable_logs);
       templateStorage.setItem('set_cross_domain_listener', true);
 
-      if (enable_logs && event_name === 'page_view') { log(event_name, '>', '  👉 Cross-domain enabled for:', domains.join(', ')); }
+      if (enable_logs && event_name === 'page_view') { log(event_name, '>', '  ðŸ‘‰ Cross-domain enabled for:', domains.join(', ')); }
     }
   }
 }
@@ -688,12 +699,12 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
       delete_cookie('na_temp', JSON.stringify({}));
     }
 
-    if (!utm_source && !getQueryParameters('na_source')) { source = null; }
-    if (!utm_campaign && !getQueryParameters('na_campaign')) { campaign = null; }
-    if (!utm_id && !getQueryParameters('na_campaign_id')) { campaign_id = null; }
-    if (!utm_term && !getQueryParameters('na_campaign_term')) { campaign_term = null; }
-    if (!utm_content && !getQueryParameters('na_campaign_content')) { campaign_content = null; }
-    if (!utm_click_id && !gclid && !dclid && !gclsrc && !wbraid && !gbraid && !msclkid && !fbclid && !ttclid && !twclid && !epik && !li_fat_id && !scclid && !getQueryParameters('na_campaign_click_id')) {
+    if (!utm_source && !temp_source) { source = null; }
+    if (!utm_campaign && !temp_campaign) { campaign = null; }
+    if (!utm_id && !temp_campaign_id) { campaign_id = null; }
+    if (!utm_term && !temp_campaign_term) { campaign_term = null; }
+    if (!utm_content && !temp_campaign_content) { campaign_content = null; }
+    if (!utm_click_id && !gclid && !dclid && !gclsrc && !wbraid && !gbraid && !msclkid && !fbclid && !ttclid && !twclid && !epik && !li_fat_id && !scclid && !temp_campaign_click_id) {
       campaign_click_id = null;
     }
   }
@@ -716,14 +727,14 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
     }, {
       page_id: page_id,
       page_load_timestamp: timestamp,
-      page_hostname_protocol: getUrl('protocol') || null,
-      page_hostname: hostname || null,
-      page_title: readTitle() || null,
-      page_url: getUrl() || null,
-      page_path: getUrl('path') || null,
-      page_fragment: getUrl('fragment') || null,
-      page_query: getUrl('query') || null,
-      page_extension: getUrl('extension') || null,
+      page_hostname_protocol: page_snapshot.page_hostname_protocol,
+      page_hostname: page_snapshot.page_hostname,
+      page_title: page_snapshot.page_title,
+      page_url: page_snapshot.page_url,
+      page_path: page_snapshot.page_path,
+      page_fragment: page_snapshot.page_fragment,
+      page_query: page_snapshot.page_query,
+      page_extension: page_snapshot.page_extension,
       page_referrer: (page_referrer === '' || page_referrer === null || page_referrer === undefined) ? null : page_referrer,
     }, {
       pv_count: pv_count
@@ -755,16 +766,16 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
 
     templateStorage.setItem(storage_name, JSON.stringify(event_info));
 
-    if (enable_logs) { log(event_name, '>', '  🟢 Valid', event_name, 'event'); }
+    if (enable_logs) { log(event_name, '>', '  ðŸŸ¢ Valid', event_name, 'event'); }
 
     return true;
 
     // Orphan events
   } else if (event_name !== 'page_view' && !storage_value) {
-    if (enable_logs) { log(event_name, '>', '  🔴 Event fired before a page view event. The first event on any page must be page_view.'); }
+    if (enable_logs) { log(event_name, '>', '  ðŸ”´ Event fired before a page view event. The first event on any page must be page_view.'); }
 
     if (enable_logs) { log(event_name, '>', 'REQUEST STATUS'); }
-    if (enable_logs) { log(event_name, '>', '  🔴 Request aborted'); }
+    if (enable_logs) { log(event_name, '>', '  ðŸ”´ Request aborted'); }
 
     data.gtmOnSuccess();
     return false;
@@ -793,7 +804,7 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
 
     templateStorage.setItem(storage_name, JSON.stringify(event_info));
 
-    if (enable_logs) { log(event_name, '>', '  🟢 Valid', event_name, 'event'); }
+    if (enable_logs) { log(event_name, '>', '  ðŸŸ¢ Valid', event_name, 'event'); }
 
     return true;
   }
