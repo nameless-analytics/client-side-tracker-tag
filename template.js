@@ -172,21 +172,21 @@ if (enable_logs) { log(event_name, '>', 'NAMELESS ANALYTICS'); }
 if (enable_logs) { log(event_name, '>', 'CHECKING CONFIGURATION VARIABLE'); }
 
 if (config === undefined || config.is_na_config_variable !== true) {
-  if (enable_logs) { log(event_name, '>', '  ðŸ”´ Tracker configuration error: event has invalid Nameless Analytics Client-Side tracker configuration variable'); }
+  if (enable_logs) { log(event_name, '>', '  🔴 Tracker configuration error: event has invalid Nameless Analytics Client-Side tracker configuration variable'); }
 
   if (enable_logs) { log(event_name, '>', 'REQUEST STATUS'); }
-  if (enable_logs) { log(event_name, '>', '  ðŸ”´ Request aborted'); }
+  if (enable_logs) { log(event_name, '>', '  🔴 Request aborted'); }
   data.gtmOnSuccess();
   return;
 } else {
-  if (enable_logs) { log(event_name, '>', '  ðŸŸ¢ Valid Nameless Analytics Client-Side tracker configuration variable'); }
+  if (enable_logs) { log(event_name, '>', '  🟢 Valid Nameless Analytics Client-Side tracker configuration variable'); }
 }
 
 if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', 'TRACKER TAG CONFIGURATION'); }
-if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  ðŸ‘‰ Server-side requests endpoint path:', full_endpoint); }
-if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  ðŸ‘‰ Load libraries in first-party mode:', (config.load_libraries_from_custom_location) ? 'Yes' : 'No'); }
-if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  ðŸ‘‰ Enable cross-domain tracking?', (config.enable_cross_domain_tracking) ? 'Yes' : 'No'); }
-if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  ðŸ‘‰ Respect Google Consent Mode?', (respect_consent_mode) ? 'Yes' : 'No'); }
+if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  👉 Server-side requests endpoint path:', full_endpoint); }
+if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  👉 Load libraries in first-party mode:', (config.load_libraries_from_custom_location) ? 'Yes' : 'No'); }
+if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  👉 Enable cross-domain tracking?', (config.enable_cross_domain_tracking) ? 'Yes' : 'No'); }
+if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  👉 Respect Google Consent Mode?', (respect_consent_mode) ? 'Yes' : 'No'); }
 
 
 // --------------------------------------------------------------------------------------------------------------
@@ -200,47 +200,47 @@ if (queryPermission('inject_script', ua_parser_url)) {
   injectScript(
     ua_parser_url,
     () => { // UA parser library loaded
-      if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  ðŸŸ¢ UA parser library loaded from:', ua_parser_url); }
+      if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  🟢 UA parser library loaded from:', ua_parser_url); }
 
       // Load Main library
       if (queryPermission('inject_script', na_url)) {
         injectScript(
           na_url,
           () => { // Main library loaded  
-            if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  ðŸŸ¢ Main library loaded from:', na_url); }
+            if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  🟢 Main library loaded from:', na_url); }
 
             send_request(full_endpoint);
           },
           () => { // Main library not loaded
-            if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  ðŸ”´ Main library not loaded from:', na_url); }
+            if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  🔴 Main library not loaded from:', na_url); }
 
             if (enable_logs) { log(event_name, '>', 'REQUEST STATUS'); }
-            if (enable_logs) { log(event_name, '>', '  ðŸ”´ Request aborted'); }
+            if (enable_logs) { log(event_name, '>', '  🔴 Request aborted'); }
             data.gtmOnSuccess();
           }, na_url // cached Main library
         );
       } else {
-        if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  ðŸ”´ Permission denied: unable to load Main library from', na_url); }
+        if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  🔴 Permission denied: unable to load Main library from', na_url); }
 
         if (enable_logs) { log(event_name, '>', 'REQUEST STATUS'); }
-        if (enable_logs) { log(event_name, '>', '  ðŸ”´ Request aborted'); }
+        if (enable_logs) { log(event_name, '>', '  🔴 Request aborted'); }
         data.gtmOnSuccess();
       }
 
     },
     () => { // UA parser library not loaded
-      if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  ðŸ”´ UA parser library not loaded from:', ua_parser_url); }
+      if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  🔴 UA parser library not loaded from:', ua_parser_url); }
 
       if (enable_logs) { log(event_name, '>', 'REQUEST STATUS'); }
-      if (enable_logs) { log(event_name, '>', '  ðŸ”´ Request aborted'); }
+      if (enable_logs) { log(event_name, '>', '  🔴 Request aborted'); }
       data.gtmOnSuccess();
     }, ua_parser_url // cached UA parser library
   );
 } else {
-  if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  ðŸ”´ Permission denied: unable to load UA parser library from', ua_parser_url); }
+  if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  🔴 Permission denied: unable to load UA parser library from', ua_parser_url); }
 
   if (enable_logs) { log(event_name, '>', 'REQUEST STATUS'); }
-  if (enable_logs) { log(event_name, '>', '  ðŸ”´ Request aborted'); }
+  if (enable_logs) { log(event_name, '>', '  🔴 Request aborted'); }
   data.gtmOnSuccess();
 }
 
@@ -263,15 +263,15 @@ function send_request(full_endpoint) {
 
     // Check if consent mode is present
     if (consent_type === 'Consent mode not present') {
-      if (enable_logs) { log(event_name, '>', '  ðŸ”´ Google Consent Mode not found'); }
+      if (enable_logs) { log(event_name, '>', '  🔴 Google Consent Mode not found'); }
 
       if (enable_logs) { log(event_name, '>', 'REQUEST STATUS'); }
-      if (enable_logs) { log(event_name, '>', '  ðŸ”´ Request aborted'); }
+      if (enable_logs) { log(event_name, '>', '  🔴 Request aborted'); }
       data.gtmOnSuccess();
     } else if (consent_type === 'Default' || consent_type === 'Update') {
       // Consent denied
       if (!isConsentGranted("analytics_storage")) {
-        if (enable_logs) { log(event_name, '>', '  ðŸ”´ analytics_storage denied'); }
+        if (enable_logs) { log(event_name, '>', '  🔴 analytics_storage denied'); }
 
         // Save temp cookie
         if (event_name === 'page_view' && pv_count === 1) {
@@ -307,7 +307,7 @@ function send_request(full_endpoint) {
 
           // When consent is granted
           consent_listener_called = true;
-          if (enable_logs) { log(event_name, '>', '  ðŸŸ¢ analytics_storage granted'); }
+          if (enable_logs) { log(event_name, '>', '  🟢 analytics_storage granted'); }
 
           // if (enable_logs && event_name === 'page_view') {log(event_name, '>', 'CHECKING TEMP COOKIE');}
           const temp_cookie_value = get_cookie('na_temp');
@@ -335,7 +335,7 @@ function send_request(full_endpoint) {
 
         // Consent granted  
       } else if (isConsentGranted("analytics_storage")) {
-        if (enable_logs) { log(event_name, '>', '  ðŸŸ¢ analytics_storage granted'); }
+        if (enable_logs) { log(event_name, '>', '  🟢 analytics_storage granted'); }
 
         var temp_cookie_value = get_cookie('na_temp');
 
@@ -400,7 +400,7 @@ function set_cross_domain_listener(full_endpoint) {
       callInWindow('set_cross_domain_listener', full_endpoint, domains, respect_consent_mode, enable_logs);
       templateStorage.setItem('set_cross_domain_listener', true);
 
-      if (enable_logs && event_name === 'page_view') { log(event_name, '>', '  ðŸ‘‰ Cross-domain enabled for:', domains.join(', ')); }
+      if (enable_logs && event_name === 'page_view') { log(event_name, '>', '  👉 Cross-domain enabled for:', domains.join(', ')); }
     }
   }
 }
@@ -766,16 +766,16 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
 
     templateStorage.setItem(storage_name, JSON.stringify(event_info));
 
-    if (enable_logs) { log(event_name, '>', '  ðŸŸ¢ Valid', event_name, 'event'); }
+    if (enable_logs) { log(event_name, '>', '  🟢 Valid', event_name, 'event'); }
 
     return true;
 
     // Orphan events
   } else if (event_name !== 'page_view' && !storage_value) {
-    if (enable_logs) { log(event_name, '>', '  ðŸ”´ Event fired before a page view event. The first event on any page must be page_view.'); }
+    if (enable_logs) { log(event_name, '>', '  🔴 Event fired before a page view event. The first event on any page must be page_view.'); }
 
     if (enable_logs) { log(event_name, '>', 'REQUEST STATUS'); }
-    if (enable_logs) { log(event_name, '>', '  ðŸ”´ Request aborted'); }
+    if (enable_logs) { log(event_name, '>', '  🔴 Request aborted'); }
 
     data.gtmOnSuccess();
     return false;
@@ -804,7 +804,7 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
 
     templateStorage.setItem(storage_name, JSON.stringify(event_info));
 
-    if (enable_logs) { log(event_name, '>', '  ðŸŸ¢ Valid', event_name, 'event'); }
+    if (enable_logs) { log(event_name, '>', '  🟢 Valid', event_name, 'event'); }
 
     return true;
   }
