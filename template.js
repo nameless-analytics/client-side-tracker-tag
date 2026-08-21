@@ -29,6 +29,7 @@ const generateRandom = require('generateRandom');
 const setCookie = require('setCookie');
 const getCookieValues = require('getCookieValues');
 const makeInteger = require('makeInteger');
+const fromBase64 = require('fromBase64');
 
 
 // --------------------------------------------------------------------------------------------------------------
@@ -106,7 +107,8 @@ const alphanumeric_event_id = generate_alphanumeric();
 
 
 // Cross-domain
-const raw_cross_domain_id = getQueryParameters('na_id');
+const encoded_cross_domain_id = getQueryParameters('na_id');
+const raw_cross_domain_id = (encoded_cross_domain_id) ? fromBase64(encoded_cross_domain_id) : null;
 const CROSS_DOMAIN_MAX_AGE_MS = 5 * 60 * 1000;
 
 let cross_domain_id = null;
