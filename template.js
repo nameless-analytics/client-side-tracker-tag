@@ -28,6 +28,7 @@ const Object = require('Object');
 const generateRandom = require('generateRandom');
 const setCookie = require('setCookie');
 const getCookieValues = require('getCookieValues');
+const makeInteger = require('makeInteger');
 
 
 // --------------------------------------------------------------------------------------------------------------
@@ -35,7 +36,9 @@ const getCookieValues = require('getCookieValues');
 // --------------------------------------------------------------------------------------------------------------
 
 const config = data.config_variable;
+const respect_consent_mode = config.respect_consent_mode;
 const event_name = (data.event_name === 'standard') ? data.standard_event_name : data.custom_event_name;
+
 
 // Logs
 let enable_logs = false;
@@ -53,8 +56,8 @@ if (config !== undefined && config.enable_logs) {
   enable_logs = true;
 }
 
-// Event data
-const timestamp = getTimestampMillis();
+
+// Page data
 const page_snapshot = {
   page_hostname_protocol: getUrl('protocol') || null,
   page_hostname: getUrl('host') || null,
@@ -66,6 +69,32 @@ const page_snapshot = {
   page_extension: getUrl('extension') || null
 };
 
+const retrieve_page_status_code_storage_value = templateStorage.getItem('page_status_code') || false;
+let retrieve_page_status_code = retrieve_page_status_code_storage_value;
+
+if (config.add_page_status_code && event_name === 'page_view') {
+  retrieve_page_status_code = true;
+  if (!retrieve_page_status_code_storage_value) {
+    templateStorage.setItem('page_status_code', true);
+  }
+}
+
+const temp_page_referrer = getQueryParameters('na_page_referrer');
+var page_referrer = (temp_page_referrer) ? temp_page_referrer : getReferrerUrl();
+page_referrer = (page_referrer === '') ? null : page_referrer;
+
+var pv_count = templateStorage.getItem('pv_count_tracker'); // Count page_view events occurred in the same real page
+if (!pv_count && event_name === 'page_view') {
+  pv_count = 1;
+} else if (event_name === 'page_view') {
+  pv_count = pv_count + 1;
+}
+templateStorage.setItem('pv_count_tracker', pv_count);
+
+
+// Event data
+const timestamp = getTimestampMillis();
+
 const hostname = page_snapshot.page_hostname;
 const referrer_hostname = getReferrerUrl('host');
 const datalayer = copyFromWindow('dataLayer');
@@ -74,17 +103,28 @@ const datalayer_unique_event_id = copyFromDataLayer('gtm.uniqueEventId', 2);
 
 const alphanumeric_page_id = generate_alphanumeric();
 const alphanumeric_event_id = generate_alphanumeric();
-const cross_domain_id = getQueryParameters('na_id');
 
-const respect_consent_mode = config.respect_consent_mode;
 
-const retrieve_page_status_code_storage_value = templateStorage.getItem('page_status_code') || false;
-let retrieve_page_status_code = retrieve_page_status_code_storage_value;
+// Cross-domain
+const raw_cross_domain_id = getQueryParameters('na_id');
+const CROSS_DOMAIN_MAX_AGE_MS = 5 * 60 * 1000;
 
-if (config.add_page_status_code && event_name === 'page_view') {
-  retrieve_page_status_code = true;
-  if (!retrieve_page_status_code_storage_value) {
-    templateStorage.setItem('page_status_code', true);
+let cross_domain_id = null;
+
+if (config.enable_cross_domain_tracking && event_name === 'page_view' && pv_count === 1 && raw_cross_domain_id) {
+  const separator_index = raw_cross_domain_id.lastIndexOf('.');
+  
+  if (separator_index > 0 && separator_index < raw_cross_domain_id.length - 1) {
+    const session_id = raw_cross_domain_id.substring(0, separator_index);
+
+    const decoration_timestamp = makeInteger(raw_cross_domain_id.substring(separator_index + 1));
+
+    // "timestamp" è il momento di estrazione/esecuzione del tag
+    const elapsed_time = timestamp - decoration_timestamp;
+
+    const is_valid = session_id !== '' && decoration_timestamp > 0 && elapsed_time >= 0 && elapsed_time <= CROSS_DOMAIN_MAX_AGE_MS;
+
+    if (is_valid) {cross_domain_id = session_id;}
   }
 }
 
@@ -123,20 +163,6 @@ var campaign_id = (temp_campaign_id) ? temp_campaign_id : (utm_id || null);
 var campaign_click_id = (temp_campaign_click_id) ? temp_campaign_click_id : (utm_click_id || gclid || dclid || gclsrc || wbraid || gbraid || msclkid || fbclid || ttclid || twclid || epik || li_fat_id || scclid || null);
 var campaign_term = (temp_campaign_term) ? temp_campaign_term : (utm_term || null);
 var campaign_content = (temp_campaign_content) ? temp_campaign_content : (utm_content || null);
-
-const temp_page_referrer = getQueryParameters('na_page_referrer');
-
-var page_referrer = (temp_page_referrer) ? temp_page_referrer : getReferrerUrl();
-page_referrer = (page_referrer === '') ? null : page_referrer;
-
-// Count page_view events occurred in the same real page
-var pv_count = templateStorage.getItem('pv_count_tracker');
-if (!pv_count && event_name === 'page_view') {
-  pv_count = 1;
-} else if (event_name === 'page_view') {
-  pv_count = pv_count + 1;
-}
-templateStorage.setItem('pv_count_tracker', pv_count);
 
 
 // Default script paths
