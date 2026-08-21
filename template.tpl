@@ -924,8 +924,8 @@ if (enable_logs) { log(event_name, '>', 'NAMELESS ANALYTICS'); }
 // CHECK CROSS DOMAIN ID
 // --------------------------------------------------------------------------------------------------------------
 
-if (enable_logs) {log(event_name, '>', 'CHECKING CROSS-DOMAIN ID');}
 if (config.enable_cross_domain_tracking && event_name === 'page_view' && pv_count === 1 && encoded_cross_domain_id) {
+  if (enable_logs) {log(event_name, '>', 'CHECKING CROSS-DOMAIN ID');}
 
   if (!raw_cross_domain_id) {
     if (enable_logs) {log(event_name, '>', '  🔴 Invalid cross-domain ID: unable to decode na_id');}
