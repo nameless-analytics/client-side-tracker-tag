@@ -187,8 +187,14 @@ The following success and status messages indicate a correct implementation:
 | | [event_name] > Firestore: [Status] | Firestore user and session persistence outcome |
 | | [event_name] > BigQuery: [Status] | BigQuery streaming insertion outcome |
 | | [event_name] > Custom Endpoint: [Status] | Forwarding outcome to custom endpoint |
-| Cross-domain | cross-domain > 🟢 Valid user data. Cross-domain URL link decoration will be applied | Success log for `na_id` link decoration when consent is granted |
-| | cross-domain > Decorating URL with na_temp params: [JSON] | Confirms that anonymous acquisition data is being transferred across-domains while consent is denied |
+| Cross-domain | cross-domain > 🟢 Valid user data. Cross-domain URL link decoration will be applied | The server-side handshake returned a valid session ID and the outbound URL will be decorated with an encoded `na_id` value |
+| | cross-domain > Decorating URL with na_temp params: [JSON] | Confirms that anonymous acquisition data is being transferred across domains while consent is denied |
+| | [page_view] > CHECKING CROSS-DOMAIN ID | An `na_id` value was detected and is being validated on the first page view |
+| | [page_view] > 🟢 Valid cross-domain ID | The value was decoded successfully and its structure and timestamp are valid |
+| | [page_view] > 🟠 Expired cross-domain ID | The value has a valid structure but was generated more than five minutes ago |
+| | [page_view] > 🔴 Invalid cross-domain ID: unable to decode na_id | The `na_id` value could not be decoded from Base64 |
+| | [page_view] > 🔴 Invalid cross-domain ID: invalid format | The decoded value does not contain a valid session ID and timestamp |
+| | [page_view] > 🔴 Invalid cross-domain ID | The decoded value contains an invalid timestamp or a timestamp in the future |
 
 
 ## Troubleshooting
