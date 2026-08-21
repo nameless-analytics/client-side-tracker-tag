@@ -851,27 +851,10 @@ const alphanumeric_event_id = generate_alphanumeric();
 
 // Cross-domain
 const encoded_cross_domain_id = getQueryParameters('na_id');
-const raw_cross_domain_id = (encoded_cross_domain_id) ? fromBase64(encoded_cross_domain_id) : null;
+const raw_cross_domain_id = encoded_cross_domain_id ? fromBase64(encoded_cross_domain_id) : null;
 const CROSS_DOMAIN_MAX_AGE_MS = 5 * 60 * 1000;
 
 let cross_domain_id = null;
-
-if (config.enable_cross_domain_tracking && event_name === 'page_view' && pv_count === 1 && raw_cross_domain_id) {
-  const separator_index = raw_cross_domain_id.lastIndexOf('.');
-  
-  if (separator_index > 0 && separator_index < raw_cross_domain_id.length - 1) {
-    const session_id = raw_cross_domain_id.substring(0, separator_index);
-
-    const decoration_timestamp = makeInteger(raw_cross_domain_id.substring(separator_index + 1));
-
-    // "timestamp" è il momento di estrazione/esecuzione del tag
-    const elapsed_time = timestamp - decoration_timestamp;
-
-    const is_valid = session_id !== '' && decoration_timestamp > 0 && elapsed_time >= 0 && elapsed_time <= CROSS_DOMAIN_MAX_AGE_MS;
-
-    if (is_valid) {cross_domain_id = session_id;}
-  }
-}
 
 
 // Acquisition
@@ -935,11 +918,50 @@ const endpoint_path = config.endpoint_path;
 const full_endpoint = 'https://' + endpoint_domain_name + endpoint_path;
 
 
+if (enable_logs) { log(event_name, '>', 'NAMELESS ANALYTICS'); }
+
+// --------------------------------------------------------------------------------------------------------------
+// CHECK CROSS DOMAIN ID
+// --------------------------------------------------------------------------------------------------------------
+
+if (enable_logs) {log(event_name, '>', 'CHECKING CROSS-DOMAIN ID');}
+if (config.enable_cross_domain_tracking && event_name === 'page_view' && pv_count === 1 && encoded_cross_domain_id) {
+
+  if (!raw_cross_domain_id) {
+    if (enable_logs) {log(event_name, '>', '  🔴 Invalid cross-domain ID: unable to decode na_id');}
+
+  } else {
+    const separator_index = raw_cross_domain_id.lastIndexOf('.');
+
+    if (separator_index <= 0 || separator_index >= raw_cross_domain_id.length - 1) {
+      if (enable_logs) {log(event_name, '>', '  🔴 Invalid cross-domain ID: invalid format');}
+    } else {
+      const session_id = raw_cross_domain_id.substring(0, separator_index);
+      const decoration_timestamp = makeInteger(raw_cross_domain_id.substring(separator_index + 1));
+      const elapsed_time = timestamp - decoration_timestamp;
+      const is_valid = session_id !== '' && decoration_timestamp > 0 && elapsed_time >= 0 && elapsed_time <= CROSS_DOMAIN_MAX_AGE_MS;
+      const is_expired = session_id !== '' && decoration_timestamp > 0 && elapsed_time > CROSS_DOMAIN_MAX_AGE_MS;
+
+      if (is_valid) {
+        cross_domain_id = session_id;
+
+        if (enable_logs) {log(event_name, '>', '  🟢 Valid cross-domain ID');}
+
+      } else if (is_expired) {
+        if (enable_logs) {log(event_name, '>', '  🟠 Expired cross-domain ID');}
+      } else {
+        if (enable_logs) {log(event_name, '>', '  🔴 Invalid cross-domain ID');}
+      }
+    }
+  }
+}
+
+
 // --------------------------------------------------------------------------------------------------------------
 // CHECK CONFIGURATION VARIABLE
 // --------------------------------------------------------------------------------------------------------------
 
-if (enable_logs) { log(event_name, '>', 'NAMELESS ANALYTICS'); }
+
 if (enable_logs) { log(event_name, '>', 'CHECKING CONFIGURATION VARIABLE'); }
 
 if (config === undefined || config.is_na_config_variable !== true) {
