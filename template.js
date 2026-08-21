@@ -109,7 +109,7 @@ const alphanumeric_event_id = generate_alphanumeric();
 // Cross-domain
 const encoded_cross_domain_id = getQueryParameters('na_id');
 const raw_cross_domain_id = encoded_cross_domain_id ? fromBase64(encoded_cross_domain_id) : null;
-const CROSS_DOMAIN_MAX_AGE_MS = 5 * 60 * 1000; // Cross-domain links are valids for 5 minutes
+const CROSS_DOMAIN_MAX_AGE_MS = 5 * 60 * 1000; // Cross-domain links are valid for 5 minutes
 
 let cross_domain_id = null;
 
