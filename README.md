@@ -194,6 +194,7 @@ The following success and status messages indicate a correct implementation:
 | | [page_view] > 🟠 Expired cross-domain ID | The value has a valid structure but was generated more than five minutes ago |
 | | [page_view] > 🔴 Invalid cross-domain ID: unable to decode na_id | The `na_id` value could not be decoded from Base64 |
 | | [page_view] > 🔴 Invalid cross-domain ID: invalid format | The decoded value does not contain a valid session ID and timestamp |
+| | [page_view] > 🔴 Invalid cross-domain ID: invalid session_id format | The structure is correct but the `session_id` does not match the required format: 15 alphanumeric characters, an underscore, 15 alphanumeric characters |
 | | [page_view] > 🔴 Invalid cross-domain ID | The decoded value contains an invalid timestamp or a timestamp in the future |
 
 

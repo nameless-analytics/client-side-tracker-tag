@@ -95,12 +95,12 @@ ___TEMPLATE_PARAMETERS___
                     "displayValue": "newsletter_sign_up"
                   },
                   {
-                    "value": "lead",
-                    "displayValue": "lead"
+                    "value": "new_lead",
+                    "displayValue": "new_lead"
                   },
                   {
-                    "value": "account_creation",
-                    "displayValue": "account_creation"
+                    "value": "sign_up",
+                    "displayValue": "sign_up"
                   }
                 ],
                 "simpleValueType": true,
@@ -196,9 +196,9 @@ ___TEMPLATE_PARAMETERS___
                   {
                     "type": "REGEX",
                     "args": [
-                      "^(?!account_creation$).*"
+                      "^(?!sign_up$).*"
                     ],
-                    "errorMessage": "Please use standard event name for account_creation."
+                    "errorMessage": "Please use standard event name for sign_up."
                   },
                   {
                     "type": "REGEX",
@@ -210,9 +210,9 @@ ___TEMPLATE_PARAMETERS___
                   {
                     "type": "REGEX",
                     "args": [
-                      "^(?!lead$).*"
+                      "^(?!new_lead$).*"
                     ],
-                    "errorMessage": "Please use standard event name for lead."
+                    "errorMessage": "Please use standard event name for new_lead."
                   },
                   {
                     "type": "REGEX",
