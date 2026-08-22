@@ -567,6 +567,13 @@ ___TEMPLATE_PARAMETERS___
                   {
                     "type": "REGEX",
                     "args": [
+                      "^(?!device_type$).*"
+                    ],
+                    "errorMessage": "Can\u0027t remove device_type parameter."
+                  },
+                  {
+                    "type": "REGEX",
+                    "args": [
                       "^(?!device_vendor$).*"
                     ],
                     "errorMessage": "Can\u0027t remove device_vendor parameter."
