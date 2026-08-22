@@ -426,6 +426,13 @@ ___TEMPLATE_PARAMETERS___
                       "^(?!country$).*"
                     ],
                     "errorMessage": "Can\u0027t add/override country parameter."
+                  },
+                  {
+                    "type": "REGEX",
+                    "args": [
+                      "^(?!cross_domain_id$).*"
+                    ],
+                    "errorMessage": "Can\u0027t add/override cross_domain_id parameter."
                   }
                 ]
               },
@@ -640,6 +647,13 @@ ___TEMPLATE_PARAMETERS___
                       "^(?!country$).*"
                     ],
                     "errorMessage": "Can\u0027t remove country parameter."
+                  },
+                  {
+                    "type": "REGEX",
+                    "args": [
+                      "^(?!cross_domain_id$).*"
+                    ],
+                    "errorMessage": "Can\u0027t remove cross_domain_id parameter."
                   }
                 ]
               }
