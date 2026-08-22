@@ -57,9 +57,9 @@ Please note:
 * search_result_click: Send this event when a search result is clicked
 * login: Send this event when a user logs in
 * logout: Send this event when a user logs out
-* account_creation: Send this event when a user creates an account
-* form_submission: Send this event when a user submits a form
-* newsletter_subscription: Send this event when a user subscribes to a newsletter
+* sign_up: Send this event when a user creates an account
+* new_lead: Send this event when a user submits a form
+* newsletter_sign_up: Send this event when a user subscribes to a newsletter
 
 For more information see [Setup Guides](https://github.com/nameless-analytics/nameless-analytics/blob/main/setup-guides/SETUP-GUIDES.md#how-to-track-standard-events).
 
@@ -69,9 +69,9 @@ Choose a custom event name for the event.
 To maintain consistency between events, it is highly recommended to use _snake_case_ notation style (with underscores between words) to create descriptive, easily interpretable names. 
 
 Examples:
-* button_clicked
-* form_submitted
-* video_played
+* click_button
+* start_configuration
+* play_video
 
 Avoid:
 * Spaces: button clicked

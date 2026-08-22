@@ -36,6 +36,10 @@ const fromBase64 = require('fromBase64');
 // CONSTANTS
 // --------------------------------------------------------------------------------------------------------------
 
+const library_version_number = '1.0.0';
+const id_length = 15;
+const id_chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
 const config = data.config_variable;
 const respect_consent_mode = config.respect_consent_mode;
 const event_name = (data.event_name === 'standard') ? data.standard_event_name : data.custom_event_name;
@@ -151,15 +155,15 @@ var campaign_content = (temp_campaign_content) ? temp_campaign_content : (utm_co
 
 
 // Default script paths
-const default_na_url = 'https://cdn.jsdelivr.net/gh/nameless-analytics/client-side-tracker-tag@main/lib/nameless-analytics_v1.0.0.min.js'; // Minified
-// const default_na_url = 'https://cdn.jsdelivr.net/gh/nameless-analytics/client-side-tracker-tag@main/lib/nameless-analytics_v1.0.0.js'; // Non-minified
+const default_na_url = 'https://cdn.jsdelivr.net/gh/nameless-analytics/client-side-tracker-tag@main/lib/nameless-analytics_v'+ library_version_number + '.min.js'; // Minified
+//const default_na_url = 'https://cdn.jsdelivr.net/gh/nameless-analytics/client-side-tracker-tag@main/lib/nameless-analytics_v'+ library_version_number + '.js'; // Non-minified
 
 const default_ua_parser_url = 'https://cdn.jsdelivr.net/npm/ua-parser-js/dist/ua-parser.pack.min.js';
 
 
 // Custom script paths
-const custom_na_url = 'https://' + config.custom_libraries_domain + config.custom_libraries_path + '/nameless-analytics_v1.0.0.min.js'; // Minified
-// const custom_na_url = 'https://' + config.custom_libraries_domain + config.custom_libraries_path + '/nameless-analytics_v1.0.0.js'; // Non-minified
+const custom_na_url = 'https://' + config.custom_libraries_domain + config.custom_libraries_path + '/nameless-analytics_v'+ library_version_number + '.min.js'; // Minified
+// const custom_na_url = 'https://' + config.custom_libraries_domain + config.custom_libraries_path + '/nameless-analytics_v'+ library_version_number + '.js'; // Non-minified
 
 const custom_ua_parser_url = 'https://' + config.custom_libraries_domain + config.custom_libraries_path + '/ua-parser.pack.min.js';
 
@@ -196,19 +200,22 @@ if (config.enable_cross_domain_tracking && event_name === 'page_view' && pv_coun
       const session_id = raw_cross_domain_id.substring(0, separator_index);
       const decoration_timestamp = makeInteger(raw_cross_domain_id.substring(separator_index + 1));
       const elapsed_time = timestamp - decoration_timestamp;
-      const is_valid = session_id !== '' && decoration_timestamp > 0 && elapsed_time >= 0 && elapsed_time <= CROSS_DOMAIN_MAX_AGE_MS;
-      const is_expired = session_id !== '' && decoration_timestamp > 0 && elapsed_time > CROSS_DOMAIN_MAX_AGE_MS;
+
+      const is_valid_format = is_valid_session_id(session_id);
+      const is_valid = is_valid_format && decoration_timestamp > 0 && elapsed_time >= 0 && elapsed_time <= CROSS_DOMAIN_MAX_AGE_MS;
+      const is_expired = is_valid_format && decoration_timestamp > 0 && elapsed_time > CROSS_DOMAIN_MAX_AGE_MS;
 
       if (is_valid) {
         cross_domain_id = session_id;
-
-        if (enable_logs) {log(event_name, '>', '  🟢 Valid cross-domain ID');}
-
+        if (enable_logs) { log(event_name, '>', '  🟢 Valid cross-domain ID'); }
       } else if (is_expired) {
-        if (enable_logs) {log(event_name, '>', '  🟠 Expired cross-domain ID');}
+        if (enable_logs) { log(event_name, '>', '  🟠 Expired cross-domain ID'); }
+      } else if (!is_valid_format) {
+        if (enable_logs) { log(event_name, '>', '  🔴 Invalid cross-domain ID: invalid session_id format'); }
       } else {
-        if (enable_logs) {log(event_name, '>', '  🔴 Invalid cross-domain ID');}
+        if (enable_logs) { log(event_name, '>', '  🔴 Invalid cross-domain ID'); }
       }
+
     }
   }
 }
@@ -869,4 +876,16 @@ function generate_alphanumeric() {
     alphanumeric_id += chars.charAt(generateRandom(0, chars.length - 1));
   }
   return alphanumeric_id;
+}
+
+// Check session_id format: 15 alphanumeric + _ + 15 alphanumeric
+function is_valid_session_id(value) {
+  if (!value || value.length !== id_length * 2 + 1) return false;
+  if (value.charAt(id_length) !== '_') return false;
+
+  for (var i = 0; i < value.length; i++) {
+    if (i === id_length) continue;
+    if (id_chars.indexOf(value.charAt(i)) === -1) return false;
+  }
+  return true;
 }
