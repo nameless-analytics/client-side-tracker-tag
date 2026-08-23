@@ -1618,11 +1618,9 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
 
 // Generate random alphanumeric ID 
 function generate_alphanumeric() {
-  var max_length = 15;
-  var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   var alphanumeric_id = '';
-  for (var i = 0; i < max_length; i++) {
-    alphanumeric_id += chars.charAt(generateRandom(0, chars.length - 1));
+  for (var i = 0; i < id_length; i++) {
+    alphanumeric_id += id_chars.charAt(generateRandom(0, id_chars.length - 1));
   }
   return alphanumeric_id;
 }
