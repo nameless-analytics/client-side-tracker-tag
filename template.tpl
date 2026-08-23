@@ -248,7 +248,7 @@ ___TEMPLATE_PARAMETERS___
         "displayName": "Event parameters",
         "alwaysInSummary": true,
         "defaultValue": false,
-        "help": "Add or override event parameters to the request in event_data. If a parameter has the same name, it will be overridden.\n\u003c/br\u003e\u003c/br\u003e\nReserved event parameters: \u003c/br\u003e \n• event_type \u003c/br\u003e \n• channel_grouping \u003c/br\u003e \n• source \u003c/br\u003e \n• tld_source \u003c/br\u003e\n• campaign \u003c/br\u003e \n• campaign_id \u003c/br\u003e\n• campaign_click_id \u003c/br\u003e\n• campaign_term \u003c/br\u003e \n• campaign_content \u003c/br\u003e \n• user_agent \u003c/br\u003e \n• browser_name \u003c/br\u003e \n• browser_language \u003c/br\u003e \n• browser_version \u003c/br\u003e \n• device_type \u003c/br\u003e \n• device_vendor \u003c/br\u003e \n• device_model \u003c/br\u003e \n• os_name \u003c/br\u003e \n• os_version \u003c/br\u003e \n• screen_size \u003c/br\u003e \n• viewport_size \u003c/br\u003e\n• hostname \u003c/br\u003e\n• city \u003c/br\u003e\n• country",
+        "help": "Add or override event parameters to the request in event_data. If a parameter has the same name, it will be overridden.\n\u003c/br\u003e\u003c/br\u003e\nReserved event parameters: \u003c/br\u003e \n• event_type \u003c/br\u003e \n• channel_grouping \u003c/br\u003e \n• source \u003c/br\u003e \n• tld_source \u003c/br\u003e\n• campaign \u003c/br\u003e \n• campaign_id \u003c/br\u003e\n• campaign_click_id \u003c/br\u003e\n• campaign_term \u003c/br\u003e \n• campaign_content \u003c/br\u003e \n• user_agent \u003c/br\u003e \n• browser_name \u003c/br\u003e \n• browser_language \u003c/br\u003e \n• browser_version \u003c/br\u003e \n• device_type \u003c/br\u003e \n• device_vendor \u003c/br\u003e \n• device_model \u003c/br\u003e \n• os_name \u003c/br\u003e \n• os_version \u003c/br\u003e \n• screen_size \u003c/br\u003e \n• viewport_size \u003c/br\u003e\n• city \u003c/br\u003e\n• country \u003c/br\u003e\n• cross_domain_id",
         "subParams": [
           {
             "type": "SIMPLE_TABLE",
@@ -409,13 +409,6 @@ ___TEMPLATE_PARAMETERS___
                   {
                     "type": "REGEX",
                     "args": [
-                      "^(?!hostname$).*"
-                    ],
-                    "errorMessage": "Can\u0027t add/override hostname parameter."
-                  },
-                  {
-                    "type": "REGEX",
-                    "args": [
                       "^(?!city$).*"
                     ],
                     "errorMessage": "Can\u0027t add/override city parameter."
@@ -469,7 +462,7 @@ ___TEMPLATE_PARAMETERS___
         "displayName": "",
         "alwaysInSummary": true,
         "defaultValue": false,
-        "help": "Remove event parameters from the request in event_data. If a parameter has the same name, it will be overridden.\n\u003c/br\u003e\u003c/br\u003e\nReserved event parameters: \u003c/br\u003e \n• event_type \u003c/br\u003e \n• channel_grouping \u003c/br\u003e \n• source \u003c/br\u003e \n• tld_source \u003c/br\u003e\n• campaign \u003c/br\u003e \n• campaign_id \u003c/br\u003e\n• campaign_click_id \u003c/br\u003e\n• campaign_term \u003c/br\u003e \n• campaign_content \u003c/br\u003e \n• user_agent \u003c/br\u003e \n• browser_name \u003c/br\u003e \n• browser_language \u003c/br\u003e \n• browser_version \u003c/br\u003e \n• device_type \u003c/br\u003e \n• device_vendor \u003c/br\u003e \n• device_model \u003c/br\u003e \n• os_name \u003c/br\u003e \n• os_version \u003c/br\u003e \n• screen_size \u003c/br\u003e \n• viewport_size \u003c/br\u003e\n• hostname \u003c/br\u003e\n• city \u003c/br\u003e\n• country",
+        "help": "Remove event parameters from the request in event_data. If a parameter has the same name, it will be overridden.\n\u003c/br\u003e\u003c/br\u003e\nReserved event parameters: \u003c/br\u003e \n• event_type \u003c/br\u003e \n• channel_grouping \u003c/br\u003e \n• source \u003c/br\u003e \n• tld_source \u003c/br\u003e\n• campaign \u003c/br\u003e \n• campaign_id \u003c/br\u003e\n• campaign_click_id \u003c/br\u003e\n• campaign_term \u003c/br\u003e \n• campaign_content \u003c/br\u003e \n• user_agent \u003c/br\u003e \n• browser_name \u003c/br\u003e \n• browser_language \u003c/br\u003e \n• browser_version \u003c/br\u003e \n• device_type \u003c/br\u003e \n• device_vendor \u003c/br\u003e \n• device_model \u003c/br\u003e \n• os_name \u003c/br\u003e \n• os_version \u003c/br\u003e \n• screen_size \u003c/br\u003e \n• viewport_size \u003c/br\u003e\n• city \u003c/br\u003e\n• country \u003c/br\u003e\n• cross_domain_id",
         "subParams": [
           {
             "type": "SIMPLE_TABLE",
@@ -630,13 +623,6 @@ ___TEMPLATE_PARAMETERS___
                   {
                     "type": "REGEX",
                     "args": [
-                      "^(?!hostname$).*"
-                    ],
-                    "errorMessage": "Can\u0027t remove hostname parameter."
-                  },
-                  {
-                    "type": "REGEX",
-                    "args": [
                       "^(?!city$).*"
                     ],
                     "errorMessage": "Can\u0027t remove city parameter."
@@ -682,7 +668,7 @@ ___TEMPLATE_PARAMETERS___
         "displayName": "",
         "alwaysInSummary": true,
         "defaultValue": false,
-        "help": "Add event parameters from the dataLayer.push() event that has triggered the tag.\u003cbr\u003e\u003c/br\u003e\n\nReserved dataLayer event parameters: \u003c/br\u003e \nReserved event parameters: \u003c/br\u003e \n• event_type \u003c/br\u003e \n• channel_grouping \u003c/br\u003e \n• source \u003c/br\u003e \n• tld_source \u003c/br\u003e\n• campaign \u003c/br\u003e \n• campaign_id \u003c/br\u003e\n• campaign_click_id \u003c/br\u003e\n• campaign_term \u003c/br\u003e \n• campaign_content \u003c/br\u003e \n• user_agent \u003c/br\u003e \n• browser_name \u003c/br\u003e \n• browser_language \u003c/br\u003e \n• browser_version \u003c/br\u003e \n• device_type \u003c/br\u003e \n• device_vendor \u003c/br\u003e \n• device_model \u003c/br\u003e \n• os_name \u003c/br\u003e \n• os_version \u003c/br\u003e \n• screen_size \u003c/br\u003e \n• viewport_size \u003c/br\u003e\n• hostname \u003c/br\u003e\n• city \u003c/br\u003e\n• country \u003c/br\u003e\u003c/br\u003e\n\nIf present the ecommerce object in the dataLayer will not be added in event data but it will be added in the ecommerce field."
+        "help": "Add event parameters from the dataLayer.push() event that has triggered the tag.\u003cbr\u003e\u003c/br\u003e\n\nReserved dataLayer event parameters: \u003c/br\u003e \nReserved event parameters: \u003c/br\u003e \n• event_type \u003c/br\u003e \n• channel_grouping \u003c/br\u003e \n• source \u003c/br\u003e \n• tld_source \u003c/br\u003e\n• campaign \u003c/br\u003e \n• campaign_id \u003c/br\u003e\n• campaign_click_id \u003c/br\u003e\n• campaign_term \u003c/br\u003e \n• campaign_content \u003c/br\u003e \n• user_agent \u003c/br\u003e \n• browser_name \u003c/br\u003e \n• browser_language \u003c/br\u003e \n• browser_version \u003c/br\u003e \n• device_type \u003c/br\u003e \n• device_vendor \u003c/br\u003e \n• device_model \u003c/br\u003e \n• os_name \u003c/br\u003e \n• os_version \u003c/br\u003e \n• screen_size \u003c/br\u003e \n• viewport_size \u003c/br\u003e\n• city \u003c/br\u003e\n• country \u003c/br\u003e\n• cross_domain_id \u003c/br\u003e\u003c/br\u003e\n\nIf present the ecommerce object in the dataLayer will not be added in event data but it will be added in the ecommerce field."
       }
     ]
   },
@@ -922,14 +908,14 @@ var campaign_content = (temp_campaign_content) ? temp_campaign_content : (utm_co
 const default_na_url = 'https://cdn.jsdelivr.net/gh/nameless-analytics/client-side-tracker-tag@main/lib/nameless-analytics_v'+ library_version_number + '.min.js'; // Minified
 //const default_na_url = 'https://cdn.jsdelivr.net/gh/nameless-analytics/client-side-tracker-tag@main/lib/nameless-analytics_v'+ library_version_number + '.js'; // Non-minified
 
-const default_ua_parser_url = 'https://cdn.jsdelivr.net/npm/ua-parser-js/dist/ua-parser.pack.min.js';
+const default_ua_parser_url = 'https://cdn.jsdelivr.net/npm/ua-parser-js@1.0.40/dist/ua-parser.pack.min.js';
 
 
 // Custom script paths
 const custom_na_url = 'https://' + config.custom_libraries_domain + config.custom_libraries_path + '/nameless-analytics_v'+ library_version_number + '.min.js'; // Minified
 // const custom_na_url = 'https://' + config.custom_libraries_domain + config.custom_libraries_path + '/nameless-analytics_v'+ library_version_number + '.js'; // Non-minified
 
-const custom_ua_parser_url = 'https://' + config.custom_libraries_domain + config.custom_libraries_path + '/ua-parser.pack.min.js';
+const custom_ua_parser_url = 'https://' + config.custom_libraries_domain + config.custom_libraries_path + '/ua-parser.pack.min.js'; //download the library from here: https://cdn.jsdelivr.net/npm/ua-parser-js@1.0.40/dist/ua-parser.pack.min.js
 
 
 // Script paths
@@ -1413,7 +1399,6 @@ function build_payload() {
         key !== 'os_version' &&
         key !== 'screen_size' &&
         key !== 'viewport_size' &&
-        key !== 'hostname' &&
         key !== 'city' &&
         key !== 'country') {
         event_info[key] = last_current_event_push[key];
@@ -1787,45 +1772,6 @@ ___WEB_PERMISSIONS___
                 "mapValue": [
                   {
                     "type": 1,
-                    "string": "get_channel_grouping"
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  }
-                ]
-              },
-              {
-                "type": 3,
-                "mapKey": [
-                  {
-                    "type": 1,
-                    "string": "key"
-                  },
-                  {
-                    "type": 1,
-                    "string": "read"
-                  },
-                  {
-                    "type": 1,
-                    "string": "write"
-                  },
-                  {
-                    "type": 1,
-                    "string": "execute"
-                  }
-                ],
-                "mapValue": [
-                  {
-                    "type": 1,
                     "string": "set_cross_domain_listener"
                   },
                   {
@@ -1944,45 +1890,6 @@ ___WEB_PERMISSIONS___
                   {
                     "type": 1,
                     "string": "get_user_data"
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  }
-                ]
-              },
-              {
-                "type": 3,
-                "mapKey": [
-                  {
-                    "type": 1,
-                    "string": "key"
-                  },
-                  {
-                    "type": 1,
-                    "string": "read"
-                  },
-                  {
-                    "type": 1,
-                    "string": "write"
-                  },
-                  {
-                    "type": 1,
-                    "string": "execute"
-                  }
-                ],
-                "mapValue": [
-                  {
-                    "type": 1,
-                    "string": "get_all_data_from_dataLayer"
                   },
                   {
                     "type": 8,

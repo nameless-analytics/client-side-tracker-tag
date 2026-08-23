@@ -107,6 +107,7 @@ These event parameters are reserved and can't be modified:
 - tld_source
 - city
 - country
+- cross_domain_id
 
 #### Add/override event level parameters
 Add or overwrite parameters for a specific event. Accepted values: strings, integers, floats, JSON and booleans.

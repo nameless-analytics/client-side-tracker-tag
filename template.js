@@ -158,14 +158,14 @@ var campaign_content = (temp_campaign_content) ? temp_campaign_content : (utm_co
 const default_na_url = 'https://cdn.jsdelivr.net/gh/nameless-analytics/client-side-tracker-tag@main/lib/nameless-analytics_v'+ library_version_number + '.min.js'; // Minified
 //const default_na_url = 'https://cdn.jsdelivr.net/gh/nameless-analytics/client-side-tracker-tag@main/lib/nameless-analytics_v'+ library_version_number + '.js'; // Non-minified
 
-const default_ua_parser_url = 'https://cdn.jsdelivr.net/npm/ua-parser-js/dist/ua-parser.pack.min.js';
+const default_ua_parser_url = 'https://cdn.jsdelivr.net/npm/ua-parser-js@1.0.40/dist/ua-parser.pack.min.js';
 
 
 // Custom script paths
 const custom_na_url = 'https://' + config.custom_libraries_domain + config.custom_libraries_path + '/nameless-analytics_v'+ library_version_number + '.min.js'; // Minified
 // const custom_na_url = 'https://' + config.custom_libraries_domain + config.custom_libraries_path + '/nameless-analytics_v'+ library_version_number + '.js'; // Non-minified
 
-const custom_ua_parser_url = 'https://' + config.custom_libraries_domain + config.custom_libraries_path + '/ua-parser.pack.min.js';
+const custom_ua_parser_url = 'https://' + config.custom_libraries_domain + config.custom_libraries_path + '/ua-parser.pack.min.js'; //download the library from here: https://cdn.jsdelivr.net/npm/ua-parser-js@1.0.40/dist/ua-parser.pack.min.js
 
 
 // Script paths
@@ -649,7 +649,6 @@ function build_payload() {
         key !== 'os_version' &&
         key !== 'screen_size' &&
         key !== 'viewport_size' &&
-        key !== 'hostname' &&
         key !== 'city' &&
         key !== 'country') {
         event_info[key] = last_current_event_push[key];
