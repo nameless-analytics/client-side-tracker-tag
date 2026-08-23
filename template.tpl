@@ -1400,7 +1400,8 @@ function build_payload() {
         key !== 'screen_size' &&
         key !== 'viewport_size' &&
         key !== 'city' &&
-        key !== 'country') {
+        key !== 'country' &&
+        key !== 'cross_domain_id') {
         event_info[key] = last_current_event_push[key];
       }
     }
