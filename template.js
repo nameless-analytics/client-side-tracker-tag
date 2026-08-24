@@ -239,6 +239,35 @@ if (config === undefined || config.is_na_config_variable !== true) {
   if (enable_logs) { log(event_name, '>', '  🟢 Valid Nameless Analytics Client-side Tracker Configuration Variable'); }
 }
 
+
+// --------------------------------------------------------------------------------------------------------------
+// CHECK SERVER-SIDE ENDPOINT
+// --------------------------------------------------------------------------------------------------------------
+
+// No endpoint domain: the configuration has no endpoint for the current hostname
+if (!endpoint_domain_name) {
+  if (enable_logs) { log(event_name, '>', 'CHECKING SERVER-SIDE ENDPOINT'); }
+  if (enable_logs) { log(event_name, '>', '  🔴 Unable to send request. Unauthorized domain:', (hostname) ? hostname : '(no hostname)'); }
+  if (enable_logs) { log(event_name, '>', '  👉 No endpoint configured for this hostname. Computed endpoint:', full_endpoint); }
+
+  if (enable_logs) { log(event_name, '>', 'REQUEST STATUS'); }
+  if (enable_logs) { log(event_name, '>', '  🔴 Request aborted'); }
+  data.gtmOnSuccess();
+  return;
+}
+
+// Endpoint domain present but malformed
+if (!is_valid_endpoint_domain(endpoint_domain_name)) {
+  if (enable_logs) { log(event_name, '>', 'CHECKING SERVER-SIDE ENDPOINT'); }
+  if (enable_logs) { log(event_name, '>', '  🔴 Invalid server-side endpoint domain:', endpoint_domain_name); }
+  if (enable_logs) { log(event_name, '>', '  👉 The domain must not contain the protocol or a path. Computed endpoint:', full_endpoint); }
+
+  if (enable_logs) { log(event_name, '>', 'REQUEST STATUS'); }
+  if (enable_logs) { log(event_name, '>', '  🔴 Request aborted'); }
+  data.gtmOnSuccess();
+  return;
+}
+
 if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', 'TRACKER TAG CONFIGURATION'); }
 if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  👉 Server-side requests endpoint path:', full_endpoint); }
 if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  👉 Load libraries in first-party mode:', (config.load_libraries_from_custom_location) ? 'Yes' : 'No'); }
@@ -874,6 +903,32 @@ function generate_alphanumeric() {
     alphanumeric_id += id_chars.charAt(generateRandom(0, id_chars.length - 1));
   }
   return alphanumeric_id;
+}
+
+// Check endpoint domain format: dot separated labels with an alphabetic TLD of 2 or more characters
+function is_valid_endpoint_domain(value) {
+  const domain_chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-.';
+  const tld_chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  const last_dot_index = value.lastIndexOf('.');
+
+  // Must contain a dot followed by a TLD of at least 2 characters. This is what rejects 'undefined'
+  if (last_dot_index <= 0 || value.length - last_dot_index < 3) return false;
+
+  // Must not start or end with a separator and must not contain empty labels
+  if (value.charAt(0) === '.' || value.charAt(0) === '-') return false;
+  if (value.charAt(value.length - 1) === '-') return false;
+  if (value.indexOf('..') !== -1) return false;
+
+  // Must contain only letters, digits, hyphens and dots. This is what rejects protocols and paths
+  for (var i = 0; i < value.length; i++) {
+    if (domain_chars.indexOf(value.charAt(i)) === -1) return false;
+  }
+
+  for (var j = last_dot_index + 1; j < value.length; j++) {
+    if (tld_chars.indexOf(value.charAt(j)) === -1) return false;
+  }
+
+  return true;
 }
 
 // Check session_id format: 15 alphanumeric + _ + 15 alphanumeric

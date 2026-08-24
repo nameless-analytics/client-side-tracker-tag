@@ -989,6 +989,35 @@ if (config === undefined || config.is_na_config_variable !== true) {
   if (enable_logs) { log(event_name, '>', '  🟢 Valid Nameless Analytics Client-side Tracker Configuration Variable'); }
 }
 
+
+// --------------------------------------------------------------------------------------------------------------
+// CHECK SERVER-SIDE ENDPOINT
+// --------------------------------------------------------------------------------------------------------------
+
+// No endpoint domain: the configuration has no endpoint for the current hostname
+if (!endpoint_domain_name) {
+  if (enable_logs) { log(event_name, '>', 'CHECKING SERVER-SIDE ENDPOINT'); }
+  if (enable_logs) { log(event_name, '>', '  🔴 Unable to send request. Unauthorized domain:', (hostname) ? hostname : '(no hostname)'); }
+  if (enable_logs) { log(event_name, '>', '  👉 No endpoint configured for this hostname. Computed endpoint:', full_endpoint); }
+
+  if (enable_logs) { log(event_name, '>', 'REQUEST STATUS'); }
+  if (enable_logs) { log(event_name, '>', '  🔴 Request aborted'); }
+  data.gtmOnSuccess();
+  return;
+}
+
+// Endpoint domain present but malformed
+if (!is_valid_endpoint_domain(endpoint_domain_name)) {
+  if (enable_logs) { log(event_name, '>', 'CHECKING SERVER-SIDE ENDPOINT'); }
+  if (enable_logs) { log(event_name, '>', '  🔴 Invalid server-side endpoint domain:', endpoint_domain_name); }
+  if (enable_logs) { log(event_name, '>', '  👉 The domain must not contain the protocol or a path. Computed endpoint:', full_endpoint); }
+
+  if (enable_logs) { log(event_name, '>', 'REQUEST STATUS'); }
+  if (enable_logs) { log(event_name, '>', '  🔴 Request aborted'); }
+  data.gtmOnSuccess();
+  return;
+}
+
 if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', 'TRACKER TAG CONFIGURATION'); }
 if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  👉 Server-side requests endpoint path:', full_endpoint); }
 if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', '  👉 Load libraries in first-party mode:', (config.load_libraries_from_custom_location) ? 'Yes' : 'No'); }
