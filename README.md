@@ -188,6 +188,7 @@ The following success and status messages indicate a correct implementation:
 | | [event_name] > Firestore: [Status] | Firestore user and session persistence outcome |
 | | [event_name] > BigQuery: [Status] | BigQuery streaming insertion outcome |
 | | [event_name] > Custom Endpoint: [Status] | Forwarding outcome to custom endpoint |
+| | [event_name] > 🟢 Request processed successfully | The `response` returned by the server, printed after `REQUEST STATUS`. This is the message of a fully processed event: it is sent with `status_code: 200` only after Firestore, BigQuery and, when enabled, the custom endpoint have all completed. Any other value means the event was not stored |
 | Cross-domain | cross-domain > 🟢 Valid user data. Cross-domain URL link decoration will be applied | The server-side handshake returned a valid session ID and the outbound URL will be decorated with an encoded `na_id` value |
 | | cross-domain > Decorating URL with na_temp params: [JSON] | Confirms that anonymous acquisition data is being transferred across domains while consent is denied |
 | | [page_view] > CHECKING CROSS-DOMAIN ID | An `na_id` value was detected and is being validated on the first page view |
