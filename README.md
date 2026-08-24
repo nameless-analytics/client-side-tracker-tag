@@ -23,6 +23,7 @@ For an overview of how Nameless Analytics works [start from here](https://github
   - [Add ecommerce data from dataLayer](#add-ecommerce-data-from-datalayer)
   - [Disable logs in JavaScript console for this event](#disable-logs-in-javascript-console-for-this-event)
 - [Verifying the setup](#verifying-the-setup)
+  - [Processing status values](#processing-status-values)
 - [Troubleshooting](#troubleshooting)
 
 
@@ -198,6 +199,33 @@ The following success and status messages indicate a correct implementation:
 | | [page_view] > 🔴 Invalid cross-domain ID: invalid format | The decoded value does not contain a valid session ID and timestamp |
 | | [page_view] > 🔴 Invalid cross-domain ID: invalid session_id format | The structure is correct but the `session_id` does not match the required format: 15 alphanumeric characters, an underscore, 15 alphanumeric characters |
 | | [page_view] > 🔴 Invalid cross-domain ID | The decoded value contains an invalid timestamp or a timestamp in the future |
+
+
+### Processing status values
+The four `PROCESSING STATUS` lines come from the `processing` object of the server response, which reports one status per pipeline step. Each step can take one of these values:
+
+| Value | Meaning |
+|:---|:---|
+| `success` | The step completed |
+| `failed` | The step was attempted and did not complete |
+| `skipped` | The step was not attempted, either because a previous one failed or because the feature is off. `Custom Endpoint: skipped` is the normal value when "Send data to custom endpoint" is not enabled |
+| `pending` | Initial value of every step. It is replaced before the response is returned, so it should never appear in the console |
+
+The steps are executed in the order they are logged and each one gates the next, so a failure marks everything after it as `skipped`:
+
+```text
+Claim request: success
+Firestore: success
+BigQuery: success
+Custom Endpoint: skipped
+```
+
+Two readings that are easy to get wrong:
+
+- `Claim request: failed` does not mean the server ignored the request. The Server-side Client Tag always claims requests on its endpoint: the value means the request was **rejected during validation** (wrong origin, banned IP, bot User-Agent, missing parameters, malformed cookies, orphan event). The reason is in the response message.
+- `Custom Endpoint: failed` does not mean the event was lost. Firestore and BigQuery had already succeeded, so the event is stored and only the forwarding failed: the response is still `200` with `🟢 Request processed successfully`.
+
+Any other combination where a step reports `failed` means the event was **not** stored. See the [Troubleshooting Guide](https://github.com/nameless-analytics/nameless-analytics/blob/main/setup-guides/TROUBLESHOOTING-GUIDE.md) for the message that accompanies it.
 
 
 ## Troubleshooting
