@@ -229,14 +229,14 @@ if (config.enable_cross_domain_tracking && event_name === 'page_view' && pv_coun
 if (enable_logs) { log(event_name, '>', 'CHECKING CONFIGURATION VARIABLE'); }
 
 if (config === undefined || config.is_na_config_variable !== true) {
-  if (enable_logs) { log(event_name, '>', '  🔴 Tracker configuration error: event has invalid Nameless Analytics Client-Side tracker configuration variable'); }
+  if (enable_logs) { log(event_name, '>', '  🔴 Tracker configuration error: event has invalid Nameless Analytics Client-side Tracker Configuration Variable'); }
 
   if (enable_logs) { log(event_name, '>', 'REQUEST STATUS'); }
   if (enable_logs) { log(event_name, '>', '  🔴 Request aborted'); }
   data.gtmOnSuccess();
   return;
 } else {
-  if (enable_logs) { log(event_name, '>', '  🟢 Valid Nameless Analytics Client-Side tracker configuration variable'); }
+  if (enable_logs) { log(event_name, '>', '  🟢 Valid Nameless Analytics Client-side Tracker Configuration Variable'); }
 }
 
 if (enable_logs && event_name === 'page_view' && pv_count === 1) { log(event_name, '>', 'TRACKER TAG CONFIGURATION'); }
