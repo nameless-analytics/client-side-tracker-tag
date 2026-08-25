@@ -1,6 +1,6 @@
 # Nameless Analytics | Client-side Tracker Tag
 
-The Nameless Analytics Client-side Tracker Tag is a highly customizable GTM custom template designed to send requests to the [Nameless Analytics Server-side Client Tag](https://github.com/nameless-analytics/server-side-client-tag). 
+The Nameless Analytics Client-side Tracker Tag is a highly customizable GTM custom template designed to send requests to the [Nameless Analytics Server-side Client Tag](https://github.com/nameless-analytics/server-side-client-tag).
 
 For an overview of how Nameless Analytics works [start from here](https://github.com/nameless-analytics/nameless-analytics/#overview).
 
@@ -8,6 +8,7 @@ For an overview of how Nameless Analytics works [start from here](https://github
 
 
 ## Table of Contents
+
 - [Nameless Analytics Client-side Tracker Tag UI](#nameless-analytics-client-side-tracker-tag-ui)
 - [Event data](#event-data)
   - [Event name](#event-name)
@@ -29,7 +30,7 @@ For an overview of how Nameless Analytics works [start from here](https://github
 
 
 ## Nameless Analytics Client-side Tracker Tag UI
-The Nameless Analytics Client-side Tracker Tag is designed to simplify complex tracking implementations with a seamless GTM integration. 
+The Nameless Analytics Client-side Tracker Tag is designed to simplify complex tracking implementations with a seamless GTM integration.
 
 It provides a structured interface to configure event names, manage deep parameter hierarchies, and handle advanced tracking settings without writing custom code.
 
@@ -42,7 +43,7 @@ This is the UI of the Nameless Analytics Client-side Tracker Tag.
 
 ## Event data
 ### Event name
-Choose between standard event names or custom event names. 
+Choose between standard event names or custom event names.
 
 Please note:
 - Always trigger a `page_view` event as the very first event on every page load. **Any event triggered before a `page_view` will be rejected.**
@@ -69,7 +70,7 @@ For more information see [Setup Guides](https://github.com/nameless-analytics/na
 #### Custom event name
 Choose a custom event name for the event.
 
-To maintain consistency between events, it is highly recommended to use _snake_case_ notation style (with underscores between words) to create descriptive, easily interpretable names. 
+To maintain consistency between events, it is highly recommended to use _snake_case_ notation style (with underscores between words) to create descriptive, easily interpretable names.
 
 Examples:
 * click_button
@@ -88,24 +89,24 @@ Add, override or remove event parameters in the event_data object. See [Paramete
 They will be sent to BigQuery with every event.
 
 These event parameters are reserved and can't be modified:
-- event_type 
-- channel_grouping 
-- source 
-- campaign 
+- event_type
+- channel_grouping
+- source
+- campaign
 - campaign_id
 - campaign_click_id
-- campaign_term 
-- campaign_content 
-- user_agent 
-- browser_name 
-- browser_language 
-- browser_version 
-- device_type 
-- device_vendor 
-- device_model 
-- os_name 
-- os_version 
-- screen_size 
+- campaign_term
+- campaign_content
+- user_agent
+- browser_name
+- browser_language
+- browser_version
+- device_type
+- device_vendor
+- device_model
+- os_name
+- os_version
+- screen_size
 - viewport_size
 - tld_source
 - city
@@ -141,7 +142,7 @@ These parameters can be overridden by:
 
 ## Configuration variable settings
 ### Configuration variable
-The Nameless Analytics Client-side Tracker Tag inherits configuration settings from [Nameless Analytics Client-side Tracker Configuration Variable](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/). 
+The Nameless Analytics Client-side Tracker Tag inherits configuration settings from [Nameless Analytics Client-side Tracker Configuration Variable](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/).
 
 This variable will handle settings like:
 - add user level parameters
@@ -163,13 +164,13 @@ This variable will handle settings like:
 ### Add ecommerce data from dataLayer
 Add ecommerce data as a JSON object inside the ecommerce field.
 
-Please note: 
+Please note:
 - By default, the table function queries extract data from standard GA4 ecommerce data structure
 - The data model can be customized to support any ecommerce data structure by modifying the relative JSON paths in the user, session, ecommerce, product and funnels [table function queries](https://github.com/nameless-analytics/nameless-analytics/tree/main/tables)
 
 
 ### Disable logs in JavaScript console for this event
-Disable console log for this specific event when [Enable logs in JavaScript console](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/#enable-logs-in-javascript-console) is enabled in the Nameless Analytics Client-side Tracker Configuration Variable. 
+Disable console log for this specific event when [Enable logs in JavaScript console](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/#enable-logs-in-javascript-console) is enabled in the Nameless Analytics Client-side Tracker Configuration Variable.
 
 
 
@@ -233,8 +234,6 @@ Any other combination where a step reports `failed` means the event was **not** 
 ## Troubleshooting
 If you encounter any issues or see 🔴 error messages in the console, please refer to the [Troubleshooting Guide](https://github.com/nameless-analytics/nameless-analytics/blob/main/setup-guides/TROUBLESHOOTING-GUIDE.md).
 
-# 
+#
 
 [Website](https://namelessanalytics.com/?utm_source=github.com&utm_medium=referral&utm_campaign=nameless_analytics_client_side_tracker_tag_readme) | [Twitter](https://x.com/nmlssanalytics) | [LinkedIn](https://www.linkedin.com/company/nameless-analytics/)
-
-
