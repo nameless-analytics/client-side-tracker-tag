@@ -728,7 +728,7 @@ ___TEMPLATE_PARAMETERS___
         "enablingConditions": []
       }
     ],
-    "help": "Lorem ipsum"
+    "help": "Optional settings for this specific event."
   },
   {
     "type": "GROUP",
