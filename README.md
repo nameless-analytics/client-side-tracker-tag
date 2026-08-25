@@ -4,6 +4,7 @@ The Nameless Analytics Client-side Tracker Tag is a highly customizable GTM cust
 
 For an overview of how Nameless Analytics works [start from here](https://github.com/nameless-analytics/nameless-analytics/#overview).
 
+
 ### 🚧 Nameless Analytics and the documentation are currently in beta and subject to change
 
 
@@ -40,7 +41,6 @@ This is the UI of the Nameless Analytics Client-side Tracker Tag.
 
 
 
-
 ## Event data
 ### Event name
 Choose between standard event names or custom event names.
@@ -51,17 +51,17 @@ Please note:
 - Follow naming conventions for event names and event parameters.
 
 #### Standard event name
-* page_view: Send this event when a page is viewed. Use this event for both standard and virtual page views. This is the only mandatory event
-* consent_update: Send this event when the user gives or withdraws consent to improve the accuracy of consent metrics
-* page_load_time: Send this event when a page is loaded
-* page_closed: Send this event when a page is closed to improve the accuracy of `time_on_page`, `session_duration`, and other metrics
-* search_result_view: Send this event when a search results page is viewed
-* search_result_click: Send this event when a search result is clicked
-* login: Send this event when a user logs in. It overwrites the session `user_id` with the value carried by the event
-* logout: Send this event when a user logs out. It clears the session `user_id`, setting it to `null`
-* sign_up: Send this event when a user creates an account
-* new_lead: Send this event when a user submits a form
-* newsletter_sign_up: Send this event when a user subscribes to a newsletter
+- page_view: Send this event when a page is viewed. Use this event for both standard and virtual page views. This is the only mandatory event
+- consent_update: Send this event when the user gives or withdraws consent to improve the accuracy of consent metrics
+- page_load_time: Send this event when a page is loaded
+- page_closed: Send this event when a page is closed to improve the accuracy of `time_on_page`, `session_duration`, and other metrics
+- search_result_view: Send this event when a search results page is viewed
+- search_result_click: Send this event when a search result is clicked
+- login: Send this event when a user logs in. It overwrites the session `user_id` with the value carried by the event
+- logout: Send this event when a user logs out. It clears the session `user_id`, setting it to `null`
+- sign_up: Send this event when a user creates an account
+- new_lead: Send this event when a user submits a form
+- newsletter_sign_up: Send this event when a user subscribes to a newsletter
 
 `login` and `logout` are the only two events the Server-side Client Tag handles specially: renaming them breaks that behaviour silently, and the session `user_id` simply stops being updated. See [User ID lifecycle](https://github.com/nameless-analytics/nameless-analytics/#user-id-lifecycle).
 
@@ -73,14 +73,14 @@ Choose a custom event name for the event.
 To maintain consistency between events, it is highly recommended to use _snake_case_ notation style (with underscores between words) to create descriptive, easily interpretable names.
 
 Examples:
-* click_button
-* start_configuration
-* play_video
+- click_button
+- start_configuration
+- play_video
 
 Avoid:
-* Spaces: button clicked
-* Hyphens: button-clicked
-* CamelCase: ButtonClicked
+- Spaces: button clicked
+- Hyphens: button-clicked
+- CamelCase: ButtonClicked
 
 
 ### Event parameters
@@ -160,6 +160,8 @@ This variable will handle settings like:
 - add current dataLayer state
 - enable logs in JavaScript console
 
+
+
 ## Advanced settings
 ### Add ecommerce data from dataLayer
 Add ecommerce data as a JSON object inside the ecommerce field.
@@ -229,6 +231,7 @@ Two readings that are easy to get wrong:
 - `Custom Endpoint: failed` does not mean the event was lost. Firestore and BigQuery had already succeeded, so the event is stored and only the forwarding failed: the response is still `200` with `🟢 Request processed successfully`.
 
 Any other combination where a step reports `failed` means the event was **not** stored. See the [Troubleshooting Guide](https://github.com/nameless-analytics/nameless-analytics/blob/main/setup-guides/TROUBLESHOOTING-GUIDE.md) for the message that accompanies it.
+
 
 
 ## Troubleshooting
