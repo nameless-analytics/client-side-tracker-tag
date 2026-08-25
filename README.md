@@ -56,11 +56,13 @@ Please note:
 * page_closed: Send this event when a page is closed to improve the accuracy of `time_on_page`, `session_duration`, and other metrics
 * search_result_view: Send this event when a search results page is viewed
 * search_result_click: Send this event when a search result is clicked
-* login: Send this event when a user logs in
-* logout: Send this event when a user logs out
+* login: Send this event when a user logs in. It overwrites the session `user_id` with the value carried by the event
+* logout: Send this event when a user logs out. It clears the session `user_id`, setting it to `null`
 * sign_up: Send this event when a user creates an account
 * new_lead: Send this event when a user submits a form
 * newsletter_sign_up: Send this event when a user subscribes to a newsletter
+
+`login` and `logout` are the only two events the Server-side Client Tag handles specially: renaming them breaks that behaviour silently, and the session `user_id` simply stops being updated. See [User ID lifecycle](https://github.com/nameless-analytics/nameless-analytics/#user-id-lifecycle).
 
 For more information see [Setup Guides](https://github.com/nameless-analytics/nameless-analytics/blob/main/setup-guides/SETUP-GUIDES.md#how-to-track-standard-events).
 
