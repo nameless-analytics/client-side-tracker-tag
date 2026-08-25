@@ -16,7 +16,7 @@ For an overview of how Nameless Analytics works [start from here](https://github
   - [Event parameters](#event-parameters)
     - [Add/override event level parameters](#addoverride-event-level-parameters)
     - [Remove event level parameters](#remove-event-level-parameters)
-    - [Add event parameters from dataLayer](#add-event-parameters-from-datalayer)
+    - [Add event level parameters from dataLayer](#add-event-level-parameters-from-datalayer)
 - [Configuration variable settings](#configuration-variable-settings)
   - [Configuration variable](#configuration-variable)
 - [Advanced settings](#advanced-settings)
@@ -127,7 +127,7 @@ These settings can remove:
 - Shared event parameters added in Nameless Analytics Client-side Tracker Configuration Variable
 - Event parameters from dataLayer added in Nameless Analytics Client-side Tracker Tag
 
-#### Add event parameters from dataLayer
+#### Add event level parameters from dataLayer
 Add event parameters from the dataLayer.push() event that triggered the tag. Accepted values: strings, integers, floats, JSON and booleans.
 
 These parameters can be overridden by:
