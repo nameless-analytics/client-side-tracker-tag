@@ -1129,9 +1129,9 @@ function send_request(full_endpoint) {
             };
 
             set_cookie('na_temp', JSON.stringify(temp_cookie_value));
-            if (enable_logs) { log(event_name, '>', '    Temp cookie saved:', temp_cookie_value); }
+            if (enable_logs) { log(event_name, '>', '  🟢 Temp cookie saved:', temp_cookie_value); }
           } else {
-            if (enable_logs) { log(event_name, '>', '    Temp cookie found:', temp_cookie_value); }
+            if (enable_logs) { log(event_name, '>', '  🟢 Temp cookie found:', temp_cookie_value); }
           }
         }
 

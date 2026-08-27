@@ -187,13 +187,13 @@ The following success and status messages indicate a correct implementation:
 | | [event_name] > 🟢 UA parser library loaded from: [URL] | The User-Agent parser library was successfully injected and loaded |
 | | [event_name] > 🟢 Main library loaded from: [URL] | The Nameless Analytics core library was successfully injected and loaded |
 | Consent | [event_name] > 🟢 analytics_storage granted | Tracking is allowed by Google Consent Mode |
-| | [event_name] > Temp cookie saved: [JSON] | Confirms that acquisition data is being persisted while consent is denied |
+| | [event_name] > 🟢 Temp cookie saved: [JSON] | Confirms that acquisition data is being persisted while consent is denied |
 | Events | [event_name] > 🟢 Valid [event_name] event | The event was successfully built and validated |
 | Processing | [event_name] > PROCESSING STATUS | Header indicating commencement of server response processing details |
-| | [event_name] > Claim request: [Status] | Claim request processing outcome |
-| | [event_name] > Firestore: [Status] | Firestore user and session persistence outcome |
-| | [event_name] > BigQuery: [Status] | BigQuery streaming insertion outcome |
-| | [event_name] > Custom Endpoint: [Status] | Forwarding outcome to custom endpoint |
+| | [event_name] > 👉 Claim request: [Status] | Claim request processing outcome |
+| | [event_name] > 👉 Firestore: [Status] | Firestore user and session persistence outcome |
+| | [event_name] > 👉 BigQuery: [Status] | BigQuery streaming insertion outcome |
+| | [event_name] > 👉 Custom Endpoint: [Status] | Forwarding outcome to custom endpoint |
 | | [event_name] > 🟢 Request processed successfully | The `response` returned by the server, printed after `REQUEST STATUS`. This is the message of a fully processed event: it is sent with `status_code: 200` only after Firestore, BigQuery and, when enabled, the custom endpoint have all completed. Any other value means the event was not stored |
 | Cross-domain | cross-domain > 🟢 Valid user data. Cross-domain URL decoration will be applied | The server-side handshake returned a valid session ID and the outbound URL will be decorated with an encoded `na_id` value |
 | | cross-domain > Decorating URL with na_temp params: [JSON] | Confirms that anonymous acquisition data is being transferred across domains while consent is denied |
@@ -219,10 +219,10 @@ The four `PROCESSING STATUS` lines come from the `processing` object of the serv
 The steps are executed in the order they are logged and each one gates the next, so a failure marks everything after it as `skipped`:
 
 ```text
-Claim request: success
-Firestore: success
-BigQuery: success
-Custom Endpoint: skipped
+👉 Claim request: success
+👉 Firestore: success
+👉 BigQuery: success
+👉 Custom Endpoint: skipped
 ```
 
 Two readings that are easy to get wrong:
