@@ -30,6 +30,7 @@ const setCookie = require('setCookie');
 const getCookieValues = require('getCookieValues');
 const makeInteger = require('makeInteger');
 const fromBase64 = require('fromBase64');
+const getType = require('getType');
 
 
 // --------------------------------------------------------------------------------------------------------------
@@ -41,8 +42,19 @@ const id_length = 15;
 const id_chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
 const config = data.config_variable;
-const respect_consent_mode = config.respect_consent_mode;
 const event_name = (data.event_name === 'standard') ? data.standard_event_name : data.custom_event_name;
+
+if (getType(config) !== 'object' || config.is_na_config_variable !== true) {
+  log(event_name, '>', 'NAMELESS ANALYTICS');
+  log(event_name, '>', 'CHECKING CONFIGURATION VARIABLE');
+  log(event_name, '>', '  🔴 Tracker configuration error: event has invalid Nameless Analytics Client-side Tracker Configuration Variable');
+  log(event_name, '>', 'REQUEST STATUS');
+  log(event_name, '>', '  🔴 Request aborted');
+  data.gtmOnSuccess();
+  return;
+}
+
+const respect_consent_mode = config.respect_consent_mode;
 
 
 // Logs
@@ -227,17 +239,7 @@ if (config.enable_cross_domain_tracking && event_name === 'page_view' && pv_coun
 
 
 if (enable_logs) { log(event_name, '>', 'CHECKING CONFIGURATION VARIABLE'); }
-
-if (config === undefined || config.is_na_config_variable !== true) {
-  if (enable_logs) { log(event_name, '>', '  🔴 Tracker configuration error: event has invalid Nameless Analytics Client-side Tracker Configuration Variable'); }
-
-  if (enable_logs) { log(event_name, '>', 'REQUEST STATUS'); }
-  if (enable_logs) { log(event_name, '>', '  🔴 Request aborted'); }
-  data.gtmOnSuccess();
-  return;
-} else {
-  if (enable_logs) { log(event_name, '>', '  🟢 Valid Nameless Analytics Client-side Tracker Configuration Variable'); }
-}
+if (enable_logs) { log(event_name, '>', '  🟢 Valid Nameless Analytics Client-side Tracker Configuration Variable'); }
 
 
 // --------------------------------------------------------------------------------------------------------------
