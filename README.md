@@ -25,6 +25,16 @@ For an overview of how Nameless Analytics works [start from here](https://github
   - [Add ecommerce data from dataLayer](#add-ecommerce-data-from-datalayer)
   - [Disable logs in JavaScript console for this event](#disable-logs-in-javascript-console-for-this-event)
 - [Verifying the setup](#verifying-the-setup)
+  - [CHECKING CROSS-DOMAIN ID](#checking-cross-domain-id)
+  - [CHECKING CONFIGURATION VARIABLE](#checking-configuration-variable)
+  - [CHECKING SERVER-SIDE ENDPOINT](#checking-server-side-endpoint)
+  - [TRACKER TAG CONFIGURATION](#tracker-tag-configuration)
+  - [LOADING LIBRARIES](#loading-libraries)
+  - [CHECKING GOOGLE CONSENT MODE](#checking-google-consent-mode)
+  - [ENABLING CROSS-DOMAIN TRACKING](#enabling-cross-domain-tracking)
+  - [CHECKING EVENT](#checking-event)
+  - [SENDING REQUEST, PROCESSING STATUS and REQUEST STATUS](#sending-request-processing-status-and-request-status)
+  - [Cross-domain handshake](#cross-domain-handshake)
   - [Processing status values](#processing-status-values)
 - [Troubleshooting](#troubleshooting)
 
@@ -177,53 +187,183 @@ Disable console log for this specific event when [Enable logs in JavaScript cons
 
 
 ## Verifying the setup
-When logs are enabled in the [Nameless Analytics Client-side Tracker Configuration Variable](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/#enable-logs-in-javascript-console), you can verify that the tag is working correctly by checking the browser console.
+When logs are enabled in the [Nameless Analytics Client-side Tracker Configuration Variable](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/#enable-logs-in-javascript-console), the tag prints its progress to the browser console, one block per stage. Every line is prefixed with the event name, so several tags firing on the same page stay readable.
 
-The following success and status messages indicate a correct implementation:
+This is the console output of a successful `page_view`:
 
-| **Scope** | **Message** | **Description** |
-|:---|:---|:---|
-| Config | [event_name] > 🟢 Valid Nameless Analytics Client-side Tracker Configuration Variable | Tag configuration variable is correctly set and verified |
-| | [event_name] > 🟢 UA parser library loaded from: [URL] | The User-Agent parser library was successfully injected and loaded |
-| | [event_name] > 🟢 Main library loaded from: [URL] | The Nameless Analytics core library was successfully injected and loaded |
-| Consent | [event_name] > 🟢 analytics_storage granted | Tracking is allowed by Google Consent Mode |
-| | [event_name] > 🟢 Temp cookie saved: [JSON] | Confirms that acquisition data is being persisted while consent is denied |
-| Events | [event_name] > 🟢 Valid [event_name] event | The event was successfully built and validated |
-| Processing | [event_name] > PROCESSING STATUS | Header indicating commencement of server response processing details |
-| | [event_name] > 👉 Claim request: [Status] | Claim request processing outcome |
-| | [event_name] > 👉 Firestore: [Status] | Firestore user and session persistence outcome |
-| | [event_name] > 👉 BigQuery: [Status] | BigQuery streaming insertion outcome |
-| | [event_name] > 👉 Custom Endpoint: [Status] | Forwarding outcome to custom endpoint |
-| | [event_name] > 🟢 Request processed successfully | The `response` returned by the server, printed after `REQUEST STATUS`. This is the message of a fully processed event: it is sent with `status_code: 200` only after Firestore, BigQuery and, when enabled, the custom endpoint have all completed. Any other value means the event was not stored |
-| Cross-domain | cross-domain > 🟢 Valid user data. Cross-domain URL decoration will be applied | The server-side handshake returned a valid session ID and the outbound URL will be decorated with an encoded `na_id` value |
-| | cross-domain > Decorating URL with na_temp params: [JSON] | Confirms that anonymous acquisition data is being transferred across domains while consent is denied |
-| | [page_view] > CHECKING CROSS-DOMAIN ID | An `na_id` value was detected and is being validated on the first page view |
-| | [page_view] > 🟢 Valid cross-domain ID | The value was decoded successfully and its structure and timestamp are valid |
-| | [page_view] > 🟠 Expired cross-domain ID | The value has a valid structure but was generated more than five minutes ago |
-| | [page_view] > 🔴 Invalid cross-domain ID: unable to decode na_id | The `na_id` value could not be decoded from Base64 |
-| | [page_view] > 🔴 Invalid cross-domain ID: invalid format | The decoded value does not contain a valid session ID and timestamp |
-| | [page_view] > 🔴 Invalid cross-domain ID: invalid session_id format | The structure is correct but the `session_id` does not match the required format: 15 alphanumeric characters, an underscore, 15 alphanumeric characters |
-| | [page_view] > 🔴 Invalid cross-domain ID | The decoded value contains an invalid timestamp or a timestamp in the future |
+```text
+page_view > NAMELESS ANALYTICS
+page_view > CHECKING CONFIGURATION VARIABLE
+page_view >   🟢 Valid Nameless Analytics Client-side Tracker Configuration Variable
+page_view > CHECKING SERVER-SIDE ENDPOINT
+page_view >   🟢 Valid server-side endpoint
+page_view > TRACKER TAG CONFIGURATION
+page_view >   👉 Server-side requests endpoint path: /na/collect
+page_view >   👉 Load libraries in first-party mode: No
+page_view >   👉 Enable cross-domain tracking? No
+page_view >   👉 Respect Google Consent Mode? Yes
+page_view > LOADING LIBRARIES
+page_view >   🟢 UA parser library loaded from: https://cdn.jsdelivr.net/npm/ua-parser-js@1.0.40/dist/ua-parser.pack.min.js
+page_view >   🟢 Main library loaded from: https://cdn.jsdelivr.net/gh/nameless-analytics/client-side-tracker-tag@main/lib/nameless-analytics_v1.0.0.min.js
+page_view > CHECKING GOOGLE CONSENT MODE
+page_view >   🟢 analytics_storage granted
+page_view > CHECKING EVENT
+page_view >   🟢 Valid page_view event
+page_view > SENDING REQUEST
+page_view >   👉 Payload data: {…}
+page_view > PROCESSING STATUS
+page_view >   👉 Claim request: success
+page_view >   👉 Firestore: success
+page_view >   👉 BigQuery: success
+page_view >   👉 Custom Endpoint: skipped
+page_view > REQUEST STATUS
+page_view >   🟢 Request processed successfully
+```
+
+Reading it top to bottom tells you how far the tag got. The block that does **not** appear is the one that tells you where it stopped.
+
+The stages below are listed in the order they are printed. Any block can be missing: it simply means the corresponding feature is off or the tag never reached it.
+
+
+### CHECKING CROSS-DOMAIN ID
+Printed only on the first `page_view` of a page reached through a decorated cross-domain link, that is when the URL carries an `na_id` parameter.
+
+| Message | Meaning |
+|:---|:---|
+| `🟢 Valid cross-domain ID` | The value was decoded and its structure and timestamp are valid. The original `session_id` is sent as `cross_domain_id` |
+| `🟠 Expired cross-domain ID` | Valid structure, but generated more than five minutes ago |
+| `🔴 Invalid cross-domain ID: unable to decode na_id` | The value is not valid Base64 |
+| `🔴 Invalid cross-domain ID: invalid format` | The decoded value does not follow the `{session_id}.{decoration_timestamp_ms}` structure |
+| `🔴 Invalid cross-domain ID: invalid session_id format` | The structure is correct but the `session_id` is not 15 alphanumeric characters, an underscore, 15 alphanumeric characters |
+| `🔴 Invalid cross-domain ID` | The timestamp is invalid or set in the future |
+
+In every case except the first the value is discarded, `cross_domain_id` stays `null` and the event is sent anyway: the destination resolves identity from its own cookies. See [Cross-domain architecture](https://github.com/nameless-analytics/nameless-analytics/#cross-domain-architecture).
+
+
+### CHECKING CONFIGURATION VARIABLE
+
+| Message | Meaning |
+|:---|:---|
+| `🟢 Valid Nameless Analytics Client-side Tracker Configuration Variable` | The configuration variable is present and recognised |
+| `🔴 Tracker configuration error: event has invalid Nameless Analytics Client-side Tracker Configuration Variable` | The **Configuration variable** field is empty or points to a variable of another type. The tag stops here |
+
+This check runs before anything else, so its error is printed even when console logs are disabled: the log setting itself lives in the configuration variable, and cannot be read when the variable is invalid.
+
+
+### CHECKING SERVER-SIDE ENDPOINT
+
+| Message | Meaning |
+|:---|:---|
+| `🟢 Valid server-side endpoint` | Domain and path resolve to a usable endpoint |
+| `🔴 Unable to send request. Unauthorized domain: [hostname]` | The current hostname has no endpoint configured. The next line, `👉 No endpoint configured for this hostname`, shows the computed value |
+| `🔴 Invalid server-side endpoint domain: [domain]` | The domain contains a protocol or a path. The next line shows the computed value |
+
+Both errors stop the tag, and `REQUEST STATUS` closes with `🔴 Request aborted`.
+
+
+### TRACKER TAG CONFIGURATION
+Four informational lines that echo the resolved configuration. They carry no status: they exist to confirm what the tag is actually using, which is the fastest way to spot a configuration variable that is not the one you edited.
+
+```text
+page_view >   👉 Server-side requests endpoint path: /na/collect
+page_view >   👉 Load libraries in first-party mode: No
+page_view >   👉 Enable cross-domain tracking? No
+page_view >   👉 Respect Google Consent Mode? Yes
+```
+
+
+### LOADING LIBRARIES
+
+| Message | Meaning |
+|:---|:---|
+| `🟢 UA parser library loaded from: [URL]` | The User-Agent parser was injected and loaded |
+| `🟢 Main library loaded from: [URL]` | The Nameless Analytics core library was injected and loaded |
+| `🔴 UA parser library not loaded from: [URL]` | The browser could not fetch the script, often an ad blocker on the CDN |
+| `🔴 Main library not loaded from: [URL]` | Same, for the core library |
+| `🔴 Permission denied: unable to load Main library from [URL]` | The GTM sandbox refused the injection: the URL is not in the **Inject Scripts** template permission |
+| `🔴 Permission denied: unable to load UA parser library from [URL]` | Same, for the parser |
+
+Any of the four errors stops the tag with `🔴 Request aborted`. See [How to set up first-party library hosting](https://github.com/nameless-analytics/nameless-analytics/blob/main/setup-guides/SETUP-GUIDES.md#how-to-set-up-first-party-library-hosting).
+
+
+### CHECKING GOOGLE CONSENT MODE
+Printed only when **Respect Google Consent Mode** is enabled. The `na_temp` messages belong to this block: they describe how the acquisition context is preserved while consent is missing.
+
+| Message | Meaning |
+|:---|:---|
+| `🟢 analytics_storage granted` | Tracking is allowed and the event proceeds |
+| `🟢 Temp cookie found: [JSON]` | Acquisition data was recovered from the `na_temp` cookie |
+| `🟢 Temp cookie saved: [JSON]` | Consent is denied: acquisition data was stored in `na_temp` for later |
+| `🟢 Temp cookie deleted` | Consent has been granted and the cookie is no longer needed |
+| `🔴 analytics_storage denied` | Consent is denied. The event is held until consent is granted |
+| `🔴 Google Consent Mode not found` | Consent Mode is not present on the page. The tag stops with `🔴 Request aborted` |
+
+
+### ENABLING CROSS-DOMAIN TRACKING
+Printed on the first `page_view` only, and only when **Enable cross-domain tracking** is on.
+
+```text
+page_view > ENABLING CROSS-DOMAIN TRACKING
+page_view >   👉 Cross-domain enabled for: example.com, partner.com
+```
+
+
+### CHECKING EVENT
+
+| Message | Meaning |
+|:---|:---|
+| `🟢 Valid [event_name] event` | The event was built and validated |
+| `🔴 Event fired before a page view event. The first event on any page must be page_view.` | An interaction event reached the tag before any `page_view`. The tag stops with `🔴 Request aborted` |
+
+
+### SENDING REQUEST, PROCESSING STATUS and REQUEST STATUS
+These three blocks are printed by the main library after the server has answered.
+
+`SENDING REQUEST` is followed by `👉 Payload data:` with the enriched payload the server returned, which is the quickest way to inspect what was actually stored.
+
+`PROCESSING STATUS` reports one line per pipeline step, taken from the `processing` object of the response. `REQUEST STATUS` closes with the server's own `response` field.
+
+| Message | Meaning |
+|:---|:---|
+| `🟢 Request processed successfully` | Returned with `status_code: 200` only after Firestore, BigQuery and, when enabled, the custom endpoint have all completed |
+| `🔴 Request refused` | The server answered with a status other than 200. The line above it carries the server's reason |
+| `🔴 Request not sent successfully` | The request never reached the server. The line above carries the browser error, typically `TypeError: Failed to fetch` |
+
+
+### Cross-domain handshake
+Logged under the `cross-domain` prefix rather than the event name, because it runs on a link click and not inside an event.
+
+```text
+cross-domain > NAMELESS ANALYTICS
+cross-domain > ASK USER DATA
+cross-domain >   👉 User data: {…}
+cross-domain > CHECK USER DATA
+cross-domain >   🟢 Valid user data. Cross-domain URL decoration will be applied
+cross-domain >   👉 Redirect to: https://partner.com/?na_id=…
+```
+
+| Message | Meaning |
+|:---|:---|
+| `🟢 Valid user data. Cross-domain URL decoration will be applied` | The server returned a valid session ID and the outbound URL is decorated with `na_id` |
+| `🔴 Error while fetching user data: [error]` | The handshake failed. The visitor is redirected to the original, undecorated URL |
+| `Decorating URL with na_temp params: [JSON]` | Consent is denied, so acquisition parameters travel instead of the identifiers |
+| `Cookie na_temp not found, no decoration applied.` | Consent is denied and there is no acquisition context to carry over |
+| `Google Consent Mode not found. Cross-domain decoration aborted.` | Consent Mode is missing while it is required |
+
+The absence of `ASK USER DATA` on the source page means the click was never intercepted. See [When link decoration does not happen](https://github.com/nameless-analytics/nameless-analytics/#when-link-decoration-does-not-happen).
 
 
 ### Processing status values
-The four `PROCESSING STATUS` lines come from the `processing` object of the server response, which reports one status per pipeline step. Each step can take one of these values:
+Each of the four `PROCESSING STATUS` lines can take one of these values:
 
 | Value | Meaning |
 |:---|:---|
 | `success` | The step completed |
 | `failed` | The step was attempted and did not complete |
-| `skipped` | The step was not attempted, either because a previous one failed or because the feature is off. `Custom Endpoint: skipped` is the normal value when "Send data to custom endpoint" is not enabled |
+| `skipped` | The step was not attempted, either because a previous one failed or because the feature is off. `Custom Endpoint: skipped` is the normal value when **Send data to custom endpoint** is not enabled |
 | `pending` | Initial value of every step. It is replaced before the response is returned, so it should never appear in the console |
 
-The steps are executed in the order they are logged and each one gates the next, so a failure marks everything after it as `skipped`:
-
-```text
-👉 Claim request: success
-👉 Firestore: success
-👉 BigQuery: success
-👉 Custom Endpoint: skipped
-```
+The steps are executed in the order they are printed and each one gates the next, so a failure marks everything after it as `skipped`.
 
 Two readings that are easy to get wrong:
 
