@@ -2,5 +2,5 @@ homepage: 'https://namelessanalytics.com/'
 documentation: 'https://github.com/nameless-analytics/client-side-tracker-tag/'
 versions:
 # Latest version
-  - sha: '0981430a2ba6d42bf1a7ff629b31f2db2e1a14bb'
+  - sha: '71b03dc0481778dbf31015c256e1722f72ef09e4'
     changeNotes: 'Initial release.'
