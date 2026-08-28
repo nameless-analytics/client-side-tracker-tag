@@ -70,7 +70,7 @@ if (config !== undefined && config.enable_logs) {
     enable_logs = false;
   }
 } else {
-  enable_logs = true;
+  enable_logs = false;
 }
 
 
