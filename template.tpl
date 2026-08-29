@@ -120,7 +120,7 @@ ___TEMPLATE_PARAMETERS___
                 ]
               }
             ],
-            "help": "Standard event name. \n\u003c/br\u003e\u003c/br\u003e\nPlease use:\u003c/br\u003e\n\u003cul\u003e\n  \u003cli\u003e\n    \u003cb\u003epage_view\u003c/b\u003e when a page is viewed. Use this event for both standard and virtual pageviews.\u003c/br\u003e\n  \u003c/li\u003e\n  \u003cli\u003e\n    \u003cb\u003econsent_given\u003c/b\u003e when the user gives consent to improve the accuracy of consent metrics.\n  \u003c/li\u003e\n  \u003cli\u003e\n    \u003cb\u003epage_load_time\u003c/b\u003e when a page is loaded to calculate page speed metrics.\n  \u003c/li\u003e\n  \u003cli\u003e\n    \u003cb\u003epage_closed\u003c/b\u003e when a page is closed to improve the accuracy of \u003ci\u003esession_duration\u003c/i\u003e, \u003ci\u003etime_on_page\u003c/i\u003e and other metrics.\n  \u003c/li\u003e\n  \u003cli\u003e\n    \u003cb\u003e search_result_view\u003c/b\u003e when a search result page is viewed.\n  \u003c/li\u003e\n  \u003cli\u003e\n    \u003cb\u003e search_result_click\u003c/b\u003e when a search result is clicked.\n  \u003c/li\u003e\n\u003c/ul\u003e"
+            "help": "Choose a predefined event name. Use \u003cb\u003epage_view\u003c/b\u003e for standard and virtual page views, and \u003cb\u003econsent_update\u003c/b\u003e whenever consent changes."
           },
           {
             "value": "custom",
@@ -232,7 +232,7 @@ ___TEMPLATE_PARAMETERS___
                 ]
               }
             ],
-            "help": "Custom event name.\n\u003c/br\u003e\u003c/br\u003e\nTo maintain consistency between events, it is highly recommended to use \u003cb\u003esnake_case\u003c/b\u003e notation style (with underscores between words) to create descriptive and easily interpretable names.\u003cbr\u003e\u003cbr\u003e\n\nExamples:\u003cbr\u003e\n\u003cul\u003e\n  \u003cli\u003ebutton_clicked\u003c/li\u003e\n  \u003cli\u003eform_submitted\u003c/li\u003e\n  \u003cli\u003evideo_played\u003c/li\u003e\n\u003c/ul\u003e\u003cbr\u003e\n\nAvoid:\u003cbr\u003e\n\u003cul\u003e\n  \u003cli\u003eSpaces: button clicked\u003c/li\u003e\n  \u003cli\u003eHyphens: button-clicked\u003c/li\u003e\n  \u003cli\u003eCamelCase: ButtonClicked\u003c/li\u003e\n\u003c/ul\u003e"
+            "help": "Custom event names must use \u003cb\u003esnake_case\u003c/b\u003e: lowercase letters and numbers separated by single underscores. Standard event names must be selected from the predefined list."
           }
         ],
         "simpleValueType": true,

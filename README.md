@@ -1,6 +1,6 @@
 # Nameless Analytics | Client-side Tracker Tag
 
-The Nameless Analytics Client-side Tracker Tag is a highly customizable GTM custom template designed to send requests to the [Nameless Analytics Server-side Client Tag](https://github.com/nameless-analytics/server-side-client-tag).
+The Nameless Analytics Client-side Tracker Tag builds website events and sends them to the [Nameless Analytics Server-side Client Tag](https://github.com/nameless-analytics/server-side-client-tag), combining event-specific fields with the shared settings provided by the Configuration Variable.
 
 For an overview of how Nameless Analytics works [start from here](https://github.com/nameless-analytics/nameless-analytics/#overview).
 
@@ -10,31 +10,25 @@ For an overview of how Nameless Analytics works [start from here](https://github
 
 ## Table of Contents
 
-- [Nameless Analytics Client-side Tracker Tag UI](#nameless-analytics-client-side-tracker-tag-ui)
+- [Template interface](#template-interface)
 - [Event data](#event-data)
   - [Event name](#event-name)
-    - [Standard event name](#standard-event-name)
-    - [Custom event name](#custom-event-name)
+    - [Standard event names](#standard-event-names)
+    - [Custom event names](#custom-event-names)
   - [Event parameters](#event-parameters)
     - [Add/override event level parameters](#addoverride-event-level-parameters)
     - [Remove event level parameters](#remove-event-level-parameters)
     - [Add event level parameters from dataLayer](#add-event-level-parameters-from-datalayer)
-- [Configuration variable settings](#configuration-variable-settings)
-  - [Configuration variable](#configuration-variable)
+- [Configuration Variable](#configuration-variable)
 - [Advanced settings](#advanced-settings)
   - [Add ecommerce data from dataLayer](#add-ecommerce-data-from-datalayer)
   - [Disable logs in JavaScript console for this event](#disable-logs-in-javascript-console-for-this-event)
 - [Verifying the setup](#verifying-the-setup)
-- [Troubleshooting](#troubleshooting)
 
 
 
-## Nameless Analytics Client-side Tracker Tag UI
-The Nameless Analytics Client-side Tracker Tag is designed to simplify complex tracking implementations with a seamless GTM integration.
-
-It provides a structured interface to configure event names, manage deep parameter hierarchies, and handle advanced tracking settings without writing custom code.
-
-This is the UI of the Nameless Analytics Client-side Tracker Tag.
+## Template interface
+Use the template to select an event name, configure event-specific parameters, connect the shared Configuration Variable and enable optional behavior for that event.
 
 ![Nameless Analytics Client-side Tracker Tag UI](https://github.com/user-attachments/assets/2dcce31e-513b-413d-b77e-deca4a37c22c)
 
@@ -42,50 +36,47 @@ This is the UI of the Nameless Analytics Client-side Tracker Tag.
 
 ## Event data
 ### Event name
-Choose between standard event names or custom event names.
+Choose a standard event whenever it represents the interaction; otherwise, use a custom event name. `page_view` must be the first Nameless Analytics event on every physical page load. Any earlier event is rejected because no page context exists yet.
 
-Please note:
-- Always trigger a `page_view` event as the very first event on every page load. **Any event triggered before a `page_view` will be rejected.**
-- Use standard event names whenever possible.
-- Follow naming conventions for event names and event parameters.
+#### Standard event names
 
-#### Standard event name
-- page_view: Send this event when a page is viewed. Use this event for both standard and virtual page views. This is the only mandatory event
-- consent_update: Send this event when the user gives or withdraws consent to improve the accuracy of consent metrics
-- page_load_time: Send this event when a page is loaded
-- page_closed: Send this event when a page is closed to improve the accuracy of `time_on_page`, `session_duration`, and other metrics
-- search_result_view: Send this event when a search results page is viewed
-- search_result_click: Send this event when a search result is clicked
-- login: Send this event when a user logs in. It overwrites the session `user_id` with the value carried by the event
-- logout: Send this event when a user logs out. It clears the session `user_id`, setting it to `null`
-- sign_up: Send this event when a user creates an account
-- new_lead: Send this event when a user submits a form
-- newsletter_sign_up: Send this event when a user subscribes to a newsletter
+| Event | When to use it |
+|:---|:---|
+| `page_view` | When a standard or virtual page is viewed. This is the only mandatory event. |
+| `consent_update` | When the user grants, changes or withdraws consent. Consent Mode values are collected separately. |
+| `page_load_time` | After the page load completes, to record page-speed metrics. |
+| `page_closed` | When the page is closed or hidden, to improve time-on-page and session-duration metrics. |
+| `search_result_view` | When a search-results page or view is displayed. |
+| `search_result_click` | When a search result is selected. |
+| `login` | When a user logs in. It replaces the current session `user_id` with the value carried by the event. |
+| `logout` | When a user logs out. It clears the current session `user_id`. |
+| `sign_up` | When a user creates an account. |
+| `new_lead` | When a relevant lead action is completed. |
+| `newsletter_sign_up` | When a user subscribes to a newsletter. |
 
-`login` and `logout` are the only two events the Server-side Client Tag handles specially: renaming them breaks that behaviour silently, and the session `user_id` simply stops being updated. See [User ID lifecycle](https://github.com/nameless-analytics/nameless-analytics/#user-id-lifecycle).
+Only `login` and `logout` have special server-side behavior. Renaming them prevents the session `user_id` lifecycle from running. See [User ID lifecycle](https://github.com/nameless-analytics/nameless-analytics/#user-id-lifecycle) and [How to track standard events](https://github.com/nameless-analytics/nameless-analytics/blob/main/setup-guides/SETUP-GUIDES.md#how-to-track-standard-events).
 
-For more information see [Setup Guides](https://github.com/nameless-analytics/nameless-analytics/blob/main/setup-guides/SETUP-GUIDES.md#how-to-track-standard-events).
+#### Custom event names
+Custom event names must use `snake_case`: lowercase letters and numbers separated by single underscores. Standard event names are reserved and must be selected from the standard list.
 
-#### Custom event name
-Choose a custom event name for the event.
+Valid examples: `click_button`, `start_configuration`, `play_video`.
 
-To maintain consistency between events, it is highly recommended to use _snake_case_ notation style (with underscores between words) to create descriptive, easily interpretable names.
-
-Examples:
-- click_button
-- start_configuration
-- play_video
-
-Avoid:
-- Spaces: button clicked
-- Hyphens: button-clicked
-- CamelCase: ButtonClicked
+Invalid examples: `button clicked`, `button-clicked`, `ButtonClicked`.
 
 
 ### Event parameters
-Add, override or remove event parameters in the event_data object. See [Parameter Hierarchy](https://github.com/nameless-analytics/nameless-analytics/#parameter-hierarchy) in the main project documentation.
+Custom event parameters are added to `event_data` when this tag fires. Accepted values are strings, integers, floats, booleans and JSON-compatible values.
 
-They will be sent to BigQuery with every event.
+The browser builds custom parameters in this order:
+
+1. parameters copied from the triggering `dataLayer` event;
+2. shared parameters from the Configuration Variable;
+3. parameters added or overridden in this tag;
+4. parameters removed in this tag.
+
+After the request reaches the server, the Server-side Client Tag can add, override or remove custom parameters again. See [Parameter hierarchy](https://github.com/nameless-analytics/nameless-analytics/#parameter-hierarchy).
+
+<details><summary>Reserved event parameters</summary>
 
 These event parameters are reserved and can't be modified:
 - event_type
@@ -112,123 +103,54 @@ These event parameters are reserved and can't be modified:
 - country
 - cross_domain_id
 
+</details>
+
 #### Add/override event level parameters
-Add or overwrite parameters for a specific event. Accepted values: strings, integers, floats, JSON and booleans.
-
-These settings can override:
-- Shared event parameters added in Nameless Analytics Client-side Tracker Configuration Variable
-- event parameters from dataLayer added in Nameless Analytics Client-side Tracker Tag
-
-These settings can be overridden by:
-- Event parameter added in Nameless Analytics Server-side Client Tag
+Add fields that apply only to this tag. A matching name replaces the value copied from `dataLayer` or inherited from the Configuration Variable.
 
 #### Remove event level parameters
-Remove event level parameters by name in event_data object in the payload.
-
-These settings can remove:
-- Shared event parameters added in Nameless Analytics Client-side Tracker Configuration Variable
-- Event parameters from dataLayer added in Nameless Analytics Client-side Tracker Tag
+Remove a custom field before the browser sends the request. This also removes a field configured under **Add/override event level parameters** when both lists contain the same name.
 
 #### Add event level parameters from dataLayer
-Add event parameters from the dataLayer.push() event that triggered the tag. Accepted values: strings, integers, floats, JSON and booleans.
-
-These parameters can be overridden by:
-- Event parameters added in Nameless Analytics Server-side Client Tag
-- Event parameters added in Nameless Analytics Client-side Tracker Tag
-- Shared event parameters added in Nameless Analytics Client-side Tracker Configuration Variable
+Copy custom fields from the latest `dataLayer` push matching the current GTM event. The `event` key, GTM internal keys, reserved parameters and `ecommerce` are excluded. Use **Add ecommerce data from dataLayer** for the ecommerce object.
 
 
 
-## Configuration variable settings
-### Configuration variable
-The Nameless Analytics Client-side Tracker Tag inherits configuration settings from [Nameless Analytics Client-side Tracker Configuration Variable](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/).
+## Configuration Variable
+Select a valid [Client-side Tracker Configuration Variable](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/). It provides shared user, session, page and event fields together with endpoint, consent, acquisition, cross-domain, library and logging settings.
 
-This variable will handle settings like:
-- add user level parameters
-- add user id
-- set session level parameters
-- add page status code
-- override default page parameters
-- add shared event level parameters
-- add server-side endpoint domain name and path
-- set if Google Consent Mode is respected
-- override default acquisition parameters
-- enable cross-domain tracking
-- load JavaScript libraries in first-party mode
-- custom library domain name and path
-- add current dataLayer state
-- enable logs in JavaScript console
+The tag aborts before building the request when the selected value is missing or is not a Nameless Analytics Configuration Variable.
 
 
 
 ## Advanced settings
 ### Add ecommerce data from dataLayer
-Add ecommerce data as a JSON object inside the ecommerce field.
+Copy the current `ecommerce` object from `dataLayer` into the top-level `ecommerce` field of the payload.
 
-Please note:
-- By default, the table function queries extract data from standard GA4 ecommerce data structure
-- The data model can be customized to support any ecommerce data structure by modifying the relative JSON paths in the user, session, ecommerce, product and funnels [table function queries](https://github.com/nameless-analytics/nameless-analytics/tree/main/tables)
+The provided [reporting tables](https://github.com/nameless-analytics/nameless-analytics/tree/main/tables) expect GA4-compatible ecommerce keys and event names. Other structures are still stored, but their reporting queries must be adapted. Large item arrays also increase the request size; see [Request never sent](https://github.com/nameless-analytics/nameless-analytics/blob/main/setup-guides/TROUBLESHOOTING-GUIDE.md#request-never-sent).
 
 
 ### Disable logs in JavaScript console for this event
-Disable console log for this specific event when [Enable logs in JavaScript console](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/#enable-logs-in-javascript-console) is enabled in the Nameless Analytics Client-side Tracker Configuration Variable.
+Disable browser-console logs only for this tag execution. This overrides [Enable logs in JavaScript console](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/#enable-logs-in-javascript-console) without changing logging for other events.
 
 
 
 ## Verifying the setup
 Enable logs in the [Nameless Analytics Client-side Tracker Configuration Variable](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/#enable-logs-in-javascript-console), open GTM Preview and reload the page. `page_view` must be the first Nameless Analytics event on every physical page load.
 
-A successful `page_view` follows this path in the browser console:
-
-```text
-page_view > NAMELESS ANALYTICS
-page_view > CHECKING CONFIGURATION VARIABLE
-page_view >   🟢 Valid Nameless Analytics Client-side Tracker Configuration Variable
-page_view > CHECKING SERVER-SIDE ENDPOINT
-page_view >   🟢 Valid server-side endpoint
-page_view > TRACKER TAG CONFIGURATION
-page_view >   👉 Server-side requests endpoint path: /na/collect
-page_view >   👉 Load libraries in first-party mode: No
-page_view >   👉 Enable cross-domain tracking? No
-page_view >   👉 Respect Google Consent Mode? Yes
-page_view > LOADING LIBRARIES
-page_view >   🟢 UA parser library loaded from: https://cdn.jsdelivr.net/npm/ua-parser-js@1.0.40/dist/ua-parser.pack.min.js
-page_view >   🟢 Main library loaded from: https://cdn.jsdelivr.net/gh/nameless-analytics/client-side-tracker-tag@main/lib/nameless-analytics_v1.0.0.min.js
-page_view > CHECKING GOOGLE CONSENT MODE
-page_view >   🟢 analytics_storage granted
-page_view > CHECKING EVENT
-page_view >   🟢 Valid page_view event
-page_view > SENDING REQUEST
-page_view >   👉 Payload data: {…}
-page_view > PROCESSING STATUS
-page_view >   👉 Claim request: success
-page_view >   👉 Firestore: success
-page_view >   👉 BigQuery: success
-page_view >   👉 Custom Endpoint: skipped
-page_view > REQUEST STATUS
-page_view >   🟢 Request processed successfully
-```
-
-Validate these points:
-
-1. `CHECKING CONFIGURATION VARIABLE` and `CHECKING SERVER-SIDE ENDPOINT` complete successfully.
-2. The four values under `TRACKER TAG CONFIGURATION` match the configuration variable you intend to use.
-3. Both libraries load from the expected URLs. With first-party hosting enabled, those URLs should use your own domain.
-4. When Consent Mode is respected, `analytics_storage` is granted before the request is sent.
-5. `CHECKING EVENT` confirms `page_view` as valid.
-6. `Claim request`, `Firestore` and `BigQuery` report `success`. `Custom Endpoint` may report `success` or `skipped`, depending on the configuration.
-7. `REQUEST STATUS` ends with `🟢 Request processed successfully`.
-
-In the Network panel, the request to the configured endpoint must use `POST`, return HTTP `200` and include the same successful processing values in its JSON response.
+| Check | Expected result |
+|:---|:---|
+| Configuration | The console confirms a valid Configuration Variable and server-side endpoint; the values under `TRACKER TAG CONFIGURATION` match your setup. |
+| Libraries | Both libraries load from the expected URLs. With first-party hosting enabled, they use your domain. |
+| Consent | When Consent Mode is respected, `analytics_storage` is granted before the request is sent. |
+| Event | `CHECKING EVENT` confirms `page_view` as valid. |
+| Request | The Network panel shows a `POST` request to the configured endpoint with HTTP `200`. |
+| Processing | `claim_request`, `firestore` and `bigquery` are `success`; `custom_endpoint` is `success` or `skipped`. |
+| Final status | The console ends with `🟢 Request processed successfully`. |
 
 When cross-domain tracking is enabled, also confirm that the configured domains are listed under `ENABLING CROSS-DOMAIN TRACKING`. Clicking a configured outbound link should complete `ASK USER DATA`, validate the returned user data and redirect to a URL containing `na_id`.
 
 If a stage is missing, a status is not successful or the request is not sent, use the [Troubleshooting Guide](https://github.com/nameless-analytics/nameless-analytics/blob/main/setup-guides/TROUBLESHOOTING-GUIDE.md).
-
-
-
-## Troubleshooting
-If you encounter any issues or see 🔴 error messages in the console, please refer to the [Troubleshooting Guide](https://github.com/nameless-analytics/nameless-analytics/blob/main/setup-guides/TROUBLESHOOTING-GUIDE.md).
 
 #
 
