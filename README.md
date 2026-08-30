@@ -1,6 +1,6 @@
 # Nameless Analytics | Client-side Tracker Tag
 
-The Nameless Analytics Client-side Tracker Tag builds website events and sends them to the [Nameless Analytics Server-side Client Tag](https://github.com/nameless-analytics/server-side-client-tag), combining event-specific fields with the shared settings provided by the Configuration Variable.
+The Nameless Analytics Client-side Tracker Tag builds website events and sends them to the [Nameless Analytics Server-side Client Tag](https://github.com/nameless-analytics/server-side-client-tag/), combining event-specific fields with the shared settings provided by the Configuration Variable.
 
 For an overview of how Nameless Analytics works [start from here](https://github.com/nameless-analytics/nameless-analytics/#overview).
 
@@ -106,10 +106,10 @@ These event parameters are reserved and can't be modified:
 </details>
 
 #### Add/override event level parameters
-Add fields that apply only to this tag. A matching name replaces the value copied from `dataLayer` or inherited from the Configuration Variable.
+Add fields that apply only to this tag, one row per field with **Param name** and **Param value**. A matching name replaces the value copied from `dataLayer` or inherited from the Configuration Variable.
 
 #### Remove event level parameters
-Remove a custom field before the browser sends the request. This also removes a field configured under **Add/override event level parameters** when both lists contain the same name.
+Remove a custom field before the browser sends the request, one **Param name** per row. This also removes a field configured under **Add/override event level parameters** when both lists contain the same name.
 
 #### Add event level parameters from dataLayer
 Copy custom fields from the latest `dataLayer` push matching the current GTM event. The `event` key, GTM internal keys, reserved parameters and `ecommerce` are excluded. Use **Add ecommerce data from dataLayer** for the ecommerce object.
@@ -117,7 +117,7 @@ Copy custom fields from the latest `dataLayer` push matching the current GTM eve
 
 
 ## Configuration Variable
-Select a valid [Client-side Tracker Configuration Variable](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/). It provides shared user, session, page and event fields together with endpoint, consent, acquisition, cross-domain, library and logging settings.
+Under **Configuration variable settings**, select a valid [Client-side Tracker Configuration Variable](https://github.com/nameless-analytics/client-side-tracker-configuration-variable/). It provides shared user, session, page and event fields together with endpoint, consent, acquisition, cross-domain, library and logging settings.
 
 The tag aborts before building the request when the selected value is missing or is not a Nameless Analytics Configuration Variable.
 
