@@ -238,7 +238,7 @@ ___TEMPLATE_PARAMETERS___
         "simpleValueType": true,
         "subParams": [],
         "defaultValue": "standard",
-        "help": "Select a name for the event.\u003c/br\u003e\u003c/br\u003eChoose between standard events and custom events, use standard events when possible."
+        "help": "Select a name for the event.\u003cbr\u003e\u003cbr\u003eChoose between standard events and custom events, use standard events when possible."
       },
       {
         "type": "CHECKBOX",
@@ -248,7 +248,7 @@ ___TEMPLATE_PARAMETERS___
         "displayName": "Event parameters",
         "alwaysInSummary": true,
         "defaultValue": false,
-        "help": "Add or override event parameters to the request in event_data. If a parameter has the same name, it will be overridden.\n\u003c/br\u003e\u003c/br\u003e\nReserved event parameters: \u003c/br\u003e \n• event_type \u003c/br\u003e \n• channel_grouping \u003c/br\u003e \n• source \u003c/br\u003e \n• tld_source \u003c/br\u003e\n• campaign \u003c/br\u003e \n• campaign_id \u003c/br\u003e\n• campaign_click_id \u003c/br\u003e\n• campaign_term \u003c/br\u003e \n• campaign_content \u003c/br\u003e \n• user_agent \u003c/br\u003e \n• browser_name \u003c/br\u003e \n• browser_language \u003c/br\u003e \n• browser_version \u003c/br\u003e \n• device_type \u003c/br\u003e \n• device_vendor \u003c/br\u003e \n• device_model \u003c/br\u003e \n• os_name \u003c/br\u003e \n• os_version \u003c/br\u003e \n• screen_size \u003c/br\u003e \n• viewport_size \u003c/br\u003e\n• city \u003c/br\u003e\n• country \u003c/br\u003e\n• cross_domain_id",
+        "help": "Add or override event parameters to the request in event_data. If a parameter has the same name, it will be overridden.\n\u003cbr\u003e\u003cbr\u003e\nReserved event parameters: \u003cbr\u003e \n• event_type \u003cbr\u003e \n• channel_grouping \u003cbr\u003e \n• source \u003cbr\u003e \n• tld_source \u003cbr\u003e\n• campaign \u003cbr\u003e \n• campaign_id \u003cbr\u003e\n• campaign_click_id \u003cbr\u003e\n• campaign_term \u003cbr\u003e \n• campaign_content \u003cbr\u003e \n• user_agent \u003cbr\u003e \n• browser_name \u003cbr\u003e \n• browser_language \u003cbr\u003e \n• browser_version \u003cbr\u003e \n• device_type \u003cbr\u003e \n• device_vendor \u003cbr\u003e \n• device_model \u003cbr\u003e \n• os_name \u003cbr\u003e \n• os_version \u003cbr\u003e \n• screen_size \u003cbr\u003e \n• viewport_size \u003cbr\u003e\n• city \u003cbr\u003e\n• country \u003cbr\u003e\n• cross_domain_id",
         "subParams": [
           {
             "type": "SIMPLE_TABLE",
@@ -462,7 +462,7 @@ ___TEMPLATE_PARAMETERS___
         "displayName": "",
         "alwaysInSummary": true,
         "defaultValue": false,
-        "help": "Remove event parameters from the request in event_data. If a parameter has the same name, it will be overridden.\n\u003c/br\u003e\u003c/br\u003e\nReserved event parameters: \u003c/br\u003e \n• event_type \u003c/br\u003e \n• channel_grouping \u003c/br\u003e \n• source \u003c/br\u003e \n• tld_source \u003c/br\u003e\n• campaign \u003c/br\u003e \n• campaign_id \u003c/br\u003e\n• campaign_click_id \u003c/br\u003e\n• campaign_term \u003c/br\u003e \n• campaign_content \u003c/br\u003e \n• user_agent \u003c/br\u003e \n• browser_name \u003c/br\u003e \n• browser_language \u003c/br\u003e \n• browser_version \u003c/br\u003e \n• device_type \u003c/br\u003e \n• device_vendor \u003c/br\u003e \n• device_model \u003c/br\u003e \n• os_name \u003c/br\u003e \n• os_version \u003c/br\u003e \n• screen_size \u003c/br\u003e \n• viewport_size \u003c/br\u003e\n• city \u003c/br\u003e\n• country \u003c/br\u003e\n• cross_domain_id",
+        "help": "Remove event parameters from the request in event_data. If a parameter has the same name, it will be overridden.\n\u003cbr\u003e\u003cbr\u003e\nReserved event parameters: \u003cbr\u003e \n• event_type \u003cbr\u003e \n• channel_grouping \u003cbr\u003e \n• source \u003cbr\u003e \n• tld_source \u003cbr\u003e\n• campaign \u003cbr\u003e \n• campaign_id \u003cbr\u003e\n• campaign_click_id \u003cbr\u003e\n• campaign_term \u003cbr\u003e \n• campaign_content \u003cbr\u003e \n• user_agent \u003cbr\u003e \n• browser_name \u003cbr\u003e \n• browser_language \u003cbr\u003e \n• browser_version \u003cbr\u003e \n• device_type \u003cbr\u003e \n• device_vendor \u003cbr\u003e \n• device_model \u003cbr\u003e \n• os_name \u003cbr\u003e \n• os_version \u003cbr\u003e \n• screen_size \u003cbr\u003e \n• viewport_size \u003cbr\u003e\n• city \u003cbr\u003e\n• country \u003cbr\u003e\n• cross_domain_id",
         "subParams": [
           {
             "type": "SIMPLE_TABLE",
@@ -668,14 +668,14 @@ ___TEMPLATE_PARAMETERS___
         "displayName": "",
         "alwaysInSummary": true,
         "defaultValue": false,
-        "help": "Add event parameters from the dataLayer.push() event that has triggered the tag.\u003cbr\u003e\u003c/br\u003e\n\nReserved dataLayer event parameters: \u003c/br\u003e \nReserved event parameters: \u003c/br\u003e \n• event_type \u003c/br\u003e \n• channel_grouping \u003c/br\u003e \n• source \u003c/br\u003e \n• tld_source \u003c/br\u003e\n• campaign \u003c/br\u003e \n• campaign_id \u003c/br\u003e\n• campaign_click_id \u003c/br\u003e\n• campaign_term \u003c/br\u003e \n• campaign_content \u003c/br\u003e \n• user_agent \u003c/br\u003e \n• browser_name \u003c/br\u003e \n• browser_language \u003c/br\u003e \n• browser_version \u003c/br\u003e \n• device_type \u003c/br\u003e \n• device_vendor \u003c/br\u003e \n• device_model \u003c/br\u003e \n• os_name \u003c/br\u003e \n• os_version \u003c/br\u003e \n• screen_size \u003c/br\u003e \n• viewport_size \u003c/br\u003e\n• city \u003c/br\u003e\n• country \u003c/br\u003e\n• cross_domain_id \u003c/br\u003e\u003c/br\u003e\n\nIf present the ecommerce object in the dataLayer will not be added in event data but it will be added in the ecommerce field."
+        "help": "Add event parameters from the dataLayer.push() event that has triggered the tag.\u003cbr\u003e\u003cbr\u003e\n\nReserved dataLayer event parameters: \u003cbr\u003e \nReserved event parameters: \u003cbr\u003e \n• event_type \u003cbr\u003e \n• channel_grouping \u003cbr\u003e \n• source \u003cbr\u003e \n• tld_source \u003cbr\u003e\n• campaign \u003cbr\u003e \n• campaign_id \u003cbr\u003e\n• campaign_click_id \u003cbr\u003e\n• campaign_term \u003cbr\u003e \n• campaign_content \u003cbr\u003e \n• user_agent \u003cbr\u003e \n• browser_name \u003cbr\u003e \n• browser_language \u003cbr\u003e \n• browser_version \u003cbr\u003e \n• device_type \u003cbr\u003e \n• device_vendor \u003cbr\u003e \n• device_model \u003cbr\u003e \n• os_name \u003cbr\u003e \n• os_version \u003cbr\u003e \n• screen_size \u003cbr\u003e \n• viewport_size \u003cbr\u003e\n• city \u003cbr\u003e\n• country \u003cbr\u003e\n• cross_domain_id \u003cbr\u003e\u003cbr\u003e\n\nIf present the ecommerce object in the dataLayer will not be added in event data but it will be added in the ecommerce field."
       }
     ]
   },
   {
     "type": "LABEL",
     "name": "settings_title",
-    "displayName": "\u003c/br\u003e\u003cb\u003eSettings\u003c/b\u003e"
+    "displayName": "\u003cbr\u003e\u003cb\u003eSettings\u003c/b\u003e"
   },
   {
     "type": "GROUP",
@@ -738,7 +738,7 @@ ___TEMPLATE_PARAMETERS___
       {
         "type": "LABEL",
         "name": "info",
-        "displayName": "\u003cb\u003eNameless Analytics Client-Side tracker tag | Beta version 1.0\u003c/b\u003e\u003c/br\u003e\nBeta version: 1.0. \n\u003c/br\u003e\nRead more about the \u003ca href\u003d\"https://github.com/nameless-analytics/nameless-analytics\" target\u003d\u0027_blank\u0027 rel\u003d\"noopener\"\u003eNameless Analytics project\u003c/a\u003e or the \u003ca href\u003d\"https://github.com/nameless-analytics/nameless-analytics-client-tag\" target\u003d\u0027_blank\u0027 rel\u003d\"noopener\"\u003eClient-side Tracker Tag\u003c/a\u003e. \n\u003c/br\u003e\nOfficial website \u003ca href\u003d\"https://namelessanalytics.com/?utm_source\u003dtagmanager.google.com\u0026utm_medium\u003dreferral\u0026utm_campaign\u003dcs_analytics_tag\" target\u003d\u0027_blank\u0027 rel\u003d\"noopener\"\u003eNameless Analytics\u003c/a\u003e\n\u003c/br\u003e\nCreated by \u003ca href\u003d\"https://tommasomoretti.com/?utm_source\u003dtagmanager.google.com\u0026utm_medium\u003dreferral\u0026utm_campaign\u003dcs_analytics_tag\" target\u003d\u0027_blank\u0027 rel\u003d\"noopener\"\u003eTommaso Moretti\u003c/a\u003e\n\u003c/br\u003e\u003c/br\u003e"
+        "displayName": "\u003cb\u003eNameless Analytics Client-Side tracker tag | Beta version 1.0\u003c/b\u003e\u003cbr\u003e\nBeta version: 1.0. \n\u003cbr\u003e\nRead more about the \u003ca href\u003d\"https://github.com/nameless-analytics/nameless-analytics\" target\u003d\u0027_blank\u0027 rel\u003d\"noopener\"\u003eNameless Analytics project\u003c/a\u003e or the \u003ca href\u003d\"https://github.com/nameless-analytics/nameless-analytics-client-tag\" target\u003d\u0027_blank\u0027 rel\u003d\"noopener\"\u003eClient-side Tracker Tag\u003c/a\u003e. \n\u003cbr\u003e\nOfficial website \u003ca href\u003d\"https://namelessanalytics.com/?utm_source\u003dtagmanager.google.com\u0026utm_medium\u003dreferral\u0026utm_campaign\u003dcs_analytics_tag\" target\u003d\u0027_blank\u0027 rel\u003d\"noopener\"\u003eNameless Analytics\u003c/a\u003e\n\u003cbr\u003e\nCreated by \u003ca href\u003d\"https://tommasomoretti.com/?utm_source\u003dtagmanager.google.com\u0026utm_medium\u003dreferral\u0026utm_campaign\u003dcs_analytics_tag\" target\u003d\u0027_blank\u0027 rel\u003d\"noopener\"\u003eTommaso Moretti\u003c/a\u003e\n\u003cbr\u003e\u003cbr\u003e"
       }
     ],
     "groupStyle": "ZIPPY_OPEN"
