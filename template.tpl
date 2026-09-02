@@ -1098,7 +1098,9 @@ function send_request(full_endpoint) {
   if (respect_consent_mode) {
     if (enable_logs) { log(event_name, '>', 'CHECKING GOOGLE CONSENT MODE'); }
 
-    const consent_type = callInWindow('get_last_consent_values').consent_type;
+    const consent_values = callInWindow('get_last_consent_values');
+    const consent_type = consent_values.consent_type;
+    const analytics_storage = consent_values.analytics_storage;
 
     // Check if consent mode is present
     if (consent_type === 'Consent mode not present') {
@@ -1107,6 +1109,14 @@ function send_request(full_endpoint) {
       if (enable_logs) { log(event_name, '>', 'REQUEST STATUS'); }
       if (enable_logs) { log(event_name, '>', '  🔴 Request aborted'); }
       data.gtmOnSuccess();
+      return;
+    } else if (analytics_storage === null || analytics_storage === undefined) {
+      if (enable_logs) { log(event_name, '>', '  🔴 analytics_storage not configured'); }
+
+      if (enable_logs) { log(event_name, '>', 'REQUEST STATUS'); }
+      if (enable_logs) { log(event_name, '>', '  🔴 Request aborted'); }
+      data.gtmOnSuccess();
+      return;
     } else if (consent_type === 'Default' || consent_type === 'Update') {
       // Consent denied
       if (!isConsentGranted("analytics_storage")) {

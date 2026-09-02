@@ -142,7 +142,7 @@ Enable logs in the [Nameless Analytics Client-side Tracker Configuration Variabl
 |:---|:---|
 | Configuration | The console confirms a valid Configuration Variable and server-side endpoint; the values under `TRACKER TAG CONFIGURATION` match your setup. |
 | Libraries | Both libraries load from the expected URLs. With first-party hosting enabled, they use your domain. |
-| Consent | When Consent Mode is respected, `analytics_storage` is granted before the request is sent. |
+| Consent | When Consent Mode is respected, `analytics_storage` is explicitly granted before the request is sent. A missing value aborts the request. |
 | Event | `CHECKING EVENT` confirms `page_view` as valid. |
 | Request | The Network panel shows a `POST` request to the configured endpoint with HTTP `200`. |
 | Processing | `claim_request`, `firestore` and `bigquery` are `success`; `custom_endpoint` is `success` or `skipped`. |
