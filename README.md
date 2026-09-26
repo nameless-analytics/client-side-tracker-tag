@@ -104,7 +104,7 @@ These event parameters are reserved and can't be modified:
 - cross_domain_id
 
 </details>
-
+ 
 #### Add/override event level parameters
 Add fields that apply only to this tag, one row per field with **Param name** and **Param value**. A matching name replaces the value copied from `dataLayer` or inherited from the Configuration Variable.
 
