@@ -798,14 +798,13 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
       delete_cookie('na_temp', JSON.stringify({}));
     }
 
-    if (!utm_source && !temp_source) { source = null; }
-    if (!utm_campaign && !temp_campaign) { campaign = null; }
-    if (!utm_id && !temp_campaign_id) { campaign_id = null; }
-    if (!utm_term && !temp_campaign_term) { campaign_term = null; }
-    if (!utm_content && !temp_campaign_content) { campaign_content = null; }
-    if (!utm_click_id && !gclid && !dclid && !gclsrc && !wbraid && !gbraid && !msclkid && !fbclid && !ttclid && !twclid && !epik && !li_fat_id && !scclid && !temp_campaign_click_id) {
-      campaign_click_id = null;
-    }
+    // The first page view is always a real one: virtual page views and the events after them are internal traffic, even with campaign parameters still in the URL
+    source = null;
+    campaign = null;
+    campaign_id = null;
+    campaign_click_id = null;
+    campaign_term = null;
+    campaign_content = null;
   }
 
   // Standard and Virtual Page View
