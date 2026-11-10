@@ -132,6 +132,7 @@ let cross_domain_id = null;
 
 // Acquisition
 const utm_source = (config.set_custom_utm_parameters_names) ? getQueryParameters(config.custom_source_name) : getQueryParameters('utm_source');
+const utm_medium = (config.set_custom_utm_parameters_names && config.custom_medium_name) ? getQueryParameters(config.custom_medium_name) : getQueryParameters('utm_medium');
 const utm_campaign = (config.set_custom_utm_parameters_names) ? getQueryParameters(config.custom_campaign_name) : getQueryParameters('utm_campaign');
 const utm_id = (config.set_custom_utm_parameters_names) ? getQueryParameters(config.custom_campaign_id) : getQueryParameters('utm_id');
 const utm_click_id = (config.set_custom_utm_parameters_names) ? getQueryParameters(config.custom_campaign_click_id) : getQueryParameters('utm_click_id');
@@ -152,6 +153,7 @@ const epik = getQueryParameters('epik'); // Pinterest
 const scclid = getQueryParameters('scclid'); // SnapChat
 
 const temp_source = getQueryParameters('na_source'); // Cross-domain source parameter when respect consent mode is enabled and consent is denied
+const temp_medium = getQueryParameters('na_medium'); // Cross-domain medium parameter when respect consent mode is enabled and consent is denied
 const temp_campaign = getQueryParameters('na_campaign'); // Cross-domain campaign parameter when respect consent mode is enabled and consent is denied
 const temp_campaign_id = getQueryParameters('na_campaign_id'); // Cross-domain campaign ID parameter when respect consent mode is enabled and consent is denied
 const temp_campaign_click_id = getQueryParameters('na_campaign_click_id'); // Cross-domain campaign click ID parameter when respect consent mode is enabled and consent is denied
@@ -159,6 +161,7 @@ const temp_campaign_term = getQueryParameters('na_campaign_term'); // Cross-doma
 const temp_campaign_content = getQueryParameters('na_campaign_content'); // Cross-domain campaign content parameter when respect consent mode is enabled and consent is denied
 
 var source = (temp_source) ? temp_source : ((referrer_hostname === hostname) ? null : ((utm_source) ? utm_source : ((referrer_hostname === '') ? 'direct' : referrer_hostname)));
+var medium = (temp_medium) ? temp_medium : (utm_medium || null);
 var campaign = (temp_campaign) ? temp_campaign : (utm_campaign || null);
 var campaign_id = (temp_campaign_id) ? temp_campaign_id : (utm_id || null);
 var campaign_click_id = (temp_campaign_click_id) ? temp_campaign_click_id : (utm_click_id || gclid || dclid || gclsrc || wbraid || gbraid || msclkid || fbclid || ttclid || twclid || epik || li_fat_id || scclid || null);
@@ -380,6 +383,7 @@ function send_request(full_endpoint) {
           if (get_cookie('na_temp') === null || get_cookie('na_temp') === undefined) {
             const temp_cookie_value = {
               source: source,
+              medium: medium,
               campaign: campaign,
               campaign_id: campaign_id,
               campaign_click_id: campaign_click_id,
@@ -412,6 +416,7 @@ function send_request(full_endpoint) {
           const temp_cookie_value = get_cookie('na_temp');
           if (temp_cookie_value !== null && temp_cookie_value !== undefined && pv_count === 1) {
             source = temp_cookie_value.source;
+            medium = temp_cookie_value.medium;
             campaign = temp_cookie_value.campaign;
             campaign_id = temp_cookie_value.campaign_id;
             campaign_click_id = temp_cookie_value.campaign_click_id;
@@ -451,6 +456,7 @@ function send_request(full_endpoint) {
 
         if (temp_cookie_value !== null && temp_cookie_value !== undefined && pv_count === 1) {
           source = temp_cookie_value.source;
+          medium = temp_cookie_value.medium;
           campaign = temp_cookie_value.campaign;
           campaign_id = temp_cookie_value.campaign_id;
           campaign_click_id = temp_cookie_value.campaign_click_id;
@@ -675,6 +681,7 @@ function build_payload() {
         key !== 'channel_grouping' &&
         key !== 'source' &&
         key !== 'tld_source' &&
+        key !== 'medium' &&
         key !== 'campaign' &&
         key !== 'campaign_id' &&
         key !== 'campaign_click_id' &&
@@ -800,6 +807,7 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
 
     // The first page view is always a real one: virtual page views and the events after them are internal traffic, even with campaign parameters still in the URL
     source = null;
+    medium = null;
     campaign = null;
     campaign_id = null;
     campaign_click_id = null;
@@ -816,6 +824,7 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
       event_id: event_id,
       event_type: 'page_view',
       source: source,
+      medium: medium,
       campaign: campaign,
       campaign_id: campaign_id,
       campaign_click_id: campaign_click_id,
@@ -889,6 +898,7 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
       event_id: event_id,
       event_type: 'event',
       source: source,
+      medium: medium,
       campaign: campaign,
       campaign_id: campaign_id,
       campaign_click_id: campaign_click_id,

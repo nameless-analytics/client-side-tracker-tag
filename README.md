@@ -87,6 +87,7 @@ These event parameters are reserved and can't be modified:
 - campaign_click_id
 - campaign_term
 - campaign_content
+- medium
 - user_agent
 - browser_name
 - browser_language
