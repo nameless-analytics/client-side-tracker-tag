@@ -801,6 +801,9 @@ const getType = require('getType');
 // CONSTANTS
 // --------------------------------------------------------------------------------------------------------------
 
+// The main library's version: its file name (lib/nameless-analytics_vX.X.X.min.js) and the git tag it is
+// served from (vX.X.X), never a branch. A released file is never changed: a fix is a new version, with its
+// own file and its own tag, pushed before the template that names it.
 const library_version_number = '1.0.0';
 const id_length = 15;
 const id_chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -934,8 +937,8 @@ var campaign_content = (temp_campaign_content) ? temp_campaign_content : (utm_co
 
 
 // Default script paths
-const default_na_url = 'https://cdn.jsdelivr.net/gh/nameless-analytics/client-side-tracker-tag@main/lib/nameless-analytics_v'+ library_version_number + '.min.js'; // Minified
-//const default_na_url = 'https://cdn.jsdelivr.net/gh/nameless-analytics/client-side-tracker-tag@main/lib/nameless-analytics_v'+ library_version_number + '.js'; // Non-minified
+const default_na_url = 'https://cdn.jsdelivr.net/gh/nameless-analytics/client-side-tracker-tag@v' + library_version_number + '/lib/nameless-analytics_v'+ library_version_number + '.min.js'; // Minified
+//const default_na_url = 'https://cdn.jsdelivr.net/gh/nameless-analytics/client-side-tracker-tag@v' + library_version_number + '/lib/nameless-analytics_v'+ library_version_number + '.js'; // Non-minified
 
 const default_ua_parser_url = 'https://cdn.jsdelivr.net/npm/ua-parser-js@1.0.40/dist/ua-parser.pack.min.js';
 
