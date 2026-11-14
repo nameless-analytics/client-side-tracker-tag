@@ -81,10 +81,12 @@ After the request reaches the server, the Server-side Client Tag can add, overri
 These event parameters are reserved and can't be modified:
 - event_type
 - channel_grouping
+- channel_paid
 - source
 - campaign
 - campaign_id
 - campaign_click_id
+- campaign_click_id_type
 - campaign_term
 - campaign_content
 - medium

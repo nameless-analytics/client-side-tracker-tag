@@ -143,7 +143,6 @@ const utm_term = (config.set_custom_utm_parameters_names) ? getQueryParameters(c
 const utm_content = (config.set_custom_utm_parameters_names) ? getQueryParameters(config.custom_content_name) : getQueryParameters('utm_content');
 
 const gclid = getQueryParameters('gclid'); // Google Ads
-const gclsrc = getQueryParameters('gclsrc'); // Google Ads
 const wbraid = getQueryParameters('wbraid'); // Google Ads
 const gbraid = getQueryParameters('gbraid'); // Google Ads
 const dclid = getQueryParameters('dclid'); // Google Floodlight
@@ -160,6 +159,7 @@ const temp_medium = getQueryParameters('na_medium'); // Cross-domain medium para
 const temp_campaign = getQueryParameters('na_campaign'); // Cross-domain campaign parameter when respect consent mode is enabled and consent is denied
 const temp_campaign_id = getQueryParameters('na_campaign_id'); // Cross-domain campaign ID parameter when respect consent mode is enabled and consent is denied
 const temp_campaign_click_id = getQueryParameters('na_campaign_click_id'); // Cross-domain campaign click ID parameter when respect consent mode is enabled and consent is denied
+const temp_campaign_click_id_type = getQueryParameters('na_campaign_click_id_type'); // Cross-domain campaign click ID type parameter when respect consent mode is enabled and consent is denied
 const temp_campaign_term = getQueryParameters('na_campaign_term'); // Cross-domain campaign term parameter when respect consent mode is enabled and consent is denied
 const temp_campaign_content = getQueryParameters('na_campaign_content'); // Cross-domain campaign content parameter when respect consent mode is enabled and consent is denied
 
@@ -167,7 +167,11 @@ var source = (temp_source) ? temp_source : ((referrer_hostname === hostname) ? n
 var medium = (temp_medium) ? temp_medium : (utm_medium || null);
 var campaign = (temp_campaign) ? temp_campaign : (utm_campaign || null);
 var campaign_id = (temp_campaign_id) ? temp_campaign_id : (utm_id || null);
-var campaign_click_id = (temp_campaign_click_id) ? temp_campaign_click_id : (utm_click_id || gclid || dclid || gclsrc || wbraid || gbraid || msclkid || fbclid || ttclid || twclid || epik || li_fat_id || scclid || null);
+// The click ID and the parameter it came in: the channel grouping reads which it is (an ad's gclid, an fbclid…)
+const click_ids = [['utm_click_id', utm_click_id], ['gclid', gclid], ['dclid', dclid], ['wbraid', wbraid], ['gbraid', gbraid], ['msclkid', msclkid], ['fbclid', fbclid], ['ttclid', ttclid], ['twclid', twclid], ['epik', epik], ['li_fat_id', li_fat_id], ['scclid', scclid]];
+const found_click_id = click_ids.filter(item => item[1])[0];
+var campaign_click_id = (temp_campaign_click_id) ? temp_campaign_click_id : (found_click_id ? found_click_id[1] : null);
+var campaign_click_id_type = (temp_campaign_click_id) ? (temp_campaign_click_id_type || null) : (found_click_id ? found_click_id[0] : null);
 var campaign_term = (temp_campaign_term) ? temp_campaign_term : (utm_term || null);
 var campaign_content = (temp_campaign_content) ? temp_campaign_content : (utm_content || null);
 
@@ -390,6 +394,7 @@ function send_request(full_endpoint) {
               campaign: campaign,
               campaign_id: campaign_id,
               campaign_click_id: campaign_click_id,
+              campaign_click_id_type: campaign_click_id_type,
               campaign_term: campaign_term,
               campaign_content: campaign_content,
               page_referrer: page_referrer
@@ -423,6 +428,7 @@ function send_request(full_endpoint) {
             campaign = temp_cookie_value.campaign;
             campaign_id = temp_cookie_value.campaign_id;
             campaign_click_id = temp_cookie_value.campaign_click_id;
+            campaign_click_id_type = temp_cookie_value.campaign_click_id_type || null;
             campaign_term = temp_cookie_value.campaign_term;
             campaign_content = temp_cookie_value.campaign_content;
             page_referrer = temp_cookie_value.page_referrer;
@@ -463,6 +469,7 @@ function send_request(full_endpoint) {
           campaign = temp_cookie_value.campaign;
           campaign_id = temp_cookie_value.campaign_id;
           campaign_click_id = temp_cookie_value.campaign_click_id;
+          campaign_click_id_type = temp_cookie_value.campaign_click_id_type || null;
           campaign_term = temp_cookie_value.campaign_term;
           campaign_content = temp_cookie_value.campaign_content;
           page_referrer = temp_cookie_value.page_referrer;
@@ -682,12 +689,14 @@ function build_payload() {
         key !== 'ecommerce' &&
         key !== 'event_type' &&
         key !== 'channel_grouping' &&
+        key !== 'channel_paid' &&
         key !== 'source' &&
         key !== 'tld_source' &&
         key !== 'medium' &&
         key !== 'campaign' &&
         key !== 'campaign_id' &&
         key !== 'campaign_click_id' &&
+        key !== 'campaign_click_id_type' &&
         key !== 'campaign_term' &&
         key !== 'campaign_content' &&
         key !== 'user_agent' &&
@@ -814,6 +823,7 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
     campaign = null;
     campaign_id = null;
     campaign_click_id = null;
+    campaign_click_id_type = null;
     campaign_term = null;
     campaign_content = null;
   }
@@ -831,6 +841,7 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
       campaign: campaign,
       campaign_id: campaign_id,
       campaign_click_id: campaign_click_id,
+      campaign_click_id_type: campaign_click_id_type,
       campaign_term: campaign_term,
       campaign_content: campaign_content,
       cross_domain_id: cross_domain_id,
@@ -905,6 +916,7 @@ function set_event_data_in_template_storage(storage_name, storage_value) {
       campaign: campaign,
       campaign_id: campaign_id,
       campaign_click_id: campaign_click_id,
+      campaign_click_id_type: campaign_click_id_type,
       campaign_term: campaign_term,
       campaign_content: campaign_content,
       cross_domain_id: null,
